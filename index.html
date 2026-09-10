@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ক্যারিয়ার গাইডেন্স লিডস - পেডাগো একাডেমি | Career Guidance Leads</title>
+  <meta name="description" content="পেডাগো একাডেমি ক্যারিয়ার গাইডেন্স ফর্ম - আপনার সন্তানের উজ্জ্বল ভবিষ্যতের সঠিক দিকনির্দেশনা পেতে আজই নিবন্ধন করুন।">
+  
+  <!-- Google Fonts: Hind Siliguri (Bengali) + Plus Jakarta Sans (English) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient background gradients -->
+  <div class="ambient-glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow-2" aria-hidden="true"></div>
+
+  <main class="main-wrapper">
+    <div class="lead-card">
+      
+      <!-- Topbar Controls: Language & Theme Switchers -->
+      <header class="card-topbar">
+        <!-- Bilingual Toggle -->
+        <div class="lang-toggle-group" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" id="langBtnBn" data-lang="bn" aria-pressed="true">
+            বাংলা
+          </button>
+          <button type="button" class="lang-btn" id="langBtnEn" data-lang="en" aria-pressed="false">
+            English
+          </button>
+        </div>
+
+        <!-- Dark/Light Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme" title="Toggle theme">
+          <!-- Sun Icon (shown in dark mode to switch to light) -->
+          <svg class="theme-icon-sun" id="sunIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon Icon (shown in light mode to switch to dark) -->
+          <svg class="theme-icon-moon" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Brand Identity Header -->
+      <section class="card-header">
+        <div class="brand-logo-wrap">
+          <img src="Assets/logo.png" alt="Pedago Academy Logo" class="brand-logo" width="130" height="148">
+        </div>
+        <div>
+          <span class="campaign-badge">
+            <span class="badge-dot"></span>
+            <span id="badgeText">ক্যারিয়ার গাইডেন্স প্রোগ্রাম</span>
+          </span>
+        </div>
+        <h1 class="card-title" id="pageTitle">ক্যারিয়ার গাইডেন্স ফর্ম</h1>
+        <p class="card-subtitle" id="pageSubtitle">আপনার সন্তানের উপযোগী দিকনির্দেশনা ও ফ্রি কাউন্সেলিং সেশনের জন্য নিচের তথ্যগুলো পূরণ করুন।</p>
+      </section>
+
+      <!-- Toast / Feedback Notification Container -->
+      <div class="status-toast" id="statusToast" role="alert" aria-live="polite">
+        <svg class="toast-icon" id="toastSuccessIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <svg class="toast-icon" id="toastErrorIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span class="toast-message" id="toastMessage"></span>
+      </div>
+
+      <!-- Lead Capture Form -->
+      <form id="leadForm" class="lead-form" novalidate>
+        
+        <!-- Field 1: Name -->
+        <div class="form-group" id="groupName">
+          <label for="name" class="form-label">
+            <span id="labelName">শিক্ষার্থীর নাম</span>
+            <span class="required-asterisk">*</span>
+          </label>
+          <div class="input-container">
+            <span class="input-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              class="form-control" 
+              placeholder="শিক্ষার্থীর পূর্ণ নাম লিখুন" 
+              required 
+              autocomplete="name"
+            >
+          </div>
+          <p class="field-error-msg" id="nameError" role="alert" aria-live="polite">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="nameErrorText">অনুগ্রহ করে শিক্ষার্থীর নাম লিখুন</span>
+          </p>
+        </div>
+
+        <!-- Field 2: Mobile -->
+        <div class="form-group" id="groupMobile">
+          <label for="mobile" class="form-label">
+            <span id="labelMobile">অভিভাবকের মোবাইল নম্বর</span>
+            <span class="required-asterisk">*</span>
+          </label>
+          <div class="input-container">
+            <span class="input-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </span>
+            <input 
+              type="tel" 
+              id="mobile" 
+              name="mobile" 
+              class="form-control" 
+              placeholder="01XXXXXXXXX" 
+              maxlength="11" 
+              required 
+              autocomplete="tel"
+            >
+          </div>
+          <span class="phone-prefix-hint" id="mobileHint">১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন: 01712345678)</span>
+          <p class="field-error-msg" id="mobileError" role="alert" aria-live="polite">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="mobileErrorText">সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)</span>
+          </p>
+        </div>
+
+        <!-- Field 3: Student Age -->
+        <div class="form-group" id="groupAge">
+          <label for="studentAge" class="form-label">
+            <span id="labelAge">শিক্ষার্থীর বয়স</span>
+            <span class="required-asterisk">*</span>
+          </label>
+          <div class="input-container">
+            <span class="input-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+            <select id="studentAge" name="studentAge" class="form-control" required>
+              <option value="" disabled selected id="agePlaceholderOption">বয়স নির্বাচন করুন</option>
+              <!-- Populated dynamically via JS to support bilingual labels (ages 3 to 18) -->
+            </select>
+            <span class="select-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+          <p class="field-error-msg" id="ageError" role="alert" aria-live="polite">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="ageErrorText">অনুগ্রহ করে শিক্ষার্থীর বয়স নির্বাচন করুন</span>
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="btn-submit">
+          <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
+          <svg class="btn-icon" id="btnSendIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          <span id="btnText">জমা দিন</span>
+        </button>
+
+      </form>
+
+      <!-- Footer Info -->
+      <footer class="card-footer">
+        <p id="footerCallUs">যে কোনো তথ্যের জন্য কল করুন:</p>
+        <a href="tel:+8809612222999" class="footer-support">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>+8809612222999</span>
+        </a>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
