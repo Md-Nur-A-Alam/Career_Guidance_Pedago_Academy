@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="bn" data-theme="light">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ক্যারিয়ার গাইডেন্স লিডস - পেডাগো একাডেমি | Career Guidance Leads</title>
-  <meta name="description"
-    content="পেডাগো একাডেমি ক্যারিয়ার গাইডেন্স ফর্ম - আপনার সন্তানের উজ্জ্বল ভবিষ্যতের সঠিক দিকনির্দেশনা পেতে আজই নিবন্ধন করুন।">
-
+  <title>ক্যারিয়ার গাইডেন্স ও লার্নিং স্টাইল মূল্যায়ন - পেডাগো একাডেমি | Pedago Academy</title>
+  <meta name="description" content="পেডাগো একাডেমি অভিভাবক জরিপ - আপনার সন্তানের লার্নিং স্টাইল ও আচরণ মূল্যায়ন করে সঠিক গাইডেন্স এবং ফলাফল রিপোর্ট পান।">
+  
   <!-- Google Fonts: Hind Siliguri (Bengali) + Plus Jakarta Sans (English) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
   <!-- Ambient background gradients -->
@@ -26,8 +21,8 @@
   <div class="ambient-glow-2" aria-hidden="true"></div>
 
   <main class="main-wrapper">
-    <div class="lead-card">
-
+    <div class="lead-card" id="mainCard">
+      
       <!-- Topbar Controls: Language & Theme Switchers -->
       <header class="card-topbar">
         <!-- Bilingual Toggle -->
@@ -41,11 +36,9 @@
         </div>
 
         <!-- Dark/Light Theme Toggle Button -->
-        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme"
-          title="Toggle theme">
-          <!-- Sun Icon (shown in dark mode to switch to light) -->
-          <svg class="theme-icon-sun" id="sunIcon" style="display: none;" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme" title="Toggle theme">
+          <!-- Sun Icon -->
+          <svg class="theme-icon-sun" id="sunIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -56,160 +49,349 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <!-- Moon Icon (shown in light mode to switch to dark) -->
-          <svg class="theme-icon-moon" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Moon Icon -->
+          <svg class="theme-icon-moon" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
       </header>
 
       <!-- Brand Identity Header -->
-      <section class="card-header">
+      <section class="card-header" id="brandHeader">
         <div class="brand-logo-wrap">
           <img src="Assets/logo.png" alt="Pedago Academy Logo" class="brand-logo" width="130" height="148">
         </div>
-        <div>
-          <span class="campaign-badge">
-            <span class="badge-dot"></span>
-            <span id="badgeText">ক্যারিয়ার গাইডেন্স প্রোগ্রাম</span>
-          </span>
-        </div>
-        <h1 class="card-title" id="pageTitle">ক্যারিয়ার গাইডেন্স ফর্ম</h1>
-        <p class="card-subtitle" id="pageSubtitle">আপনার সন্তানের উপযোগী দিকনির্দেশনা ও ফ্রি কাউন্সেলিং সেশনের জন্য
-          নিচের তথ্যগুলো পূরণ করুন।</p>
       </section>
 
-      <!-- Toast / Feedback Notification Container -->
-      <div class="status-toast" id="statusToast" role="alert" aria-live="polite">
-        <svg class="toast-icon" id="toastSuccessIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <svg class="toast-icon" id="toastErrorIcon" style="display: none;" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <span class="toast-message" id="toastMessage"></span>
-      </div>
-
-      <!-- Lead Capture Form -->
-      <form id="leadForm" class="lead-form" novalidate>
-
-        <!-- Field 1: Name -->
-        <div class="form-group" id="groupName">
-          <label for="name" class="form-label">
-            <span id="labelName">শিক্ষার্থীর নাম</span>
-            <span class="required-asterisk">*</span>
-          </label>
-          <div class="input-container">
-            <span class="input-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </span>
-            <input type="text" id="name" name="name" class="form-control" placeholder="শিক্ষার্থীর পূর্ণ নাম লিখুন"
-              required autocomplete="name">
-          </div>
-          <p class="field-error-msg" id="nameError" role="alert" aria-live="polite">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <span id="nameErrorText">অনুগ্রহ করে শিক্ষার্থীর নাম লিখুন</span>
-          </p>
+      <!-- ===================================================================
+           PHASE 1: INITIAL LEAD CAPTURE FORM
+           =================================================================== -->
+      <section id="phase1View" class="phase-view active">
+        <div class="phase-header text-center">
+          <span class="campaign-badge">
+            <span class="badge-dot"></span>
+            <span id="badgeText">ক্যারিয়ার গাইডেন্স ও মূল্যায়ন</span>
+          </span>
+          <h1 class="card-title" id="pageTitle">সন্তানের লার্নিং স্টাইল মূল্যায়ন</h1>
+          <p class="card-subtitle" id="pageSubtitle">আপনার সন্তান কীভাবে সবচেয়ে ভালো শেখে এবং আচরণ করে তা জানতে তথ্যগুলো পূরণ করে মূল্যায়ন জরিপ শুরু করুন।</p>
         </div>
 
-        <!-- Field 2: Mobile -->
-        <div class="form-group" id="groupMobile">
-          <label for="mobile" class="form-label">
-            <span id="labelMobile">অভিভাবকের মোবাইল নম্বর</span>
-            <span class="required-asterisk">*</span>
-          </label>
-          <div class="input-container">
-            <span class="input-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                </path>
-              </svg>
-            </span>
-            <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="01XXXXXXXXX" maxlength="11"
-              required autocomplete="tel">
-          </div>
-          <span class="phone-prefix-hint" id="mobileHint">১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন: 01712345678)</span>
-          <p class="field-error-msg" id="mobileError" role="alert" aria-live="polite">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <span id="mobileErrorText">সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)</span>
-          </p>
-        </div>
-
-        <!-- Field 3: Student Age -->
-        <div class="form-group" id="groupAge">
-          <label for="studentAge" class="form-label">
-            <span id="labelAge">শিক্ষার্থীর বয়স</span>
-            <span class="required-asterisk">*</span>
-          </label>
-          <div class="input-container">
-            <span class="input-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-            </span>
-            <input type="number" id="studentAge" name="studentAge" class="form-control"
-              placeholder="শিক্ষার্থীর বয়স লিখুন (যেমন: ১০)" min="1" max="99" required>
-          </div>
-          <p class="field-error-msg" id="ageError" role="alert" aria-live="polite">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <span id="ageErrorText">অনুগ্রহ করে শিক্ষার্থীর বয়স লিখুন</span>
-          </p>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" id="submitBtn" class="btn-submit">
-          <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
-          <svg class="btn-icon" id="btnSendIcon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        <!-- Toast / Notification Banner -->
+        <div class="status-toast" id="statusToast" role="alert" aria-live="polite">
+          <svg class="toast-icon" id="toastSuccessIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
-          <span id="btnText">জমা দিন</span>
-        </button>
-
-      </form>
-
-      <!-- Footer Info -->
-      <footer class="card-footer">
-        <p id="footerCallUs">যে কোনো তথ্যের জন্য কল করুন:</p>
-        <a href="tel:+8809612222999" class="footer-support">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-            </path>
+          <svg class="toast-icon" id="toastErrorIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
           </svg>
-          <span>+8809612222999</span>
-        </a>
-      </footer>
+          <span class="toast-message" id="toastMessage"></span>
+        </div>
+
+        <!-- Lead Form -->
+        <form id="leadForm" class="lead-form" novalidate>
+          
+          <!-- Field 1: Name -->
+          <div class="form-group" id="groupName">
+            <label for="name" class="form-label">
+              <span id="labelName">শিক্ষার্থীর নাম</span>
+              <span class="required-asterisk">*</span>
+            </label>
+            <div class="input-container">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-control" 
+                placeholder="শিক্ষার্থীর পূর্ণ নাম লিখুন" 
+                required 
+                autocomplete="name"
+              >
+            </div>
+            <p class="field-error-msg" id="nameError" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span id="nameErrorText">অনুগ্রহ করে শিক্ষার্থীর নাম লিখুন</span>
+            </p>
+          </div>
+
+          <!-- Field 2: Mobile -->
+          <div class="form-group" id="groupMobile">
+            <label for="mobile" class="form-label">
+              <span id="labelMobile">অভিভাবকের মোবাইল নম্বর</span>
+              <span class="required-asterisk">*</span>
+            </label>
+            <div class="input-container">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </span>
+              <input 
+                type="tel" 
+                id="mobile" 
+                name="mobile" 
+                class="form-control" 
+                placeholder="01XXXXXXXXX" 
+                maxlength="11" 
+                required 
+                autocomplete="tel"
+              >
+            </div>
+            <span class="phone-prefix-hint" id="mobileHint">১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন: 01712345678)</span>
+            <p class="field-error-msg" id="mobileError" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span id="mobileErrorText">সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)</span>
+            </p>
+          </div>
+
+          <!-- Field 3: Student Age -->
+          <div class="form-group" id="groupAge">
+            <label for="studentAge" class="form-label">
+              <span id="labelAge">শিক্ষার্থীর বয়স</span>
+              <span class="required-asterisk">*</span>
+            </label>
+            <div class="input-container">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <input 
+                type="number" 
+                id="studentAge" 
+                name="studentAge" 
+                class="form-control" 
+                placeholder="শিক্ষার্থীর বয়স লিখুন (যেমন: ১০)" 
+                min="1" 
+                max="99" 
+                required
+              >
+            </div>
+            <p class="field-error-msg" id="ageError" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span id="ageErrorText">অনুগ্রহ করে শিক্ষার্থীর বয়স লিখুন</span>
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="btn-submit">
+            <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
+            <svg class="btn-icon" id="btnSendIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span id="btnText">জমা দিন ও মূল্যায়ন শুরু করুন</span>
+          </button>
+
+        </form>
+
+        <!-- Footer Info -->
+        <footer class="card-footer">
+          <p id="footerCallUs">যে কোনো তথ্যের জন্য কল করুন:</p>
+          <a href="tel:+8809612222999" class="footer-support">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>+8809612222999</span>
+          </a>
+        </footer>
+      </section>
+
+      <!-- ===================================================================
+           PHASE 2: ASSESSMENT QUESTIONNAIRE & EVALUATOR DASHBOARD
+           =================================================================== -->
+      <section id="phase2View" class="phase-view" style="display: none;">
+        
+        <!-- SUB-PHASE A: SURVEY QUESTION STEPPER -->
+        <div id="surveyStepperContainer">
+          
+          <!-- Survey Progress Header -->
+          <div class="survey-header">
+            <div class="survey-badge-bar">
+              <span class="survey-participant-tag" id="surveyStudentTag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span id="surveyStudentName">শিক্ষার্থীর নাম</span>
+              </span>
+              <span class="survey-progress-pill" id="surveyProgressPill">প্রশ্ন ১/১০</span>
+            </div>
+            
+            <div class="progress-track">
+              <div class="progress-bar-fill" id="progressBarFill" style="width: 10%;"></div>
+            </div>
+            
+            <div class="survey-meta-row">
+              <span id="surveyStepDetail">১০টির মধ্যে ১ম প্রশ্ন</span>
+              <span id="surveyPercentText">১০% সম্পন্ন</span>
+            </div>
+          </div>
+
+          <!-- Question Box -->
+          <div class="question-container" id="questionContainer">
+            <h2 class="question-title" id="currentQuestionTitle">
+              <!-- Dynamically populated via JS -->
+            </h2>
+            <p class="question-instruction" id="questionInstruction">
+              নিচের ৪টি অপশনের মধ্যে যেটি আপনার সন্তানের সাথে সবচেয়ে বেশি মিলে, সেটি সিলেক্ট করুন:
+            </p>
+            
+            <!-- 4 Options List -->
+            <div class="options-list" id="optionsList">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- Stepper Navigation -->
+          <div class="survey-nav-actions">
+            <button type="button" class="btn-nav btn-prev" id="prevQuestionBtn" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span id="btnPrevText">পূর্ববর্তী</span>
+            </button>
+            <button type="button" class="btn-nav btn-next" id="nextQuestionBtn" disabled>
+              <span id="btnNextText">পরবর্তী</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-submit btn-finish" id="finishSurveyBtn" style="display: none;">
+              <span class="btn-spinner" id="finishSpinner" aria-hidden="true"></span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span id="btnFinishText">ফলাফল ও মূল্যায়ন দেখুন</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- SUB-PHASE B: EVALUATOR DASHBOARD (RESULTS, STATISTICS & GUIDELINES) -->
+        <div id="evaluatorDashboard" style="display: none;">
+          
+          <!-- Hero Result Header -->
+          <div class="eval-hero-card">
+            <div class="eval-badge" id="evalResultBadge">লার্নিং স্টাইল রিপোর্ট ও মূল্যায়ন</div>
+            <h2 class="eval-student-heading" id="evalStudentHeading">
+              <!-- e.g. রহিম-এর মূল্যায়ন সম্পন্ন হয়েছে! -->
+            </h2>
+            
+            <!-- Dominant Style Announcement Box -->
+            <div class="dominant-style-box" id="dominantStyleBox">
+              <div class="style-icon-wrap" id="dominantStyleIcon">
+                <!-- Injected via JS -->
+              </div>
+              <div class="style-text-wrap">
+                <span class="style-tag" id="dominantStyleTag">প্রধান লার্নিং স্টাইল</span>
+                <h3 class="style-title" id="dominantStyleTitle">Visual Learner (দৃশ্যমান শিক্ষার্থী)</h3>
+                <p class="style-summary" id="dominantStyleSummary">
+                  আপনার সন্তান চোখে যা দেখে, তা খুব দ্রুত মাথায় গেঁথে ফেলে এবং দীর্ঘদিন মনে রাখতে পারে।
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Statistics & Score Breakdown Figure -->
+          <div class="stats-section">
+            <div class="section-title-wrap">
+              <h3 class="section-title" id="statsSectionTitle">পরিসংখ্যান ও লার্নিং স্কোর ফিগার</h3>
+              <p class="section-subtitle" id="statsSectionSubtitle">১০টি প্রশ্নের উত্তরের ওপর ভিত্তি করে প্রাপ্ত শতকরা হার ও স্কোর:</p>
+            </div>
+
+            <div class="stats-meters-grid" id="statsMetersGrid">
+              
+              <!-- Visual Meter -->
+              <div class="meter-card meter-visual">
+                <div class="meter-header">
+                  <div class="meter-label-wrap">
+                    <span class="meter-bullet visual-bullet"></span>
+                    <strong id="labelMeterVisual">Visual (দৃশ্যমান)</strong>
+                  </div>
+                  <span class="meter-score" id="scoreVisual">0/10 (0%)</span>
+                </div>
+                <div class="meter-bar-track">
+                  <div class="meter-bar-fill visual-fill" id="fillVisual" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Auditory Meter -->
+              <div class="meter-card meter-auditory">
+                <div class="meter-header">
+                  <div class="meter-label-wrap">
+                    <span class="meter-bullet auditory-bullet"></span>
+                    <strong id="labelMeterAuditory">Auditory (শ্রুতিগত)</strong>
+                  </div>
+                  <span class="meter-score" id="scoreAuditory">0/10 (0%)</span>
+                </div>
+                <div class="meter-bar-track">
+                  <div class="meter-bar-fill auditory-fill" id="fillAuditory" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Reading/Writing Meter -->
+              <div class="meter-card meter-reading">
+                <div class="meter-header">
+                  <div class="meter-label-wrap">
+                    <span class="meter-bullet reading-bullet"></span>
+                    <strong id="labelMeterReading">Reading/Writing (পঠন ও লিখন)</strong>
+                  </div>
+                  <span class="meter-score" id="scoreReading">0/10 (0%)</span>
+                </div>
+                <div class="meter-bar-track">
+                  <div class="meter-bar-fill reading-fill" id="fillReading" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Kinesthetic Meter -->
+              <div class="meter-card meter-kinesthetic">
+                <div class="meter-header">
+                  <div class="meter-label-wrap">
+                    <span class="meter-bullet kinesthetic-bullet"></span>
+                    <strong id="labelMeterKinesthetic">Kinesthetic (শারীরিক বা হাতে-কলমে)</strong>
+                  </div>
+                  <span class="meter-score" id="scoreKinesthetic">0/10 (0%)</span>
+                </div>
+                <div class="meter-bar-track">
+                  <div class="meter-bar-fill kinesthetic-fill" id="fillKinesthetic" style="width: 0%;"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Comprehensive Suggestions & Care Guidelines (Part 2 of PDF) -->
+          <div class="guidelines-section">
+            <div class="section-title-wrap">
+              <h3 class="section-title" id="guidelinesSectionTitle">অভিভাবকের জন্য পরিচর্যা ও পড়ার পরামর্শ</h3>
+              <p class="section-subtitle" id="guidelinesSectionSubtitle">সন্তানের পড়াশোনাকে আনন্দময় ও কার্যকর করতে বিশেষজ্ঞ গাইডলাইন:</p>
+            </div>
+
+            <div class="suggestions-cards-container" id="suggestionsContainer">
+              <!-- Dynamically populated based on dominant VARK style from PDF -->
+            </div>
+          </div>
+
+          <!-- Evaluator Action Buttons -->
+          <div class="eval-actions-bar">
+            <button type="button" class="btn-action btn-print" id="printReportBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <span id="btnPrintText">রিপোর্ট প্রিন্ট বা সেভ করুন</span>
+            </button>
+            <a href="tel:+8809612222999" class="btn-action btn-counselor" id="callCounselorBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span id="btnCounselorText">কাউন্সেলরের পরামর্শ নিন</span>
+            </a>
+            <button type="button" class="btn-action btn-retake" id="retakeBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+              <span id="btnRetakeText">নতুন করে মূল্যায়ন করুন</span>
+            </button>
+          </div>
+
+        </div>
+
+      </section>
 
     </div>
   </main>
@@ -217,5 +399,4 @@
   <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
-
 </html>
