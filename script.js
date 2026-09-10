@@ -29,9 +29,9 @@ const translations = {
     mobileErrorInvalid: "সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)।",
 
     labelAge: "শিক্ষার্থীর বয়স",
-    agePlaceholder: "বয়স নির্বাচন করুন",
-    ageErrorEmpty: "অনুগ্রহ করে শিক্ষার্থীর বয়স নির্বাচন করুন।",
-    ageSuffix: " বছর",
+    agePlaceholder: "শিক্ষার্থীর বয়স লিখুন (যেমন: ১০)",
+    ageErrorEmpty: "অনুগ্রহ করে শিক্ষার্থীর বয়স লিখুন।",
+    ageErrorInvalid: "সঠিক বয়স লিখুন (১ থেকে ৯৯ এর মধ্যে)।",
 
     btnSubmit: "জমা দিন",
     btnSubmitting: "অপেক্ষা করুন...",
@@ -60,9 +60,9 @@ const translations = {
     mobileErrorInvalid: "Enter a valid 11-digit mobile number (01XXXXXXXXX).",
 
     labelAge: "Student Age",
-    agePlaceholder: "Select Age",
-    ageErrorEmpty: "Please select the student's age.",
-    ageSuffix: " Years",
+    agePlaceholder: "Enter student's age (e.g. 10)",
+    ageErrorEmpty: "Please enter the student's age.",
+    ageErrorInvalid: "Enter a valid age (between 1 and 99).",
 
     btnSubmit: "Submit",
     btnSubmitting: "Submitting...",
@@ -74,16 +74,6 @@ const translations = {
     footerCallUs: "For any inquiries, call:"
   }
 };
-
-// Bengali numeral map for age dropdown rendering
-const banglaDigits = {
-  '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-  '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-};
-
-function toBengaliNumber(num) {
-  return num.toString().split('').map(d => banglaDigits[d] || d).join('');
-}
 
 // 3. APPLICATION STATE
 const state = {
@@ -122,7 +112,7 @@ const DOM = {
 
   groupAge: document.getElementById('groupAge'),
   labelAge: document.getElementById('labelAge'),
-  selectAge: document.getElementById('studentAge'),
+  inputAge: document.getElementById('studentAge'),
   ageError: document.getElementById('ageError'),
   ageErrorText: document.getElementById('ageErrorText'),
 
@@ -160,36 +150,6 @@ function toggleTheme() {
 }
 
 // 6. LANGUAGE SWITCHING & DOM LOCALIZATION
-function populateAgeDropdown(lang, preserveVal = '') {
-  const t = translations[lang];
-  const currentValue = preserveVal !== '' ? preserveVal : DOM.selectAge.value;
-
-  DOM.selectAge.innerHTML = '';
-
-  // Placeholder option
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.disabled = true;
-  defaultOption.selected = !currentValue;
-  defaultOption.textContent = t.agePlaceholder;
-  DOM.selectAge.appendChild(defaultOption);
-
-  // Ages 3 through 18
-  for (let age = 3; age <= 18; age++) {
-    const opt = document.createElement('option');
-    opt.value = age.toString();
-    if (lang === 'bn') {
-      opt.textContent = `${toBengaliNumber(age)}${t.ageSuffix}`;
-    } else {
-      opt.textContent = `${age}${t.ageSuffix}`;
-    }
-    if (currentValue === age.toString()) {
-      opt.selected = true;
-    }
-    DOM.selectAge.appendChild(opt);
-  }
-}
-
 function applyLanguage(lang) {
   state.lang = lang;
   DOM.html.setAttribute('lang', lang);
@@ -229,7 +189,7 @@ function applyLanguage(lang) {
 
   // Age Field
   DOM.labelAge.textContent = t.labelAge;
-  populateAgeDropdown(lang);
+  DOM.inputAge.placeholder = t.agePlaceholder;
 
   // Submit Button
   if (!state.isSubmitting) {
@@ -330,13 +290,21 @@ function validateMobile(focusOnError = false) {
 }
 
 function validateAge(focusOnError = false) {
-  const val = DOM.selectAge.value;
+  const val = DOM.inputAge.value.trim();
   const t = translations[state.lang];
 
   if (!val) {
     DOM.groupAge.classList.add('has-error');
     DOM.ageErrorText.textContent = t.ageErrorEmpty;
-    if (focusOnError) DOM.selectAge.focus();
+    if (focusOnError) DOM.inputAge.focus();
+    return false;
+  }
+
+  const ageNum = parseInt(val, 10);
+  if (isNaN(ageNum) || ageNum < 1 || ageNum > 99) {
+    DOM.groupAge.classList.add('has-error');
+    DOM.ageErrorText.textContent = t.ageErrorInvalid;
+    if (focusOnError) DOM.inputAge.focus();
     return false;
   }
 
@@ -374,7 +342,7 @@ async function handleSubmit(e) {
   const payload = {
     name: DOM.inputName.value.trim(),
     mobile: DOM.inputMobile.value.trim(),
-    studentAge: DOM.selectAge.value
+    studentAge: DOM.inputAge.value.trim()
   };
 
   const t = translations[state.lang];
@@ -414,7 +382,6 @@ async function handleSubmit(e) {
     if (result && result.result === "success") {
       showToast('success', t.successToast);
       DOM.form.reset();
-      populateAgeDropdown(state.lang); // Reset age select to placeholder
     } else {
       const errMsg = (result && result.message) ? result.message : t.errorToast;
       showToast('error', errMsg);
@@ -453,7 +420,7 @@ function init() {
     clearErrorOnInput(DOM.groupMobile);
   });
 
-  DOM.selectAge.addEventListener('change', () => clearErrorOnInput(DOM.groupAge));
+  DOM.inputAge.addEventListener('input', () => clearErrorOnInput(DOM.groupAge));
 
   // Form submit listener
   DOM.form.addEventListener('submit', handleSubmit);

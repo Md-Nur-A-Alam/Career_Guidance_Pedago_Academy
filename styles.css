@@ -402,22 +402,15 @@ body {
   color: #60a5fa;
 }
 
-/* Custom Select Specifics */
-select.form-control {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  padding-right: 38px;
+/* Number Input Specifics */
+input[type="number"].form-control {
+  -moz-appearance: textfield;
 }
 
-.select-arrow {
-  position: absolute;
-  right: 14px;
-  width: 16px;
-  height: 16px;
-  color: var(--text-light);
-  pointer-events: none;
+input[type="number"].form-control::-webkit-outer-spin-button,
+input[type="number"].form-control::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Phone input helper prefix */
