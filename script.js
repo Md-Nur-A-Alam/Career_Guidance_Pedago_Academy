@@ -7,7 +7,7 @@
 
 // 1. DEPLOYED APPS SCRIPT WEB APP URL
 // Replace this placeholder with your deployed Google Apps Script Web App URL:
-const SCRIPT_URL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLfoHnGM6kqKqnTxFhtQs7ivbGQlb9hzl_eX9GBSkdoDt1MDYM6C2d8EPffGx_4S24/exec";
 
 // 2. COMPLETE BILINGUAL TRANSLATION DICTIONARY
 const translations = {
@@ -16,7 +16,7 @@ const translations = {
     badgeText: "ক্যারিয়ার গাইডেন্স প্রোগ্রাম",
     pageTitle: "ক্যারিয়ার গাইডেন্স ফর্ম",
     pageSubtitle: "আপনার সন্তানের উপযোগী দিকনির্দেশনা ও ফ্রি কাউন্সেলিং সেশনের জন্য নিচের তথ্যগুলো পূরণ করুন।",
-    
+
     labelName: "শিক্ষার্থীর নাম",
     namePlaceholder: "শিক্ষার্থীর পূর্ণ নাম লিখুন",
     nameErrorEmpty: "অনুগ্রহ করে শিক্ষার্থীর নাম লিখুন।",
@@ -106,7 +106,7 @@ const DOM = {
   pageSubtitle: document.getElementById('pageSubtitle'),
 
   form: document.getElementById('leadForm'),
-  
+
   groupName: document.getElementById('groupName'),
   labelName: document.getElementById('labelName'),
   inputName: document.getElementById('name'),
@@ -446,7 +446,7 @@ function init() {
 
   // Live input error clearing & formatting
   DOM.inputName.addEventListener('input', () => clearErrorOnInput(DOM.groupName));
-  
+
   DOM.inputMobile.addEventListener('input', (e) => {
     // Only allow numeric digits
     e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
