@@ -1,461 +1,879 @@
 /**
  * ==============================================================================
- * PEDAGO ACADEMY - CAREER GUIDANCE LEADS & VARK LEARNING STYLE EVALUATOR
+ * PEDAGO ACADEMY - CAREER GUIDANCE LEADS & RIASEC PERSONALITY ASSESSMENT
  * Frontend Controller (Bilingual Bangla/English & Light/Dark Theme)
  * ==============================================================================
  */
 
 // 1. DEPLOYED APPS SCRIPT WEB APP URL (Phase 1 Lead Capture)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLfoHnGM6kqKqnTxFhtQs7ivbGQlb9hzl_eX9GBSkdoDt1MDYM6C2d8EPffGx_4S24/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn_AdmqTW1Vk1DSMapI2VuG62QNRYI5cmO3WVZ595Kw2a90Y73zl2HKVb2ob_e4oIO/exec";
 
-// 2. COMPLETE QUESTION BANK (From Assets/Question for Website (1).pdf)
+// 2. COMPLETE RIASEC QUESTION BANK (10 Questions, 6 Options A-F)
+// Mapping: A = Realistic (R), B = Investigative (I), C = Artistic (A), D = Social (S), E = Enterprising (E), F = Conventional (C)
 const questionBank = [
   {
     id: 1,
     bn: {
-      question: "আপনার সন্তান যখন কোনো নতুন খেলনা (যেমন: লেগো বা রোবট) পায়, তখন সে প্রথমে সাধারণত কী করে?",
+      question: "আপনার সন্তান নতুন কোনো খেলনা, যন্ত্র বা জিনিস হাতে পেলে সাধারণত কী করে?",
       options: [
-        { type: "V", text: "খেলনার বাক্সের গায়ে থাকা ছবি বা ডায়াগ্রামগুলো মনোযোগ দিয়ে দেখে।" },
-        { type: "A", text: "আপনার কাছে জানতে চায় খেলনাটি কীভাবে চালাতে হবে বা মুখে বলা নিয়ম শোনে।" },
-        { type: "R", text: "খেলনার সাথে থাকা লিখিত নির্দেশিকা বইটি (Manual) নিজে নিজে পড়ার চেষ্টা করে।" },
-        { type: "K", text: "কোনো নিয়ম বা ছবি না দেখেই সরাসরি খেলনাটি নিয়ে হাত-পা দিয়ে পরীক্ষা শুরু করে দেয়।" }
+        { letter: "A", type: "R", text: "কীভাবে কাজ করে তা নিজে করে দেখে বা খুলে দেখতে চায়।" },
+        { letter: "B", type: "I", text: "কেন বা কীভাবে কাজ করে এ নিয়ে প্রশ্ন করতে থাকে।" },
+        { letter: "C", type: "A", text: "সেটি দিয়ে নিজের মতো করে নতুন কিছু বানাতে বা তৈরি করতে চায়।" },
+        { letter: "D", type: "S", text: "অন্যদের সঙ্গে নিয়ে খেলতে বা কাউকে দেখাতে বেশি আগ্রহী হয়।" },
+        { letter: "E", type: "E", text: "খেলাটার নিয়ম নিজে ঠিক করতে বা অন্যদের নেতৃত্ব দিতে চায়।" },
+        { letter: "F", type: "C", text: "কীভাবে ব্যবহার করতে হবে, সেই নির্দেশনা মেনে চলতে স্বাচ্ছন্দ্যবোধ করে।" }
       ]
     },
     en: {
-      question: "When your child gets a new toy (e.g. Lego or a robot), what do they usually do first?",
+      question: "When your child gets a new toy, gadget, or item, what do they usually do first?",
       options: [
-        { type: "V", text: "Carefully examines the pictures or diagrams on the toy box." },
-        { type: "A", text: "Asks you how to operate it or listens to verbal instructions." },
-        { type: "R", text: "Tries to read the written instruction manual by themselves." },
-        { type: "K", text: "Immediately starts experimenting hands-on without looking at manuals or pictures." }
+        { letter: "A", type: "R", text: "Tries it out hands-on or takes it apart to see how it works." },
+        { letter: "B", type: "I", text: "Keeps asking questions about why and how it works." },
+        { letter: "C", type: "A", text: "Tries to invent or build something new with it in their own creative way." },
+        { letter: "D", type: "S", text: "Eager to play with others or show it to friends and family." },
+        { letter: "E", type: "E", text: "Wants to set the rules of the game or lead others." },
+        { letter: "F", type: "C", text: "Prefers following the instruction manual and guidelines." }
       ]
     }
   },
   {
     id: 2,
     bn: {
-      question: "স্কুলে বা বাসায় কোনো নতুন গল্প শেখার সময় আপনার সন্তান কীভাবে সবচেয়ে বেশি আনন্দ পায়?",
+      question: "আপনার সন্তান কোনো কাজ করতে গিয়ে সমস্যায় পড়লে সাধারণত কী করে?",
       options: [
-        { type: "V", text: "গল্পের ওপর বানানো কোনো রঙিন কার্টুন, ছবি বা অ্যানিমেশন ভিডিও দেখে।" },
-        { type: "A", text: "আপনার বা শিক্ষকের মুখে নাটুকে ভঙ্গিতে গল্পটি শুনতে পারলে।" },
-        { type: "R", text: "গল্পের বইটি নিজে নিজে রিডিং পড়ে এবং ছবির চেয়ে লেখার দিকে বেশি মনোযোগ দেয়।" },
-        { type: "K", text: "গল্পের চরিত্র সেজে নিজে অভিনয় বা অ্যাক্টিং করতে পারলে।" }
+        { letter: "A", type: "R", text: "নিজে হাতে বিভিন্নভাবে চেষ্টা করে সমাধান বের করতে চায়।" },
+        { letter: "B", type: "I", text: "সমস্যাটা কেন হচ্ছে তা বোঝার চেষ্টা করে এবং কারণ খোঁজে।" },
+        { letter: "C", type: "A", text: "অন্য কোনো নতুন উপায়ে কাজটি করার Idea বের করে।" },
+        { letter: "D", type: "S", text: "কারও সঙ্গে আলোচনা করে বা সাহায্য নিয়ে সমাধান করতে চায়।" },
+        { letter: "E", type: "E", text: "অন্যদের নিয়ে সমাধান বের করার উদ্যোগ নেয়।" },
+        { letter: "F", type: "C", text: "নিয়ম বা নির্দেশনা দেখে ধাপে ধাপে আবার চেষ্টা করে।" }
       ]
     },
     en: {
-      question: "When learning a new story at home or school, how does your child enjoy it the most?",
+      question: "When your child encounters a problem or hurdle, what do they usually do?",
       options: [
-        { type: "V", text: "Watching a colorful cartoon, picture book, or animated video of the story." },
-        { type: "A", text: "Listening to you or a teacher tell the story in an expressive, dramatic voice." },
-        { type: "R", text: "Reading the storybook independently, focusing more on the text than illustrations." },
-        { type: "K", text: "Dressing up and acting out the characters and plot." }
+        { letter: "A", type: "R", text: "Tries multiple hands-on attempts to fix it practically." },
+        { letter: "B", type: "I", text: "Analyzes why the problem occurred and searches for root causes." },
+        { letter: "C", type: "A", text: "Comes up with an imaginative, out-of-the-box alternative idea." },
+        { letter: "D", type: "S", text: "Discusses it with someone or asks for collaborative help." },
+        { letter: "E", type: "E", text: "Takes the initiative to organize others to solve it together." },
+        { letter: "F", type: "C", text: "Consults instructions or guidelines to retry step-by-step." }
       ]
     }
   },
   {
     id: 3,
     bn: {
-      question: "আপনার সন্তান কোনো নতুন কঠিন শব্দ বা বানান সহজে কীভাবে মনে রাখে?",
+      question: "অবসর সময়ে আপনার সন্তান কোন ধরনের কাজ বেছে নিতে বেশি আগ্রহী?",
       options: [
-        { type: "V", text: "শব্দটির বা বস্তুটির একটি ছবি মনের মধ্যে গেঁথে নিয়ে।" },
-        { type: "A", text: "শব্দটির বানান বারবার মুখে জোরে জোরে উচ্চারণ বা ছন্দে ছন্দে আউড়ে।" },
-        { type: "R", text: "খাতার পাতায় বা ডায়েরিতে শব্দটির বানান বারবার লিখে বা নোট করে।" },
-        { type: "K", text: "মাটিতে/বাতাসে আঙুল দিয়ে লিখে অথবা অক্ষরের ফ্ল্যাশকার্ড হাত দিয়ে সাজিয়ে।" }
+        { letter: "A", type: "R", text: "LEGO, Blocks, Model বা কোনো কিছু বানানো।" },
+        { letter: "B", type: "I", text: "Science Experiment, Quiz, Puzzle বা Brain Game।" },
+        { letter: "C", type: "A", text: "Drawing, Writing, Music, Storytelling বা Creative Activity।" },
+        { letter: "D", type: "S", text: "বন্ধুদের সঙ্গে খেলাধুলা করা, কাউকে সাহায্য করা বা কিছু শেখানো।" },
+        { letter: "E", type: "E", text: "কোনো খেলা বা Activity-এর নেতৃত্ব দেওয়া বা আয়োজন করা।" },
+        { letter: "F", type: "C", text: "কিছু Organize করা, তালিকা তৈরি করা বা নিয়ম মেনে Activity করা।" }
       ]
     },
     en: {
-      question: "How does your child easily remember a new difficult word or spelling?",
+      question: "What kind of activity does your child most prefer during free time?",
       options: [
-        { type: "V", text: "By visualizing an image of the word or object in their mind." },
-        { type: "A", text: "By repeating the spelling out loud or chanting it in rhythm." },
-        { type: "R", text: "By writing it down repeatedly in a notebook or diary." },
-        { type: "K", text: "By tracing it in the air/ground with fingers or manipulating physical flashcards." }
+        { letter: "A", type: "R", text: "Building with LEGO, blocks, models, or making crafts." },
+        { letter: "B", type: "I", text: "Science experiments, quizzes, puzzles, or brain teasers." },
+        { letter: "C", type: "A", text: "Drawing, creative writing, music, storytelling, or art." },
+        { letter: "D", type: "S", text: "Playing with friends, helping others, or teaching something." },
+        { letter: "E", type: "E", text: "Organizing games, leading activities, or planning events." },
+        { letter: "F", type: "C", text: "Organizing personal belongings, making lists, or routine tasks." }
       ]
     }
   },
   {
     id: 4,
     bn: {
-      question: "আপনার সন্তানের সবচেয়ে প্রিয় শখ বা অবসর সময়ের কাজ কোনটি?",
+      question: "আপনার সন্তান কোনো নতুন বিষয় সম্পর্কে জানতে চাইলে সাধারণত কীভাবে এগোয়?",
       options: [
-        { type: "V", text: "ছবি আঁকা, রং করা, কমিকস বা কার্টুন দেখা।" },
-        { type: "A", text: "গান শোনা, ছড়া আবৃত্তি করা বা গল্প শোনা।" },
-        { type: "R", text: "ডায়েরি লেখা, গল্পের বই পড়া বা শব্দের ধাঁধাঁ (Word Search) সমাধান করা।" },
-        { type: "K", text: "সাইকেল চালানো, নাচ করা, কাদামাটি/ক্লে দিয়ে জিনিস বানানো বা খেলাধুলা করা।" }
+        { letter: "A", type: "R", text: "নিজে করে বা ব্যবহার করে দেখে বুঝতে চায়।" },
+        { letter: "B", type: "I", text: "“কেন?”, “কীভাবে?”, “এর কারণ কী?” এ ধরনের প্রশ্ন করতে থাকে।" },
+        { letter: "C", type: "A", text: "নিজের কল্পনা ও চিন্তা দিয়ে বিষয়টিকে নতুনভাবে ভাবতে চায়।" },
+        { letter: "D", type: "S", text: "কাউকে জিজ্ঞেস করে এবং আলোচনা করে জানতে চায়।" },
+        { letter: "E", type: "E", text: "নিজের মতামত প্রকাশ করে এবং অন্যদের সঙ্গে আলোচনা করতে চায়।" },
+        { letter: "F", type: "C", text: "বই, নির্দেশনা বা নির্ভরযোগ্য তথ্য দেখে ধাপে ধাপে জানতে চায়।" }
       ]
     },
     en: {
-      question: "What is your child's favorite hobby or leisure activity?",
+      question: "How does your child typically approach learning about a new topic?",
       options: [
-        { type: "V", text: "Drawing, coloring, reading comics, or watching cartoons." },
-        { type: "A", text: "Listening to music, reciting rhymes, or hearing stories." },
-        { type: "R", text: "Writing in a diary, reading books, or solving word search puzzles." },
-        { type: "K", text: "Cycling, dancing, molding clay/playdough, or outdoor sports." }
+        { letter: "A", type: "R", text: "Prefers learning by doing, testing, and touching directly." },
+        { letter: "B", type: "I", text: "Constantly asks 'Why?', 'How?', and 'What is the reason?'." },
+        { letter: "C", type: "A", text: "Envisions it through imagination and creative perspectives." },
+        { letter: "D", type: "S", text: "Asks people and enjoys conversational discussions." },
+        { letter: "E", type: "E", text: "Shares opinions boldly and engages others in discussion." },
+        { letter: "F", type: "C", text: "Follows books, structured guides, and reliable facts step-by-step." }
       ]
     }
   },
   {
     id: 5,
     bn: {
-      question: "পড়ার টেবিলে বা ক্লাসরুমে আপনার সন্তান সাধারণত কীভাবে মনোযোগ ধরে রাখে?",
+      question: "কোনো Group Activity-তে আপনার সন্তান সাধারণত কোন ভূমিকা নিতে বেশি আগ্রহী?",
       options: [
-        { type: "V", text: "শিক্ষকের ব্ল্যাকবোর্ড/হোয়াইটবোর্ডের লেখা বা চার্টের দিকে তাকিয়ে থেকে।" },
-        { type: "A", text: "শিক্ষকের কথার দিকে কান খাড়া করে রাখে এবং খুব শান্ত হয়ে শোনে।" },
-        { type: "R", text: "বইয়ের লাইনের নিচে আঙুল বা স্কেল রেখে রিডিং পড়তে ভালোবাসে।" },
-        { type: "K", text: "পড়ার সময় অনবরত পেনসিল ঘুরায়, পা দোলায় বা হাত-পা নাড়াচাড়া করে।" }
+        { letter: "A", type: "R", text: "কীভাবে কাজটি বাস্তবে করা যায়, সেটা নিয়ে ব্যস্ত থাকে।" },
+        { letter: "B", type: "I", text: "সমস্যাটা কোথায় এবং কীভাবে সমাধান করা যায় তা খুঁজে দেখে।" },
+        { letter: "C", type: "A", text: "নতুন Idea দেয় বা কাজটিকে অন্যভাবে করার প্রস্তাব দেয়।" },
+        { letter: "D", type: "S", text: "সবাই যেন ভালোভাবে কাজ করতে পারে, সেটা দেখার চেষ্টা করে।" },
+        { letter: "E", type: "E", text: "নেতৃত্ব নেয়, কাজ ভাগ করে দেয় বা সিদ্ধান্ত নিতে চায়।" },
+        { letter: "F", type: "C", text: "কে কী করবে, কখন করবে এসব গুছিয়ে রাখতে চায়।" }
       ]
     },
     en: {
-      question: "How does your child typically stay focused at the study desk or in the classroom?",
+      question: "In a group activity, which role does your child naturally gravitate toward?",
       options: [
-        { type: "V", text: "Looking intently at the teacher's board, charts, or visuals." },
-        { type: "A", text: "Listening attentively and calmly to every word the teacher says." },
-        { type: "R", text: "Guiding their reading along text lines using a finger or ruler." },
-        { type: "K", text: "Spinning pencils, swinging legs, or moving hands while studying." }
+        { letter: "A", type: "R", text: "Focuses on the practical execution and physical work." },
+        { letter: "B", type: "I", text: "Analyzes obstacles and investigates optimal solutions." },
+        { letter: "C", type: "A", text: "Pitches novel ideas and suggests imaginative twists." },
+        { letter: "D", type: "S", text: "Ensures everyone gets along and cooperates harmoniously." },
+        { letter: "E", type: "E", text: "Takes charge, delegates tasks, and makes decisions." },
+        { letter: "F", type: "C", text: "Keeps schedules, manages checklists, and organizes roles." }
       ]
     }
   },
   {
     id: 6,
     bn: {
-      question: "আপনার সন্তানকে কোনো নতুন জায়গায় (যেমন: চিড়িয়াখানা বা মিউজিয়াম) নিয়ে গেলে সে কী করে?",
+      question: "আপনার সন্তান কোনো কাজ নিজে করতে গিয়ে ভুল করলে সাধারণত কী করে?",
       options: [
-        { type: "V", text: "চারপাশের সুন্দর দৃশ্য, পশুপাখি বা ওখানকার ম্যাপ আগ্রহ নিয়ে দেখে।" },
-        { type: "A", text: "গাইড বা আপনাকে বিভিন্ন প্রশ্ন করে এবং আপনার ব্যাখ্যা মন দিয়ে শোনে।" },
-        { type: "R", text: "খাঁচার সামনে বা দেওয়ালে নোটিশবোর্ডে লেখা তথ্যগুলো দাঁড়িয়ে দাঁড়িয়ে পড়ে।" },
-        { type: "K", text: "পশুপাখিকে খাবার খাওয়াতে চায়, গাছপালা বা রাইডগুলো হাত দিয়ে ছুঁয়ে দেখতে চায়।" }
+        { letter: "A", type: "R", text: "আবার হাতে-কলমে চেষ্টা করে দেখে কোথায় সমস্যা হয়েছে।" },
+        { letter: "B", type: "I", text: "ভুলটা কেন হয়েছে তা বোঝার চেষ্টা করে।" },
+        { letter: "C", type: "A", text: "অন্যভাবে করার নতুন Idea বের করে।" },
+        { letter: "D", type: "S", text: "কারও সঙ্গে কথা বলে বা সাহায্য নিয়ে আবার চেষ্টা করে।" },
+        { letter: "E", type: "E", text: "নতুন পরিকল্পনা করে এবং অন্যদেরও উৎসাহ দেয়।" },
+        { letter: "F", type: "C", text: "কী ভুল হয়েছে তা খুঁজে নিয়ম অনুযায়ী ঠিক করার চেষ্টা করে।" }
       ]
     },
     en: {
-      question: "When taking your child to a new place (e.g. Zoo or Museum), what do they do?",
+      question: "When making a mistake while working on something, what do they usually do?",
       options: [
-        { type: "V", text: "Fascinated by scenic views, animals, or following the map." },
-        { type: "A", text: "Asks questions to the guide or you and listens carefully to explanations." },
-        { type: "R", text: "Stands and reads information boards, plaques, and placards." },
-        { type: "K", text: "Wants to feed animals, touch plants, or interact with hands-on exhibits." }
+        { letter: "A", type: "R", text: "Retries hands-on to see where the physical error occurred." },
+        { letter: "B", type: "I", text: "Seeks to comprehend the logical reason behind the mistake." },
+        { letter: "C", type: "A", text: "Pivots to a completely fresh, creative direction." },
+        { letter: "D", type: "S", text: "Talks to someone or seeks guidance to retry comfortably." },
+        { letter: "E", type: "E", text: "Formulates a new plan and motivates peers to keep going." },
+        { letter: "F", type: "C", text: "Pinpoints the error against standard rules to fix it methodically." }
       ]
     }
   },
   {
     id: 7,
     bn: {
-      question: "পরীক্ষার পড়া রিভিশন দেওয়ার সময় আপনার সন্তানের কোন পদ্ধতিটি পছন্দ?",
+      question: "আপনার সন্তানকে নিজের মতো করে কোনো Project করার সুযোগ দিলে কোন কাজটি তার বেশি ভালো লাগতে পারে?",
       options: [
-        { type: "V", text: "রঙিন মার্কার বা হাইলাইটার দিয়ে দাগানো ছবি, চার্ট ও ছকগুলো দেখে।" },
-        { type: "A", text: "আপনার বা বন্ধুর সাথে প্রশ্ন-উত্তর খেলা খেলে (মুখে মুখে পড়া ধরা)।" },
-        { type: "R", text: "নিজের তৈরি করা সংক্ষিপ্ত নোট বা বইয়ের প্রশ্নোত্তরগুলো বারবার রিডিং পড়ে।" },
-        { type: "K", text: "পড়ার বিষয়টিকে কোনো বাস্তব উদাহরণ বা প্র্যাক্টিক্যাল কাজের সাথে মিলিয়ে মনে করার চেষ্টা করে।" }
+        { letter: "A", type: "R", text: "কিছু তৈরি করা, জোড়া লাগানো বা বাস্তবে কাজটি সম্পন্ন করা।" },
+        { letter: "B", type: "I", text: "তথ্য খোঁজা, Experiment করা বা কোনো সমস্যার সমাধান করা।" },
+        { letter: "C", type: "A", text: "Design করা বা নিজের Creative Idea প্রকাশ করা।" },
+        { letter: "D", type: "S", text: "অন্যদের সঙ্গে কাজ করা, শেখানো বা সাহায্য করা।" },
+        { letter: "E", type: "E", text: "পরিকল্পনা করা, নেতৃত্ব দেওয়া এবং Project পরিচালনা করা।" },
+        { letter: "F", type: "C", text: "তথ্য সাজানো, পরিকল্পনা করা এবং কাজটি সঠিকভাবে সম্পন্ন করা।" }
       ]
     },
     en: {
-      question: "When revising for an exam, which method does your child prefer?",
+      question: "If given the freedom to do an independent project, what would they enjoy most?",
       options: [
-        { type: "V", text: "Reviewing highlighted text, visual diagrams, flowcharts, and tables." },
-        { type: "A", text: "Playing Q&A quiz games verbally with you or friends." },
-        { type: "R", text: "Rereading self-made concise notes, summaries, and book answers." },
-        { type: "K", text: "Connecting concepts to real-life practical examples or hands-on practice." }
+        { letter: "A", type: "R", text: "Building, assembling, or crafting a tangible physical product." },
+        { letter: "B", type: "I", text: "Researching data, conducting experiments, or solving a puzzle." },
+        { letter: "C", type: "A", text: "Designing, illustrating, or expressing creative artwork." },
+        { letter: "D", type: "S", text: "Collaborating with peers, mentoring, or helping others." },
+        { letter: "E", type: "E", text: "Pitching, strategizing, and leading the project execution." },
+        { letter: "F", type: "C", text: "Structuring data, maintaining timeline, and executing accurately." }
       ]
     }
   },
   {
     id: 8,
     bn: {
-      question: "আপনার সন্তান যখন কোনো জটিল ধাঁধাঁ বা পাজল (Puzzle) সমাধান করে, তখন তার কৌশল কী হয়?",
+      question: "আপনার সন্তানকে নতুন কোনো Skill শেখাতে হলে কোন পদ্ধতিতে সে বেশি স্বাচ্ছন্দ্যবোধ করে?",
       options: [
-        { type: "V", text: "আগে টুকরোগুলোর রং এবং আকৃতি চোখ দিয়ে ভালো করে দেখে নেয়।" },
-        { type: "A", text: "জোরে জোরে নিজে নিজেই কথা বলে (\"এইটা এখানে যাবে, ওইটা ওখানে\") সমাধান করে।" },
-        { type: "R", text: "যদি কোনো নিয়ম বা টিপস লেখা থাকে, তবে আগে তা পড়ে নেয়।" },
-        { type: "K", text: "কোনো কিছু না ভেবেই সরাসরি টুকরোগুলো একটার সাথে আরেকটা জোড়া দিয়ে চেষ্টা করতে থাকে।" }
+        { letter: "A", type: "R", text: "দেখিয়ে দিলে নিজে করে করে শিখতে।" },
+        { letter: "B", type: "I", text: "বিষয়টির কারণ ও Logic বুঝে শিখতে।" },
+        { letter: "C", type: "A", text: "নিজের মতো করে Experiment ও Creativity ব্যবহার করতে।" },
+        { letter: "D", type: "S", text: "কারও কাছ থেকে শিখতে এবং অন্যের সঙ্গে Practice করতে।" },
+        { letter: "E", type: "E", text: "Challenge বা Competition-এর মাধ্যমে শিখতে।" },
+        { letter: "F", type: "C", text: "Step-by-Step Instruction অনুসরণ করে শিখতে।" }
       ]
     },
     en: {
-      question: "When solving a complex puzzle, what is your child's strategy?",
+      question: "When acquiring a new skill, which learning method feels most natural to them?",
       options: [
-        { type: "V", text: "Carefully inspects colors and shapes of puzzle pieces visually first." },
-        { type: "A", text: "Talks aloud to themselves (\"this goes here, that goes there\") while solving." },
-        { type: "R", text: "Reads the rules, guidelines, or puzzle tips before starting." },
-        { type: "K", text: "Immediately jumps into physically fitting pieces together through trial and error." }
+        { letter: "A", type: "R", text: "Demonstration followed by self-paced hands-on practice." },
+        { letter: "B", type: "I", text: "Understanding the underlying logic, science, and reasoning first." },
+        { letter: "C", type: "A", text: "Experimenting freely and applying personal creativity." },
+        { letter: "D", type: "S", text: "Interactive learning with mentors and peer practice." },
+        { letter: "E", type: "E", text: "Excelling through gamified challenges and friendly competition." },
+        { letter: "F", type: "C", text: "Following structured, step-by-step tutorials sequentially." }
       ]
     }
   },
   {
     id: 9,
     bn: {
-      question: "আপনার সন্তান অন্য কোনো মানুষের বর্ণনা দেওয়ার সময় কোন বিষয়ের ওপর বেশি জোর দেয়?",
+      question: "আপনার সন্তান নতুন কোনো জায়গা বা পরিবেশে গেলে সাধারণত কী করে?",
       options: [
-        { type: "V", text: "সে কেমন পোশাক পরেছিল বা তার চেহারা ও লুক কেমন ছিল।" },
-        { type: "A", text: "সে কীভাবে কথা বলছিল বা তার গলার আওয়াজ কেমন ছিল।" },
-        { type: "R", text: "তার নাম কী, সে কী কাজ করে বা তার সম্পর্কে কী কী লিখিত তথ্য সে জানে।" },
-        { type: "K", text: "সে কতটুকু চটপটে ছিল বা তার সাথে হ্যান্ডশেক/কোলাকুলি করার অভিজ্ঞতা কেমন ছিল।" }
+        { letter: "A", type: "R", text: "আশেপাশের জিনিসগুলো দেখে, স্পর্শ করে বা ব্যবহার করে দেখতে চায়।" },
+        { letter: "B", type: "I", text: "জায়গাটি সম্পর্কে প্রশ্ন করে এবং নতুন কিছু জানতে চায়।" },
+        { letter: "C", type: "A", text: "নতুন পরিবেশ দেখে নিজের মতো গল্প বা কল্পনা তৈরি করে।" },
+        { letter: "D", type: "S", text: "দ্রুত মানুষের সঙ্গে পরিচিত হতে এবং কথা বলতে চায়।" },
+        { letter: "E", type: "E", text: "অন্যদের সঙ্গে কী করা যায় বা কীভাবে সময় কাটানো যায় তার উদ্যোগ নেয়।" },
+        { letter: "F", type: "C", text: "জায়গাটির নিয়ম-কানুন বা কীভাবে কী করতে হবে তা আগে বুঝে নিতে চায়।" }
       ]
     },
     en: {
-      question: "When your child describes another person, what do they emphasize most?",
+      question: "When visiting a new place or environment, what does your child usually do?",
       options: [
-        { type: "V", text: "What clothes they wore, their facial appearance, and overall visual look." },
-        { type: "A", text: "How they spoke, their tone of voice, accent, or laughter." },
-        { type: "R", text: "Their name, designation, factual details, or written background info." },
-        { type: "K", text: "How energetic they were, or the physical handshake/hug experience." }
+        { letter: "A", type: "R", text: "Explores tangible objects, touching or interacting with them." },
+        { letter: "B", type: "I", text: "Inquires about the history, function, or nature of the place." },
+        { letter: "C", type: "A", text: "Draws imaginative stories inspired by the ambience." },
+        { letter: "D", type: "S", text: "Quickly strikes up conversations and befriends people." },
+        { letter: "E", type: "E", text: "Takes charge of suggesting activities to do together." },
+        { letter: "F", type: "C", text: "Checks the guidelines, map, or schedule to navigate properly." }
       ]
     }
   },
   {
     id: 10,
     bn: {
-      question: "আপনার সন্তান যখন কোনো কারণে খুব উত্তেজিত বা আনন্দিত হয়, তখন সে তা কীভাবে প্রকাশ করে?",
+      question: "আপনার সন্তানকে একটি দায়িত্ব দিলে তার মধ্যে কোন আচরণটি বেশি দেখা যায়?",
       options: [
-        { type: "V", text: "তার চোখ-মুখ উজ্জ্বল হয়ে ওঠে এবং সে চারদিকের সুন্দর জিনিসগুলোর দিকে ইশারা করে।" },
-        { type: "A", text: "সে অনেক বেশি কথা বলতে শুরু করে এবং উচ্চস্বরে চিৎকার বা হাসাহাসি করে।" },
-        { type: "R", text: "সে শান্ত হয়ে তার আনন্দের কথা ডায়েরিতে লিখতে বা কাউকে মেসেজ লিখে জানাতে পছন্দ করে।" },
-        { type: "K", text: "সে খুশিতে লাফাতে শুরু করে, তালি দেয় বা আপনাকে জড়িয়ে ধরে।" }
+        { letter: "A", type: "R", text: "দায়িত্বটি কীভাবে বাস্তবে সম্পন্ন করা যায়, সেটা নিয়ে কাজ শুরু করে।" },
+        { letter: "B", type: "I", text: "কাজটি ভালোভাবে করার জন্য তথ্য ও প্রয়োজনীয় বিষয়গুলো খুঁজে দেখে।" },
+        { letter: "C", type: "A", text: "দায়িত্বটি নিজের মতো করে করার নতুন Idea বের করে।" },
+        { letter: "D", type: "S", text: "অন্যদের সঙ্গে আলোচনা করে এবং প্রয়োজনে সাহায্য নেয়।" },
+        { letter: "E", type: "E", text: "নিজেই সিদ্ধান্ত নেয় এবং প্রয়োজনে অন্যদেরও কাজে যুক্ত করে।" },
+        { letter: "F", type: "C", text: "আগে পরিকল্পনা করে, তারপর নিয়ম মেনে কাজটি শেষ করে।" }
       ]
     },
     en: {
-      question: "When your child is very excited or happy, how do they express it?",
+      question: "When assigned a task or responsibility, how do they typically proceed?",
       options: [
-        { type: "V", text: "Their eyes and face light up, pointing out delightful things around." },
-        { type: "A", text: "Starts talking a lot and expresses delight with loud cheering or giggles." },
-        { type: "R", text: "Quietly writes about their happiness in a diary or sends a text message." },
-        { type: "K", text: "Jumps up and down with joy, claps hands, or hugs you tightly." }
+        { letter: "A", type: "R", text: "Gets right into physical action to execute it practically." },
+        { letter: "B", type: "I", text: "Researches facts and gathers information to do it thoroughly." },
+        { letter: "C", type: "A", text: "Finds unique and inventive ways to deliver creative results." },
+        { letter: "D", type: "S", text: "Consults teammates and cooperates closely throughout." },
+        { letter: "E", type: "E", text: "Makes bold decisions and coordinates peers to get it done." },
+        { letter: "F", type: "C", text: "Plans first, organizing every detail systematically to completion." }
       ]
     }
   }
 ];
 
-// 3. GUIDELINES & SUGGESTIONS REPOSITORY (Part 2 of PDF)
-const varkGuidelines = {
-  V: {
-    icon: "👁️",
+// 3. COMPLETE RIASEC GUIDELINES REPOSITORY (All 6 Personalities)
+const riasecGuidelines = {
+  R: {
+    code: "R",
+    icon: "🛠️",
     bn: {
-      title: "Visual Learner (দৃশ্যমান শিক্ষার্থী)",
-      summary: "আপনার সন্তান চোখে যা দেখে, তা খুব দ্রুত মাথায় গেঁথে ফেলে এবং দীর্ঘদিন মনে রাখতে পারে।",
-      suggestions: [
-        { icon: "📚", title: "পড়ার কৌশল", text: "পড়ার সময় গুরুত্বপূর্ণ লাইনগুলো রঙিন হাইলাইটার বা মার্কার দিয়ে দাগানোর অভ্যাস করান।" },
-        { icon: "🛠️", title: "সহায়ক টুলস", text: "কঠিন তথ্য বা শব্দ মনে রাখার জন্য ছবিযুক্ত ফ্ল্যাশকার্ড, ফ্লো-চার্ট, ম্যাপ বা ডায়াগ্রাম ব্যবহার করুন।" },
-        { icon: "💻", title: "ডিজিটাল মাধ্যম", text: "ইউটিউব বা শিক্ষামূলক অ্যাপের অ্যানিমেশন ও ইনফোগ্রাফিক ভিডিওর মাধ্যমে জটিল বিষয়গুলো বুঝিয়ে দিন।" },
-        { icon: "🏡", title: "পড়ার পরিবেশ", text: "পড়ার টেবিল বা ঘর যেন একদম গোছানো থাকে। চারপাশ অগোছালো বা হিজিবিজি হলে এদের মনোযোগ নষ্ট হয়।" }
+      name: "Realistic",
+      title: "01 — REALISTIC",
+      subtitle: "হাতে-কলমে কাজ ও Practical Thinking",
+      description: "Realistic Personality-এর শিশুরা সাধারণত কিছু করা, বানানো, ব্যবহার করা বা বাস্তবে প্রয়োগ করার মাধ্যমে শেখা ও কাজ করতে বেশি স্বাচ্ছন্দ্যবোধ করতে পারে।",
+      observedTraits: [
+        "কিছু খুলে দেখা বা কীভাবে কাজ করে তা বোঝার চেষ্টা",
+        "LEGO, Blocks বা Building Activity-এর প্রতি গভীর আগ্রহ",
+        "হাতে-কলমে কাজ ও প্র্যাক্টিক্যাল কর্মকাণ্ডে উৎসাহ",
+        "Practical problem solving-এ আনন্দ পাওয়া",
+        "“নিজে করে দেখলে” দ্রুত ও নিখুঁত বুঝতে পারা"
+      ],
+      doList: [
+        "LEGO ও Building Activity-এর সুযোগ দিন",
+        "বাস্তব ছোট ছোট Project তৈরি করতে দিন",
+        "Science & Making Activity-তে যুক্ত রাখুন",
+        "হাতে-কলমে সরাসরি শেখার সুযোগ তৈরি করুন",
+        "ভুল করে নিজে নিজে শেখার স্বাধীনতা দিন"
+      ],
+      avoidList: [
+        "সবসময় “বসে পড়ো” ধরনের একঘেয়ে learning চাপিয়ে দেওয়া",
+        "কোনো কিছু খুলে দেখলে বা মেরামত করতে গেলে সঙ্গে সঙ্গে বকা দেওয়া",
+        "সন্তানের Practical interest-কে শুধুই “দুষ্টুমি” হিসেবে গণ্য করা"
+      ],
+      careers: [
+        "Engineering", "Architecture", "Aviation", "Technical Fields", "Construction", "Agriculture", "Practical/Hands-on Professions"
       ]
     },
     en: {
-      title: "Visual Learner",
-      summary: "Your child absorbs and retains information best through visual stimuli, diagrams, and visual organization.",
-      suggestions: [
-        { icon: "📚", title: "Study Techniques", text: "Encourage highlighting important lines with colored highlighters or colored pens." },
-        { icon: "🛠️", title: "Supporting Tools", text: "Use illustrated flashcards, mind maps, flowcharts, and diagrams for tough concepts." },
-        { icon: "💻", title: "Digital Media", text: "Explain complex topics via animated explainer videos and infographic visual media." },
-        { icon: "🏡", title: "Study Environment", text: "Maintain a clutter-free, tidy desk. Visual clutter easily distracts visual learners." }
+      name: "Realistic",
+      title: "01 — REALISTIC",
+      subtitle: "Hands-on Work & Practical Thinking",
+      description: "Children with a Realistic Personality thrive through tangible action, building, manipulating tools, and applying knowledge practically.",
+      observedTraits: [
+        "Tinkering with objects to explore how they operate",
+        "High affinity for LEGO, building blocks, and construction toys",
+        "Eagerness for hands-on, active real-world tasks",
+        "Natural inclination toward practical problem-solving",
+        "Absorbs concepts best through experiential practice"
+      ],
+      doList: [
+        "Provide LEGO and hands-on building sets",
+        "Assign mini DIY projects around the house",
+        "Engage in interactive science and maker activities",
+        "Create tactile, experiential learning opportunities",
+        "Allow room for trial, error, and discovery"
+      ],
+      avoidList: [
+        "Forcing purely sedentary, static rote study methods",
+        "Scolding curiosity when they take things apart to explore",
+        "Dismissing practical exploration as mere mischief"
+      ],
+      careers: [
+        "Engineering", "Architecture", "Aviation", "Technical Fields", "Construction", "Agriculture", "Practical/Hands-on Professions"
+      ]
+    }
+  },
+  I: {
+    code: "I",
+    icon: "🔬",
+    bn: {
+      name: "Investigative",
+      title: "02 — INVESTIGATIVE",
+      subtitle: "কৌতূহলী, বিশ্লেষণধর্মী ও Problem-Solving Mind",
+      description: "Investigative Personality-এর শিশুরা সাধারণত কোনো বিষয় শুধু জানার চেয়ে কেন এবং কীভাবে কাজটি হচ্ছে তা গভীরভাবে বুঝতে আগ্রহী হয়।",
+      observedTraits: [
+        "বারবার “কেন?” ও “কীভাবে?” প্রশ্ন করা",
+        "যেকোনো সমস্যার মূল কারণ ও কার্যকারণ খোঁজা",
+        "Puzzle, ধাঁধাঁ বা Brain Game খুব পছন্দ করা",
+        "Experiment ও বৈজ্ঞানিক নিরীক্ষা করতে আগ্রহী হওয়া",
+        "সন্তোষজনক উত্তর না পাওয়া পর্যন্ত কৌতূহল ধরে রাখা"
+      ],
+      doList: [
+        "প্রশ্ন করার কৌতূহলকে মন খুলে উৎসাহ দিন",
+        "Science Experiment ও অনুসন্ধানী কাজ করতে দিন",
+        "Puzzle ও Problem-solving Activity উপহার দিন",
+        "“চলো, উত্তরটা একসাথে খুঁজে দেখি”—এই দৃষ্টিভঙ্গি রাখুন",
+        "বই, এনসাইক্লোপিডিয়া ও নির্ভরযোগ্য তথ্য খোঁজার সুযোগ দিন"
+      ],
+      avoidList: [
+        "“এত প্রশ্ন করো কেন?” বলে থামিয়ে দেওয়া",
+        "সব কৌতূহলী প্রশ্নের উত্তর না দিয়ে এড়িয়ে যাওয়া",
+        "শুধু মুখস্থনির্ভর পড়াশোনার সীমানায় আটকে রাখা"
+      ],
+      careers: [
+        "Science", "Medicine", "Engineering", "Research", "Programming", "Data Science", "Economics", "Analytical Fields"
+      ]
+    },
+    en: {
+      name: "Investigative",
+      title: "02 — INVESTIGATIVE",
+      subtitle: "Inquisitive, Analytical & Problem-Solving Mind",
+      description: "Children with an Investigative Personality are driven to understand the fundamental mechanics, logic, and reasons behind everything.",
+      observedTraits: [
+        "Inquisitively asking 'Why?' and 'How?' repeatedly",
+        "Investigating the root cause behind problems",
+        "Loves brain teasers, riddles, logic games, and puzzles",
+        "Eagerness to test theories through experiments",
+        "Relentlessly researches until satisfied with the answer"
+      ],
+      doList: [
+        "Enthusiastically encourage their inquisitive questioning",
+        "Provide home science experiments and discovery kits",
+        "Introduce analytical puzzles and logic challenges",
+        "Use collaborative prompts like 'Let's discover the answer together'",
+        "Offer access to informative books, documentaries, and research tools"
+      ],
+      avoidList: [
+        "Dismissing their queries with 'Why do you ask so many questions?'",
+        "Shutting down curiosity without guiding them to answers",
+        "Restricting their education to rote memorization"
+      ],
+      careers: [
+        "Science", "Medicine", "Engineering", "Research", "Programming", "Data Science", "Economics", "Analytical Fields"
       ]
     }
   },
   A: {
-    icon: "👂",
+    code: "A",
+    icon: "🎨",
     bn: {
-      title: "Auditory Learner (শ্রুতিগত শিক্ষার্থী)",
-      summary: "আপনার সন্তান কান দিয়ে শুনে এবং মুখে নিজের আওয়াজ শুনে সবচেয়ে ভালো ও দ্রুত শেখে।",
-      suggestions: [
-        { icon: "📚", title: "পড়ার কৌশল", text: "তাকে মুখ বন্ধ করে পড়ার চেয়ে শব্দ করে বা বিড়বিড় করে পড়ার পূর্ণ স্বাধীনতা দিন।" },
-        { icon: "🛠️", title: "সহায়ক টুলস", text: "পড়া শেষে শিশুকে মুখস্থ লিখতে না দিয়ে মুখে মুখে পড়া ধরুন। অথবা তাকেই 'শিক্ষক' সাজিয়ে আপনাকে পড়াটি বুঝিয়ে দিতে বলুন।" },
-        { icon: "💻", title: "ডিজিটাল মাধ্যম", text: "ছড়া, গল্প বা সাধারণ জ্ঞানের বিষয়গুলো অডিও বুক বা শিক্ষামূলক পডকাস্ট শুনিয়ে শেখাতে পারেন।" },
-        { icon: "🏡", title: "পড়ার পরিবেশ", text: "পড়ার সময় ঘরের চারপাশ যেন একদম নিস্তব্ধ থাকে। সামান্য আওয়াজ বা টেলিভিশনের শব্দে এদের মনোযোগ দ্রুত ভেঙে যায়।" }
+      name: "Artistic",
+      title: "03 — ARTISTIC",
+      subtitle: "সৃজনশীলতা, Imagination ও Self-Expression",
+      description: "Artistic Personality-এর শিশুরা সাধারণত নতুন কিছু তৈরি করা এবং নিজের চিন্তা, কল্পনা ও অনুভূতি প্রকাশ করার মাধ্যমে মানসিক আনন্দ পায়।",
+      observedTraits: [
+        "নতুন জিনিস আঁকা, ক্রাফট বানানো বা ডিজাইন করা",
+        "উচ্চ কল্পনাপ্রবণতা ও নিজের মতো গল্প তৈরি করা",
+        "রং, সুর, ছন্দ ও সৌন্দর্যের প্রতি গভীর সংবেদনশীলতা",
+        "স্বকীয়তা ও ব্যতিক্রমী চিন্তা প্রকাশে স্বাচ্ছন্দ্য",
+        "প্রচলিত ছকের বাইরে গিয়ে কিছু করার প্রবল চেষ্টা"
+      ],
+      doList: [
+        "Drawing, Writing, Music, Craft ও শিল্পের সুযোগ দিন",
+        "নিজের পছন্দমতো Creative Project করতে দিন",
+        "সন্তানকে তার নিজস্ব Idea স্বাধীনভাবে প্রকাশে উৎসাহ দিন",
+        "“একমাত্র সঠিক উত্তর” ছাড়াও ভিন্ন ভিন্ন দৃষ্টিকোণ থেকে ভাবার সুযোগ দিন"
+      ],
+      avoidList: [
+        "সবসময় অন্যের কাজের সাথে সন্তানের Creativity তুলনা করা",
+        "সৃজনশীল বা শিল্পকর্মকে “অযথা সময় নষ্ট” হিসেবে আখ্যা দেওয়া",
+        "একটিমাত্র বাঁধাধরা নির্দিষ্ট পদ্ধতিতে কাজ করতে বাধ্য করা"
+      ],
+      careers: [
+        "Design", "Architecture", "Writing", "Media", "Animation", "Fashion", "Music", "Creative Industries"
       ]
     },
     en: {
-      title: "Auditory Learner",
-      summary: "Your child learns fastest by listening, speaking, discussing, and hearing concepts spoken out loud.",
-      suggestions: [
-        { icon: "📚", title: "Study Techniques", text: "Allow them to read aloud or mutter while reading rather than forcing silent reading." },
-        { icon: "🛠️", title: "Supporting Tools", text: "Conduct verbal Q&A sessions, or let the child act as the teacher and explain the lesson to you." },
-        { icon: "💻", title: "Digital Media", text: "Utilize audiobooks, podcasts, educational recordings, and rhymes." },
-        { icon: "🏡", title: "Study Environment", text: "Ensure a quiet room during study. Background chatter or TV noise breaks their focus quickly." }
+      name: "Artistic",
+      title: "03 — ARTISTIC",
+      subtitle: "Creativity, Imagination & Self-Expression",
+      description: "Children with an Artistic Personality discover fulfillment through originality, creative storytelling, visual design, and open self-expression.",
+      observedTraits: [
+        "Passionate about drawing, painting, crafting, or designing",
+        "Rich imagination and spontaneous narrative creation",
+        "Keen sensitivity to color, melody, aesthetics, and rhythm",
+        "Values individuality and unconventional ideas",
+        "Thinks outside established frameworks comfortably"
+      ],
+      doList: [
+        "Provide ample access to art supplies, music, and writing journals",
+        "Support self-directed creative projects",
+        "Encourage original ideas without judging standard correctness",
+        "Embrace diverse creative perspectives beyond one 'right' answer"
+      ],
+      avoidList: [
+        "Comparing their unique artistic style with others",
+        "Devaluing creative endeavors as a 'waste of study time'",
+        "Imposing rigid, formulaic methods that stifle artistic flair"
+      ],
+      careers: [
+        "Design", "Architecture", "Writing", "Media", "Animation", "Fashion", "Music", "Creative Industries"
       ]
     }
   },
-  R: {
-    icon: "📖",
+  S: {
+    code: "S",
+    icon: "🤝",
     bn: {
-      title: "Reading/Writing Learner (পঠন ও লিখন শিক্ষার্থী)",
-      summary: "আপনার সন্তান যেকোনো বিষয়ের লিখিত রূপ (Text) দেখতে, বই পড়তে এবং খাতার পাতায় লিখতে সবচেয়ে বেশি ভালোবাসে।",
-      suggestions: [
-        { icon: "📚", title: "পড়ার কৌশল", text: "পড়ার সময় পাশে একটি খাতা রাখুন, যেন সে নিজে নিজে প্রধান পয়েন্টগুলো ডায়েরি বা নোটের মতো করে লিখে রাখতে পারে।" },
-        { icon: "🛠️", title: "সহায়ক টুলস", text: "যেকোনো কাজের রুটিন বা পড়ার অধ্যায়গুলো ডায়েরিতে সুন্দর করে ক্রমিক তালিকা (List) করে দিন।" },
-        { icon: "📖", title: "বই পড়ার অভ্যাস", text: "তাকে ক্লাসের বইয়ের বাইরে প্রচুর গল্পের বই পড়ার সুযোগ দিন এবং নতুন শব্দের অর্থ খোঁজার জন্য ডিকশনারি ব্যবহারে উৎসাহিত করুন।" },
-        { icon: "📝", title: "মূল্যায়ন পদ্ধতি", text: "পড়া যাচাই করার জন্য তাকে মুখে ধরার চেয়ে ছোট ছোট লিখিত কুইজ বা পরীক্ষা নিলে সে বেশি স্বাচ্ছন্দ্য বোধ করবে।" }
+      name: "Social",
+      title: "04 — SOCIAL",
+      subtitle: "মানুষকে সাহায্য করা, শেখানো ও যোগাযোগ",
+      description: "Social Personality-এর শিশুরা সাধারণত মানুষের সঙ্গে কাজ করা, সহমর্মিতা দেখানো, অন্যকে সাহায্য করা, শেখানো এবং যোগাযোগ করতে স্বাচ্ছন্দ্যবোধ করে।",
+      observedTraits: [
+        "সহজেই বন্ধুদের সঙ্গে মেশা ও আলাপচারিতা উপভোগ করা",
+        "অন্যদের সমস্যা বা কষ্টে সহযোগিতার হাত বাড়িয়ে দেওয়া",
+        "ছোটদের বা সহপাঠীদের কোনো কিছু স্নেহভরে শেখানো",
+        "দলগত কর্মকাণ্ডে সম্প্রীতি ও একাত্মতা বজায় রাখা",
+        "অন্যের অনুভূতি ও মানসিক অবস্থা সহজেই উপলব্ধি করতে পারা"
+      ],
+      doList: [
+        "Group Activity ও দলগত খেলায় অংশগ্রহণের সুযোগ দিন",
+        "অন্য বন্ধুদের বা ছোট ভাইবোনকে শেখানোর সুযোগ দিন",
+        "Teamwork ও পারস্পরিক সহযোগিতার সুস্থ অভ্যাস গড়ে তুলুন",
+        "Communication Skill ও সক্রিয় শোনার অভ্যাস বাড়াতে সহায়তা করুন"
+      ],
+      avoidList: [
+        "সবসময় একা একা বা ঘরে একা বসে কাজ করতে বাধ্য করা",
+        "সন্তানের সহানুভূতি ও empathy-কে দুর্বলতা মনে করা",
+        "সামাজিক মেলামেশা ও বন্ধুত্বের সুযোগ অতিরিক্ত সীমিত করে দেওয়া"
+      ],
+      careers: [
+        "Teaching", "Medicine", "Psychology", "Counseling", "Human Resources", "Social Work", "Communication-based Professions"
       ]
     },
     en: {
-      title: "Reading/Writing Learner",
-      summary: "Your child thrives on textual information, note-taking, reading books, and writing things down in their own words.",
-      suggestions: [
-        { icon: "📚", title: "Study Techniques", text: "Keep a study notepad handy so they can summarize main points and take bullet notes." },
-        { icon: "🛠️", title: "Supporting Tools", text: "Organize lessons and routines into neat checklists and structured bulleted lists." },
-        { icon: "📖", title: "Reading Habits", text: "Provide access to storybooks and encourage using dictionaries to look up new vocabulary." },
-        { icon: "📝", title: "Assessment Method", text: "Test understanding via short written quizzes rather than verbal questioning." }
+      name: "Social",
+      title: "04 — SOCIAL",
+      subtitle: "Helping, Mentoring & Human Connection",
+      description: "Children with a Social Personality flourish in collaborative environments, enjoying helping, teaching, and connecting with peers.",
+      observedTraits: [
+        "Naturally friendly, empathetic, and communicative",
+        "Quick to assist peers when they are struggling or sad",
+        "Enjoys explaining lessons or mentoring younger children",
+        "Fosters harmony in group play and teamwork",
+        "High emotional intelligence and intuitive empathy"
+      ],
+      doList: [
+        "Encourage team sports, clubs, and group activities",
+        "Provide opportunities to peer-tutor or teach",
+        "Cultivate cooperative teamwork and collaboration",
+        "Support effective listening and interpersonal communication skills"
+      ],
+      avoidList: [
+        "Forcing prolonged solitary confinement during study",
+        "Misinterpreting deep empathy as emotional weakness",
+        "Overly restricting healthy peer interactions and social bonds"
+      ],
+      careers: [
+        "Teaching", "Medicine", "Psychology", "Counseling", "Human Resources", "Social Work", "Communication-based Professions"
       ]
     }
   },
-  K: {
-    icon: "🏃",
+  E: {
+    code: "E",
+    icon: "🚀",
     bn: {
-      title: "Kinesthetic Learner (শারীরিক বা হাতে-কলমে শিক্ষার্থী)",
-      summary: "আপনার সন্তান শরীর নাড়িয়ে, জিনিসপত্র ছুঁয়ে এবং সরাসরি বাস্তব অভিজ্ঞতার বা কাজের মাধ্যমে শেখে।",
-      suggestions: [
-        { icon: "📚", title: "পড়ার কৌশল", text: "তাকে এক জায়গায় জোর করে ঘণ্টার পর ঘণ্টা বসিয়ে রাখবেন না। ২০-২৫ মিনিট পড়ার পর ৫ মিনিটের জন্য একটু হেঁটে আসার বা হাত-পা স্ট্রেচ করার ছোট বিরতি (Study Breaks) দিন।" },
-        { icon: "🛠️", title: "সহায়ক টুলস", text: "গণিত শেখানোর সময় মার্বেল বা কাঠি ব্যবহার করুন। বিজ্ঞান শেখাতে ছোটখাটো নিরাপদ ল্যাব এক্সপেরিমেন্ট বা ঘরের চারপাশের প্রকৃতির সাহায্য নিন।" },
-        { icon: "🏃", title: "শারীরিক মুভমেন্ট", text: "পড়ার সময় বা কোনো কিছু মুখস্থ করার সময় তাকে ঘরের মধ্যে পায়চারি বা হাঁটাহাঁটি করতে দিন। হাত-পা নাড়ালে এদের ব্রেইন বেশি সচল হয়।" },
-        { icon: "💡", title: "মেধা বিকাশ", text: "লেগো (Lego), ব্লক গেম, কাদামাটি/ক্লে দিয়ে জিনিস বানানো বা ধাঁধাঁ মেলানোর মাধ্যমে তার মেধার বিকাশ ঘটান।" }
+      name: "Enterprising",
+      title: "05 — ENTERPRISING",
+      subtitle: "Leadership, Initiative ও Decision-Making",
+      description: "Enterprising Personality-এর শিশুরা সাধারণত উদ্যোগ নেওয়া, আত্মবিশ্বাসের সাথে সিদ্ধান্ত নেওয়া, অন্যকে প্রভাবিত করা এবং নেতৃত্ব দিতে আগ্রহী হতে পারে।",
+      observedTraits: [
+        "যেকোনো খেলায় দলনেতা হওয়ার বা নেতৃত্ব দেওয়ার দৃঢ় ইচ্ছা",
+        "নিজের মতামত নির্ভীক ও জোরালোভাবে উপস্থাপন করা",
+        "নতুন কোনো কাজের স্বতঃস্ফূর্ত উদ্যোগ গ্রহণ ও পরিকল্পনা",
+        "বন্ধুদের কোনো লক্ষ্যে উদ্বুদ্ধ ও সংগঠিত করার সহজাত দক্ষতা",
+        "চ্যালেঞ্জ গ্রহণ ও প্রতিযোগিতায় স্বতঃস্ফূর্ত অংশগ্রহণ"
+      ],
+      doList: [
+        "ঘরের বা স্কুলের ছোট ছোট দায়িত্ব পালনের সুযোগ দিন",
+        "Leadership opportunity ও দল পরিচালনার সুযোগ তৈরি করুন",
+        "ছোটখাটো বিষয়ে নিজে সিদ্ধান্ত নেওয়ার (Decision-making) অভ্যাস করান",
+        "Team Project-এর নেতৃত্বের দায়িত্ব তাদের ওপর ছেড়ে দিন"
+      ],
+      avoidList: [
+        "সব সিদ্ধান্ত সবসময় অভিভাবক নিজেই নিয়ে দেওয়া",
+        "সন্তান স্বতঃস্ফূর্ত উদ্যোগ নিলে “বেশি কথা বলছ” বলে থামিয়ে দেওয়া",
+        "Leadership-কে ইতিবাচক সেবার বদলে শুধুই কর্তৃত্ব খাটানো হিসেবে শেখানো"
+      ],
+      careers: [
+        "Entrepreneurship", "Business", "Management", "Sales", "Marketing", "Leadership", "Public Relations"
       ]
     },
     en: {
-      title: "Kinesthetic Learner",
-      summary: "Your child learns through movement, tactile touch, real-world examples, and hands-on physical activity.",
-      suggestions: [
-        { icon: "📚", title: "Study Techniques", text: "Avoid making them sit still for hours. Provide a 5-minute movement break every 20-25 minutes." },
-        { icon: "🛠️", title: "Supporting Tools", text: "Use physical counting beads, sticks for math, and simple hands-on nature experiments for science." },
-        { icon: "🏃", title: "Physical Movement", text: "Allow pacing or walking around while memorizing or revising; physical motion stimulates their brain." },
-        { icon: "💡", title: "Skill Growth", text: "Engage them with Lego, blocks, modeling clay, and 3D tactile puzzles to develop problem-solving." }
+      name: "Enterprising",
+      title: "05 — ENTERPRISING",
+      subtitle: "Leadership, Initiative & Decision-Making",
+      description: "Children with an Enterprising Personality are bold initiators who love leading peers, taking charge, persuading others, and driving goals.",
+      observedTraits: [
+        "Natural inclination to assume leadership in games",
+        "Assertively voices viewpoints with poise and confidence",
+        "Proactively initiates new plans, clubs, or projects",
+        "Talent for persuading and mobilizing peers toward a goal",
+        "Energized by healthy competition and ambitious challenges"
+      ],
+      doList: [
+        "Entrust them with real household and group responsibilities",
+        "Provide leadership roles in student clubs and projects",
+        "Foster decision-making and problem prioritization practice",
+        "Guide them in managing and motivating team efforts"
+      ],
+      avoidList: [
+        "Making every single choice for them without consulting their voice",
+        "Silencing bold initiative by accusing them of being 'too talkative'",
+        "Conflating positive leadership with authoritarian dominance"
+      ],
+      careers: [
+        "Entrepreneurship", "Business", "Management", "Sales", "Marketing", "Leadership", "Public Relations"
       ]
     }
   },
-  M: {
-    icon: "🔀",
+  C: {
+    code: "C",
+    icon: "📋",
     bn: {
-      title: "Multimodal Learner (বহুমুখী শিক্ষার্থী)",
-      summary: "আপনার সন্তান একজন Multimodal Learner (বহুমুখী শিক্ষার্থী)। সে কেবল একটি পদ্ধতিতে সীমাবদ্ধ নয়। তাকে কখনো ছবি দেখিয়ে, কখনো মুখে আলোচনা করে, আবার কখনো প্র্যাক্টিক্যাল কাজের মিশ্রণে শেখানোই সবচেয়ে কার্যকরী হবে।",
-      suggestions: [
-        { icon: "🔀", title: "সমন্বিত পড়ার কৌশল", text: "একাধিক পদ্ধতির মিশ্রণ ঘটান—কখনো ছবি ও ডায়াগ্রাম, কখনো অডিও আলোচনা এবং মাঝে মাঝে হাতে-কলমে প্র্যাক্টিস।" },
-        { icon: "📚", title: "বিষয়নিয়ন্ত্রিত পদ্ধতি", text: "কঠিন বিষয়ে যে পদ্ধতিতে সন্তান সাড়া দেয় সেটিকে প্রাধান্য দিন; একঘেয়েমি কাটাতে ভিন্ন ভিন্ন টেকনিক কাজে লাগান।" },
-        { icon: "🛠️", title: "উপকরণ বৈচিত্র্য", text: "ভিজ্যুয়াল চার্ট, অডিও বুক ও নোট লেখার সংমিশ্রণে পড়াশোনাকে আকর্ষণীয় রাখুন।" },
-        { icon: "🏡", title: "নমনীয় পরিবেশ", text: "কখনো শান্ত টেবিলে, কখনো পায়চারি করে পড়ার নমনীয় স্বাধীনতা দিন।" }
+      name: "Conventional",
+      title: "06 — CONVENTIONAL",
+      subtitle: "Organized, Structured ও Detail-Oriented",
+      description: "Conventional Personality-এর শিশুরা সাধারণত নিয়ম, কাঠামো, সময়ানুবর্তিতা, সুনির্দিষ্ট তথ্য এবং পরিপাটিভাবে গুছিয়ে কাজ করার ক্ষেত্রে স্বাচ্ছন্দ্যবোধ করে।",
+      observedTraits: [
+        "নিজের জিনিসপত্র, বইখাতা ও ঘর নিয়মমাফিক গুছিয়ে রাখা",
+        "রুটিন, নিয়ম ও নির্দেশিকা অত্যন্ত দায়িত্বশীলভাবে মেনে চলা",
+        "তালিকা (List) বানানো বা চেকলিস্ট অনুসরণ করে কাজ করা",
+        "নির্ভুলভাবে ও যত্নের সাথে যেকোনো কাজ শেষ করার মানসিকতা",
+        "শৃঙ্খলাবদ্ধ ও পূর্বাভাসযোগ্য পরিবেশে সবচেয়ে ভালো কাজ করা"
+      ],
+      doList: [
+        "দৈনন্দিন সুশৃঙ্খল Routine তৈরি ও বজায় রাখতে সহায়তা করুন",
+        "কাজের জন্য চেকলিস্ট (Checklist) বা প্ল্যানার ব্যবহারের সুযোগ দিন",
+        "Planning ও Organizing সংক্রান্ত কর্মকাণ্ডের দায়িত্ব দিন",
+        "Step-by-step ধাপে ধাপে শেখার কাঠামো ব্যবহার করুন"
+      ],
+      avoidList: [
+        "পূর্বপ্রস্তুতি ছাড়া হঠাৎ করে নিয়ম বা কাজের ধারা অগোছালো করে দেওয়া",
+        "সন্তানের শৃঙ্খলা ও গোছানোর আগ্রহকে গুরুত্বহীন ভাবা",
+        "ছোটখাটো ভুলের জন্য অতিরিক্ত সমালোচনা বা মানসিক চাপ দেওয়া"
+      ],
+      careers: [
+        "Accounting", "Finance", "Administration", "Data Management", "Banking", "Documentation", "Operations"
       ]
     },
     en: {
-      title: "Multimodal Learner",
-      summary: "Your child is a versatile learner who benefits from a flexible blend of visual, auditory, reading, and hands-on techniques.",
-      suggestions: [
-        { icon: "🔀", title: "Integrated Study", text: "Combine multiple styles: pair visual illustrations with verbal discussions and hands-on practice." },
-        { icon: "📚", title: "Adaptive Approach", text: "Tailor techniques by subject—use visual diagrams for science and verbal role-play for languages." },
-        { icon: "🛠️", title: "Diverse Learning Tools", text: "Keep a balanced mix of flashcards, audiobooks, written checklists, and tactile models." },
-        { icon: "🏡", title: "Flexible Environment", text: "Offer flexibility: allow quiet focused reading as well as active movement when energy is high." }
+      name: "Conventional",
+      title: "06 — CONVENTIONAL",
+      subtitle: "Organized, Structured & Detail-Oriented",
+      description: "Children with a Conventional Personality excel in systematic, organized, and reliable environments with clear structure and standards.",
+      observedTraits: [
+        "Keeps study desk, books, and belongings neatly ordered",
+        "Respects routines, rules, and established procedures",
+        "Enjoys creating schedules, checklists, and inventories",
+        "Attention to detail and drive for neat, accurate execution",
+        "Performs at peak potential in predictable, structured settings"
+      ],
+      doList: [
+        "Help establish structured daily timetables and study routines",
+        "Provide organizational planners, calendars, and checklists",
+        "Involve them in categorization, scheduling, and cataloging tasks",
+        "Present lessons through clear, step-by-step structural paths"
+      ],
+      avoidList: [
+        "Disrupting routines abruptly without advance heads-up",
+        "Underestimating the value of their organizational neatness",
+        "Over-penalizing occasional errors with harsh perfectionist pressure"
+      ],
+      careers: [
+        "Accounting", "Finance", "Administration", "Data Management", "Banking", "Documentation", "Operations"
       ]
     }
   }
 };
 
-// 4. UI BILINGUAL DICTIONARY
+// 4. BILINGUAL UI DICTIONARY
 const translations = {
   bn: {
-    docTitle: "ক্যারিয়ার গাইডেন্স ও লার্নিং স্টাইল মূল্যায়ন - পেডাগো একাডেমি",
-    badgeText: "ক্যারিয়ার গাইডেন্স ও মূল্যায়ন",
-    pageTitle: "সন্তানের লার্নিং স্টাইল মূল্যায়ন",
-    pageSubtitle: "আপনার সন্তান কীভাবে সবচেয়ে ভালো শেখে এবং আচরণ করে তা জানতে তথ্যগুলো পূরণ করে মূল্যায়ন জরিপ শুরু করুন।",
+    docTitle: "আপনার সন্তানের Personality কোন ধরনের? - Pedago Career Guidance",
+    badgeText: "PEDAGO CAREER GUIDANCE",
+    pageTitle: "আপনার সন্তানের Personality কোন ধরনের?",
+    pageSubtitle: "John Holland-এর RIASEC Model-এর আলোকে Parent Observation Assessment",
 
-    labelName: "শিক্ষার্থীর নাম",
-    namePlaceholder: "শিক্ষার্থীর পূর্ণ নাম লিখুন",
-    nameErrorEmpty: "অনুগ্রহ করে শিক্ষার্থীর নাম লিখুন।",
-    nameErrorShort: "শিক্ষার্থীর নাম কমপক্ষে ২ অক্ষরের হতে হবে।",
+    introP1: "প্রতিটি শিশুর Personality, পছন্দ ও কাজের ধরন আলাদা। কেউ হাতে-কলমে কাজ করতে ভালোবাসে, কেউ জানতে চায় “কেন” ও “কীভাবে”, কেউ সৃজনশীল, কেউ সাহায্য করতে বা নেতৃত্ব দিতে পছন্দ করে।",
+    introP2: "এই ১০টি প্রশ্ন আপনার সন্তানের দৈনন্দিন আচরণ ও পছন্দের ওপর ভিত্তি করে তৈরি। আপনার সন্তানের সঙ্গে সবচেয়ে বেশি মিলে যায় এমন উত্তরটি নির্বাচন করুন।",
+    noteTag: "নোট:",
+    noteText: "এটি কোনো Clinical Psychological Test বা Career Prediction নয়; বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি Parent Observation & Career Guidance Tool। সময় নিয়ে প্রতিটি প্রশ্নের উত্তর দিন—আপনার প্রতিটি উত্তরই সন্তানের Personality বুঝতে গুরুত্বপূর্ণ।",
 
-    labelMobile: "অভিভাবকের মোবাইল নম্বর",
-    mobilePlaceholder: "01XXXXXXXXX",
+    formStartTitle: "START করার আগে — অভিভাবকের তথ্য",
+
+    labelParentName: "অভিভাবকের নাম",
+    placeholderParentName: "অভিভাবকের পূর্ণ নাম লিখুন",
+    errorParentNameEmpty: "অনুগ্রহ করে অভিভাবকের নাম লিখুন।",
+    errorParentNameShort: "অভিভাবকের নাম কমপক্ষে ২ অক্ষরের হতে হবে।",
+
+    labelStudentName: "সন্তানের নাম",
+    placeholderStudentName: "সন্তানের পূর্ণ নাম লিখুন",
+    errorStudentNameEmpty: "অনুগ্রহ করে সন্তানের নাম লিখুন।",
+    errorStudentNameShort: "সন্তানের নাম কমপক্ষে ২ অক্ষরের হতে হবে।",
+
+    labelStudentAge: "সন্তানের বয়স",
+    placeholderStudentAge: "যেমন: ১০",
+    errorStudentAgeEmpty: "অনুগ্রহ করে বয়স লিখুন।",
+    errorStudentAgeInvalid: "সঠিক বয়স দিন (১ থেকে ৯৯ এর মধ্যে)।",
+
+    labelStudentClass: "সন্তানের শ্রেণি",
+    placeholderStudentClass: "যেমন: ৪র্থ শ্রেণি / Class 4",
+    errorStudentClassEmpty: "অনুগ্রহ করে শ্রেণি উল্লেখ করুন।",
+
+    labelMobile: "মোবাইল নম্বর",
+    placeholderMobile: "01XXXXXXXXX",
     mobileHint: "১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন: 01712345678)",
-    mobileErrorEmpty: "অনুগ্রহ করে অভিভাবকের মোবাইল নম্বর লিখুন।",
-    mobileErrorInvalid: "সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)।",
+    errorMobileEmpty: "অনুগ্রহ করে মোবাইল নম্বর লিখুন।",
+    errorMobileInvalid: "সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)।",
 
-    labelAge: "শিক্ষার্থীর বয়স",
-    agePlaceholder: "শিক্ষার্থীর বয়স লিখুন (যেমন: ১০)",
-    ageErrorEmpty: "অনুগ্রহ করে শিক্ষার্থীর বয়স লিখুন।",
-    ageErrorInvalid: "সঠিক বয়স লিখুন (১ থেকে ৯৯ এর মধ্যে)।",
-
-    btnSubmit: "জমা দিন ও মূল্যায়ন শুরু করুন",
+    btnSubmit: "শুরু করুন →",
     btnSubmitting: "অপেক্ষা করুন...",
 
     successToast: "ধন্যবাদ! তথ্য সফলভাবে জমা হয়েছে। মূল্যায়ন জরিপ শুরু হচ্ছে...",
-    errorToast: "দুঃখিত! তথ্য জমা দেওয়া সম্ভব হয়নি। অনুগ্রহ করে আপনার ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।",
+    errorToast: "দুঃখিত! তথ্য জমা দেওয়া সম্ভব হয়নি। অনুগ্রহ করে ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।",
     unconfiguredUrlToast: "দয়া করে প্রথমে Google Apps Script ডিপ্লয় করে প্রাপ্ত Web App URL-টি script.js-এর SCRIPT_URL ভ্যারিয়েবলে পেস্ট করুন।",
 
     footerCallUs: "যে কোনো তথ্যের জন্য কল করুন:",
 
     // Stepper translations
-    qInstruction: "নিচের ৪টি অপশনের মধ্যে যেটি আপনার সন্তানের সাথে সবচেয়ে বেশি মিলে, সেটি সিলেক্ট করুন:",
+    assessmentSectionTag: "PERSONALITY ASSESSMENT",
+    qInstruction: "আপনার সন্তানের সঙ্গে সবচেয়ে বেশি মিলে যায় এমন উত্তরটি নির্বাচন করুন:",
     btnPrev: "পূর্ববর্তী",
     btnNext: "পরবর্তী",
-    btnFinish: "ফলাফল ও মূল্যায়ন দেখুন",
-    calculating: "ফলাফল তৈরি হচ্ছে...",
+    btnFinish: "আপনার সন্তানের Personality Profile দেখুন →",
+    calculating: "প্রোফাইল তৈরি হচ্ছে...",
     stepTextTemplate: (curr, total) => `${toBengaliNum(total)}টির মধ্যে ${toBengaliNum(curr)}ম প্রশ্ন`,
     pillTextTemplate: (curr, total) => `প্রশ্ন ${toBengaliNum(curr)}/${toBengaliNum(total)}`,
     pctTextTemplate: (pct) => `${toBengaliNum(pct)}% সম্পন্ন`,
 
     // Evaluator translations
-    evalBadge: "লার্নিং স্টাইল রিপোর্ট ও মূল্যায়ন",
-    evalStudentTemplate: (name) => `${name}-এর মূল্যায়ন সম্পন্ন হয়েছে!`,
-    dominantTag: "প্রধান লার্নিং স্টাইল",
-    statsTitle: "পরিসংখ্যান ও লার্নিং স্কোর ফিগার",
-    statsSubtitle: "১০টি প্রশ্নের উত্তরের ওপর ভিত্তি করে প্রাপ্ত শতকরা হার ও স্কোর:",
-    labelVisual: "Visual (দৃশ্যমান)",
-    labelAuditory: "Auditory (শ্রুতিগত)",
-    labelReading: "Reading/Writing (পঠন ও লিখন)",
-    labelKinesthetic: "Kinesthetic (শারীরিক বা হাতে-কলমে)",
-    guidelinesTitle: "অভিভাবকের জন্য পরিচর্যা ও পড়ার পরামর্শ",
-    guidelinesSubtitle: "সন্তানের পড়াশোনাকে আনন্দময় ও কার্যকর করতে বিশেষজ্ঞ গাইডলাইন:",
+    evalResultBadge: "RESULT PAGE",
+    evalHeadingTemplate: (studentName) => `${studentName}-এর Personality Profile`,
+    rankTitlePrimary: "Primary Personality",
+    rankTitleSecondary: "Secondary Personality",
+    rankTitleSupporting: "Supporting Personality",
+    badgeTraitHigh: "উচ্চ প্রবণতা",
+    badgeTraitModerate: "মাঝারি প্রবণতা",
+    summaryTemplate: (pName, sName) => `আপনার উত্তরের ভিত্তিতে দেখা যাচ্ছে, আপনার সন্তানের মধ্যে ${pName} ও ${sName} Personality-এর বৈশিষ্ট্য তুলনামূলকভাবে বেশি।`,
+
+    statsTitle: "John Holland RIASEC স্কোর বিশ্লেষণ",
+    statsSubtitle: "১০টি মূল্যায়নের ওপর ভিত্তি করে ৬টি Personality-এর প্রাপ্ত স্কোর অনুপাত:",
+    labelMeterR: "01 — Realistic (হাতে-কলমে কাজ ও Practical Thinking)",
+    labelMeterI: "02 — Investigative (কৌতূহলী, বিশ্লেষণধর্মী ও Problem-Solving)",
+    labelMeterA: "03 — Artistic (সৃজনশীলতা, Imagination ও Self-Expression)",
+    labelMeterS: "04 — Social (সাহায্য করা, শেখানো ও যোগাযোগ)",
+    labelMeterE: "05 — Enterprising (Leadership, Initiative ও Decision-Making)",
+    labelMeterC: "06 — Conventional (Organized, Structured ও Detail-Oriented)",
+
+    guidelinesTitle: "সন্তানের Personality পরিচর্যা গাইডলাইন",
+    guidelinesSubtitle: "শীর্ষ পার্সোনালিটি অনুযায়ী অভিভাবক হিসেবে কী করবেন এবং এড়িয়ে চলবেন:",
+    traitsHeading: "আপনার সন্তানের মধ্যে যা দেখা যেতে পারে:",
+    doHeading: "অভিভাবক হিসেবে কী করবেন (DO ✓)",
+    avoidHeading: "যা এড়িয়ে চলবেন (AVOID ✕)",
+    careerEnvHeading: "সম্ভাব্য Career Environment:",
+
+    rememberTitle: "মনে রাখবেন",
+    rem1: "Personality কোনো শিশুর ভবিষ্যৎ Career নির্ধারণ করে না।",
+    rem2: "একজন শিশুর Personality-এর সঙ্গে তার Interest + Ability + Skills এই বিষয়গুলোও বিবেচনা করতে হবে।",
+    rem3: "একটি শিশুর Personality সময়ের সঙ্গে পরিবর্তিত ও বিকশিতও হতে পারে। তাই এই Assessment-এর ফলাফলকে একটি নির্দিষ্ট Career-এর সিদ্ধান্ত হিসেবে নয়, বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি starting point হিসেবে দেখুন।",
+
+    stepsBoxTitle: "আপনার সন্তানের জন্য ৩টি Practical Step",
+    step1Title: "Observe",
+    step1Desc: "পরবর্তী কয়েক সপ্তাহ সন্তানের স্বাভাবিক আচরণ লক্ষ্য করুন।",
+    step2Title: "Provide Opportunity",
+    step2Desc: "তার Personality অনুযায়ী বিভিন্ন Activity করার সুযোগ দিন।",
+    step3Title: "Develop",
+    step3Desc: "যে কাজে তার আগ্রহ ও সম্ভাবনা দেখা যাচ্ছে, সেখানে Practice, Learning ও Skill Development-এর সুযোগ তৈরি করুন।",
+
+    closingCtaTitle: "আপনার সন্তানের Career Journey শুরু হোক তাকে বোঝার মাধ্যমে",
+    closingCtaFlow: "Personality জানুন → Interest বুঝুন → Ability ও Skills তৈরি করুন → তারপর Career Path নিয়ে ভাবুন।",
+    closingCtaTagline: "Pedago Career Guidance — সন্তানের জন্য Career বেছে দেওয়ার আগে, তাকে বুঝুন।",
+
     btnPrint: "রিপোর্ট প্রিন্ট বা সেভ করুন",
     btnCounselor: "কাউন্সেলরের পরামর্শ নিন",
-    btnRetake: "নতুন করে মূল্যায়ন করুন"
+
+    // Visual Hexagon Radar & Progressive Disclosure
+    chartCardTitle: "ব্যক্তিত্ব হেক্সাগন রাডার গ্রাফ",
+    chartCardSubtitle: "John Holland-এর ৬টি প্রবণতার পারস্পরিক সামঞ্জস্যের ভিজ্যুয়াল চিত্র:",
+    btnExpandGuidelines: "বিস্তারিত পরামর্শ ও গাইডলাইন দেখুন ↓",
+    btnCollapseGuidelines: "সংক্ষেপ করুন ↑",
+    expandHintText: "অভিভাবক হিসেবে কী করবেন (DO/AVOID), ক্যারিয়ার সম্ভাবনা ও পরবর্তী পদক্ষেপ জানতে ক্লিক করুন",
+    tabPrimaryText: "Primary Personality",
+    tabSecondaryText: "Secondary Personality",
+    tabSupportingText: "Supporting Personality",
+
+    // Social Sharing & Community
+    shareTitle: "আপনার পরিচিত কোনো অভিভাবককে শেয়ার করুন",
+    shareSubtitle: "তিনিও জেনে নিন তার প্যারেন্টিং স্টাইল কেমন",
+    shareWhatsappText: "WhatsApp-এ পাঠান",
+    shareFacebookText: "Facebook-এ শেয়ার করুন",
+    shareCopyText: "লিংক কপি করুন",
+    copiedText: "✓ লিংক কপি হয়েছে!",
+    linkCopiedToast: "লিংক ক্লিপবোর্ডে কপি করা হয়েছে!",
+    communityTitle: "প্যারেন্টিং সম্পর্কে নিয়মিত টিপস পেতে যোগ দিন আমাদের কমিউনিটিতে",
+    communityWaText: "WhatsApp চ্যানেলে যোগ দিন",
+    communityFbText: "Facebook গ্রুপে যোগ দিন",
+    btnRetake: "আবার উত্তর দিন"
   },
   en: {
-    docTitle: "Career Guidance & VARK Learning Style Evaluator - Pedago Academy",
-    badgeText: "Career Guidance & Evaluation",
-    pageTitle: "Student Learning Style Evaluation",
-    pageSubtitle: "Fill in the details to discover how your child learns best and receive personalized parenting guidelines.",
+    docTitle: "What Personality Type is Your Child? - Pedago Career Guidance",
+    badgeText: "PEDAGO CAREER GUIDANCE",
+    pageTitle: "What Personality Type is Your Child?",
+    pageSubtitle: "Parent Observation Assessment based on John Holland's RIASEC Model",
 
-    labelName: "Student Name",
-    namePlaceholder: "Enter student's full name",
-    nameErrorEmpty: "Please enter the student's name.",
-    nameErrorShort: "Student name must be at least 2 characters.",
+    introP1: "Every child has a unique personality, learning preferences, and work style. Some love hands-on making, some constantly ask 'why' and 'how', some are artistic creators, and some thrive in helping or leading others.",
+    introP2: "These 10 situational questions reflect your child's daily habits and natural behaviors. Choose the option that best resonates with your child.",
+    noteTag: "Note:",
+    noteText: "This is not a clinical psychological evaluation or deterministic career prediction; it is a supportive Parent Observation & Career Guidance tool to understand your child more deeply. Please take your time—every answer is valuable.",
 
-    labelMobile: "Guardian's Mobile Number",
-    mobilePlaceholder: "01XXXXXXXXX",
+    formStartTitle: "Before Starting — Guardian Information",
+
+    labelParentName: "Guardian's Name",
+    placeholderParentName: "Enter guardian's full name",
+    errorParentNameEmpty: "Please enter guardian's name.",
+    errorParentNameShort: "Guardian's name must be at least 2 characters.",
+
+    labelStudentName: "Child's Name",
+    placeholderStudentName: "Enter child's full name",
+    errorStudentNameEmpty: "Please enter child's name.",
+    errorStudentNameShort: "Child's name must be at least 2 characters.",
+
+    labelStudentAge: "Child's Age",
+    placeholderStudentAge: "e.g. 10",
+    errorStudentAgeEmpty: "Please enter child's age.",
+    errorStudentAgeInvalid: "Enter a valid age (between 1 and 99).",
+
+    labelStudentClass: "Child's Grade / Class",
+    placeholderStudentClass: "e.g. Class 4 / Grade 4",
+    errorStudentClassEmpty: "Please enter child's grade or class.",
+
+    labelMobile: "Mobile Number",
+    placeholderMobile: "01XXXXXXXXX",
     mobileHint: "11-digit Bangladeshi mobile number (e.g. 01712345678)",
-    mobileErrorEmpty: "Please enter the guardian's mobile number.",
-    mobileErrorInvalid: "Enter a valid 11-digit mobile number (01XXXXXXXXX).",
+    errorMobileEmpty: "Please enter mobile number.",
+    errorMobileInvalid: "Enter a valid 11-digit mobile number (01XXXXXXXXX).",
 
-    labelAge: "Student Age",
-    agePlaceholder: "Enter student's age (e.g. 10)",
-    ageErrorEmpty: "Please enter the student's age.",
-    ageErrorInvalid: "Enter a valid age (between 1 and 99).",
-
-    btnSubmit: "Submit & Start Evaluation",
-    btnSubmitting: "Submitting...",
+    btnSubmit: "Get Started →",
+    btnSubmitting: "Please wait...",
 
     successToast: "Thank you! Information submitted successfully. Launching evaluation survey...",
     errorToast: "Sorry! Submission failed. Please check your internet connection and try again.",
-    unconfiguredUrlToast: "Please deploy the Google Apps Script first and paste the Web App URL into SCRIPT_URL in script.js.",
+    unconfiguredUrlToast: "Please deploy the Google Apps Script Web App first and update SCRIPT_URL in script.js.",
 
     footerCallUs: "For any inquiries, call:",
 
     // Stepper translations
-    qInstruction: "Select the option that best matches your child's natural behavior:",
+    assessmentSectionTag: "PERSONALITY ASSESSMENT",
+    qInstruction: "Select the option that best reflects your child's natural behavior:",
     btnPrev: "Previous",
     btnNext: "Next",
-    btnFinish: "View Evaluation Results",
-    calculating: "Generating report...",
+    btnFinish: "View Personality Profile →",
+    calculating: "Generating profile...",
     stepTextTemplate: (curr, total) => `Question ${curr} of ${total}`,
     pillTextTemplate: (curr, total) => `Question ${curr}/${total}`,
     pctTextTemplate: (pct) => `${pct}% Completed`,
 
     // Evaluator translations
-    evalBadge: "Learning Style Report & Evaluation",
-    evalStudentTemplate: (name) => `Evaluation completed for ${name}!`,
-    dominantTag: "Dominant Learning Style",
-    statsTitle: "Statistics & Learning Score Breakdown",
-    statsSubtitle: "Percentage distribution and scores calculated from 10 assessment answers:",
-    labelVisual: "Visual",
-    labelAuditory: "Auditory",
-    labelReading: "Reading / Writing",
-    labelKinesthetic: "Kinesthetic",
-    guidelinesTitle: "Parenting Care & Study Guidelines",
-    guidelinesSubtitle: "Expert recommendations to make learning joyful and effective for your child:",
+    evalResultBadge: "RESULT PAGE",
+    evalHeadingTemplate: (studentName) => `${studentName}'s Personality Profile`,
+    rankTitlePrimary: "Primary Personality",
+    rankTitleSecondary: "Secondary Personality",
+    rankTitleSupporting: "Supporting Personality",
+    badgeTraitHigh: "High Affinity",
+    badgeTraitModerate: "Moderate Affinity",
+    summaryTemplate: (pName, sName) => `Based on your responses, your child demonstrates pronounced traits of ${pName} and ${sName} personalities.`,
+
+    statsTitle: "John Holland RIASEC Score Analysis",
+    statsSubtitle: "Distribution and scores calculated across the 6 personality traits:",
+    labelMeterR: "01 — Realistic (Hands-on & Practical Thinking)",
+    labelMeterI: "02 — Investigative (Inquisitive & Problem-Solving)",
+    labelMeterA: "03 — Artistic (Creativity & Self-Expression)",
+    labelMeterS: "04 — Social (Helping, Mentoring & Connection)",
+    labelMeterE: "05 — Enterprising (Leadership & Decision-Making)",
+    labelMeterC: "06 — Conventional (Organized, Structured & Detail-Oriented)",
+
+    guidelinesTitle: "Parental Guidance & Nurturing Roadmap",
+    guidelinesSubtitle: "Recommended parenting DOs and AVOID practices for their dominant traits:",
+    traitsHeading: "Key Behaviors You May Observe:",
+    doHeading: "What to Do as a Parent (DO ✓)",
+    avoidHeading: "Practices to Avoid (AVOID ✕)",
+    careerEnvHeading: "Potential Career Environments:",
+
+    rememberTitle: "Keep in Mind",
+    rem1: "Personality alone does not fix or limit a child's future career destiny.",
+    rem2: "A child's personality must be viewed in tandem with their evolving Interests + Abilities + Skills.",
+    rem3: "Children develop and adapt as they grow. Treat this assessment as a starting point to understand your child, rather than an unchangeable verdict.",
+
+    stepsBoxTitle: "3 Practical Next Steps for Your Child",
+    step1Title: "Observe",
+    step1Desc: "Observe your child's natural, spontaneous behaviors closely over the coming weeks.",
+    step2Title: "Provide Opportunity",
+    step2Desc: "Offer diverse activities tailored to their personality traits and curiosity.",
+    step3Title: "Develop",
+    step3Desc: "Cultivate structured practice, learning, and skill development where genuine excitement sparks.",
+
+    closingCtaTitle: "A Child's Career Journey Begins by Understanding Them",
+    closingCtaFlow: "Discover Personality → Identify Interests → Build Abilities & Skills → Then Shape Career Paths.",
+    closingCtaTagline: "Pedago Career Guidance — Before choosing a career for your child, understand who they are.",
+
     btnPrint: "Print or Save Report",
     btnCounselor: "Speak with a Counselor",
-    btnRetake: "Retake Evaluation"
+
+    // Visual Hexagon Radar & Progressive Disclosure
+    chartCardTitle: "Personality Hexagon Radar Graph",
+    chartCardSubtitle: "Visual representation of affinity across John Holland's 6 RIASEC domains:",
+    btnExpandGuidelines: "View Detailed Suggestions & Guidelines ↓",
+    btnCollapseGuidelines: "Collapse Guidelines ↑",
+    expandHintText: "Click to reveal in-depth parental guidelines (DO/AVOID), career outlooks, and practical steps",
+    tabPrimaryText: "Primary Personality",
+    tabSecondaryText: "Secondary Personality",
+    tabSupportingText: "Supporting Personality",
+
+    // Social Sharing & Community
+    shareTitle: "Share with a Fellow Parent",
+    shareSubtitle: "Help them discover their child's personality and parenting approach",
+    shareWhatsappText: "Send via WhatsApp",
+    shareFacebookText: "Share on Facebook",
+    shareCopyText: "Copy Link",
+    copiedText: "✓ Link Copied!",
+    linkCopiedToast: "Link copied to clipboard!",
+    communityTitle: "Join our community for regular parenting & career guidance tips",
+    communityWaText: "Join WhatsApp Channel",
+    communityFbText: "Join Facebook Group",
+    btnRetake: "Answer Again"
   }
 };
 
@@ -474,18 +892,21 @@ const state = {
   theme: localStorage.getItem('pedago_theme') || 'light',
   isSubmitting: false,
 
-  // Student Lead Information from Phase 1
-  student: {
-    name: '',
-    mobile: '',
-    studentAge: ''
+  // Lead Information collected in Phase 1
+  lead: {
+    parentName: '',
+    studentName: '',
+    studentAge: '',
+    studentClass: '',
+    mobile: ''
   },
 
-  // Questionnaire Progress (Purely Client-Side Static Evaluation)
+  // Questionnaire Stepper Progress (Purely Client-Side Static Evaluator)
   currentQuestionIndex: 0,
-  answers: {}, // index 0..9 -> 'V' | 'A' | 'R' | 'K'
+  answers: {}, // index 0..9 -> 'R' | 'I' | 'A' | 'S' | 'E' | 'C'
   evaluatedScores: null,
-  evaluatedDominantStyle: null
+  evaluatedRankings: null,
+  activeGuidelineTab: 'primary'
 };
 
 // 6. DOM ELEMENT CACHE
@@ -503,17 +924,42 @@ const DOM = {
   surveyStepperContainer: document.getElementById('surveyStepperContainer'),
   evaluatorDashboard: document.getElementById('evaluatorDashboard'),
 
-  // Phase 1 Elements
+  // Phase 1 Hero Header Elements
   badgeText: document.getElementById('badgeText'),
   pageTitle: document.getElementById('pageTitle'),
   pageSubtitle: document.getElementById('pageSubtitle'),
+  introP1: document.getElementById('introP1'),
+  introP2: document.getElementById('introP2'),
+  noteTag: document.getElementById('noteTag'),
+  noteText: document.getElementById('noteText'),
+  formStartTitle: document.getElementById('formStartTitle'),
 
+  // Phase 1 Form Elements
   form: document.getElementById('leadForm'),
-  groupName: document.getElementById('groupName'),
-  labelName: document.getElementById('labelName'),
-  inputName: document.getElementById('name'),
-  nameError: document.getElementById('nameError'),
-  nameErrorText: document.getElementById('nameErrorText'),
+
+  groupParentName: document.getElementById('groupParentName'),
+  labelParentName: document.getElementById('labelParentName'),
+  inputParentName: document.getElementById('parentName'),
+  parentNameError: document.getElementById('parentNameError'),
+  parentNameErrorText: document.getElementById('parentNameErrorText'),
+
+  groupStudentName: document.getElementById('groupStudentName'),
+  labelStudentName: document.getElementById('labelStudentName'),
+  inputStudentName: document.getElementById('studentName'),
+  studentNameError: document.getElementById('studentNameError'),
+  studentNameErrorText: document.getElementById('studentNameErrorText'),
+
+  groupStudentAge: document.getElementById('groupStudentAge'),
+  labelStudentAge: document.getElementById('labelStudentAge'),
+  inputStudentAge: document.getElementById('studentAge'),
+  studentAgeError: document.getElementById('studentAgeError'),
+  studentAgeErrorText: document.getElementById('studentAgeErrorText'),
+
+  groupStudentClass: document.getElementById('groupStudentClass'),
+  labelStudentClass: document.getElementById('labelStudentClass'),
+  inputStudentClass: document.getElementById('studentClass'),
+  studentClassError: document.getElementById('studentClassError'),
+  studentClassErrorText: document.getElementById('studentClassErrorText'),
 
   groupMobile: document.getElementById('groupMobile'),
   labelMobile: document.getElementById('labelMobile'),
@@ -522,15 +968,8 @@ const DOM = {
   mobileError: document.getElementById('mobileError'),
   mobileErrorText: document.getElementById('mobileErrorText'),
 
-  groupAge: document.getElementById('groupAge'),
-  labelAge: document.getElementById('labelAge'),
-  inputAge: document.getElementById('studentAge'),
-  ageError: document.getElementById('ageError'),
-  ageErrorText: document.getElementById('ageErrorText'),
-
   submitBtn: document.getElementById('submitBtn'),
   btnSpinner: document.getElementById('btnSpinner'),
-  btnSendIcon: document.getElementById('btnSendIcon'),
   btnText: document.getElementById('btnText'),
 
   statusToast: document.getElementById('statusToast'),
@@ -540,11 +979,13 @@ const DOM = {
   footerCallUs: document.getElementById('footerCallUs'),
 
   // Phase 2: Survey Stepper Elements
+  surveyStudentTag: document.getElementById('surveyStudentTag'),
   surveyStudentName: document.getElementById('surveyStudentName'),
   surveyProgressPill: document.getElementById('surveyProgressPill'),
   progressBarFill: document.getElementById('progressBarFill'),
   surveyStepDetail: document.getElementById('surveyStepDetail'),
   surveyPercentText: document.getElementById('surveyPercentText'),
+  assessmentSectionTag: document.getElementById('assessmentSectionTag'),
   currentQuestionTitle: document.getElementById('currentQuestionTitle'),
   questionInstruction: document.getElementById('questionInstruction'),
   optionsList: document.getElementById('optionsList'),
@@ -559,35 +1000,106 @@ const DOM = {
   // Phase 2: Evaluator Dashboard Elements
   evalResultBadge: document.getElementById('evalResultBadge'),
   evalStudentHeading: document.getElementById('evalStudentHeading'),
-  dominantStyleIcon: document.getElementById('dominantStyleIcon'),
-  dominantStyleTag: document.getElementById('dominantStyleTag'),
-  dominantStyleTitle: document.getElementById('dominantStyleTitle'),
-  dominantStyleSummary: document.getElementById('dominantStyleSummary'),
+
+  rankTitlePrimary: document.getElementById('rankTitlePrimary'),
+  namePrimary: document.getElementById('namePrimary'),
+  badgeTraitPrimary: document.getElementById('badgeTraitPrimary'),
+  scorePrimary: document.getElementById('scorePrimary'),
+
+  rankTitleSecondary: document.getElementById('rankTitleSecondary'),
+  nameSecondary: document.getElementById('nameSecondary'),
+  badgeTraitSecondary: document.getElementById('badgeTraitSecondary'),
+  scoreSecondary: document.getElementById('scoreSecondary'),
+
+  rankTitleSupporting: document.getElementById('rankTitleSupporting'),
+  nameSupporting: document.getElementById('nameSupporting'),
+  badgeTraitSupporting: document.getElementById('badgeTraitSupporting'),
+  scoreSupporting: document.getElementById('scoreSupporting'),
+
+  evalSummaryBanner: document.getElementById('evalSummaryBanner'),
+  evalSummaryText: document.getElementById('evalSummaryText'),
 
   statsSectionTitle: document.getElementById('statsSectionTitle'),
   statsSectionSubtitle: document.getElementById('statsSectionSubtitle'),
-  labelMeterVisual: document.getElementById('labelMeterVisual'),
-  scoreVisual: document.getElementById('scoreVisual'),
-  fillVisual: document.getElementById('fillVisual'),
-  labelMeterAuditory: document.getElementById('labelMeterAuditory'),
-  scoreAuditory: document.getElementById('scoreAuditory'),
-  fillAuditory: document.getElementById('fillAuditory'),
-  labelMeterReading: document.getElementById('labelMeterReading'),
-  scoreReading: document.getElementById('scoreReading'),
-  fillReading: document.getElementById('fillReading'),
-  labelMeterKinesthetic: document.getElementById('labelMeterKinesthetic'),
-  scoreKinesthetic: document.getElementById('scoreKinesthetic'),
-  fillKinesthetic: document.getElementById('fillKinesthetic'),
 
-  guidelinesSectionTitle: document.getElementById('guidelinesSectionTitle'),
-  guidelinesSectionSubtitle: document.getElementById('guidelinesSectionSubtitle'),
-  suggestionsContainer: document.getElementById('suggestionsContainer'),
+  labelMeterR: document.getElementById('labelMeterR'),
+  scoreR: document.getElementById('scoreR'),
+  fillR: document.getElementById('fillR'),
+
+  labelMeterI: document.getElementById('labelMeterI'),
+  scoreI: document.getElementById('scoreI'),
+  fillI: document.getElementById('fillI'),
+
+  labelMeterA: document.getElementById('labelMeterA'),
+  scoreA: document.getElementById('scoreA'),
+  fillA: document.getElementById('fillA'),
+
+  labelMeterS: document.getElementById('labelMeterS'),
+  scoreS: document.getElementById('scoreS'),
+  fillS: document.getElementById('fillS'),
+
+  labelMeterE: document.getElementById('labelMeterE'),
+  scoreE: document.getElementById('scoreE'),
+  fillE: document.getElementById('fillE'),
+
+  labelMeterC: document.getElementById('labelMeterC'),
+  scoreC: document.getElementById('scoreC'),
+  fillC: document.getElementById('fillC'),
+
+  // Visual Hexagon Radar & Progressive Disclosure Elements
+  riasecRadarSvg: document.getElementById('riasecRadarSvg'),
+  radarTooltip: document.getElementById('radarTooltip'),
+  chartLegend: document.getElementById('chartLegend'),
+  chartCardTitle: document.getElementById('chartCardTitle'),
+  chartCardSubtitle: document.getElementById('chartCardSubtitle'),
+  toggleGuidelinesBtn: document.getElementById('toggleGuidelinesBtn'),
+  toggleGuidelinesBtnText: document.getElementById('toggleGuidelinesBtnText'),
+  expandHintText: document.getElementById('expandHintText'),
+  collapsibleGuidelinesWrapper: document.getElementById('collapsibleGuidelinesWrapper'),
+  tabPrimary: document.getElementById('tabPrimary'),
+  tabSecondary: document.getElementById('tabSecondary'),
+  tabSupporting: document.getElementById('tabSupporting'),
+  tabPrimaryText: document.getElementById('tabPrimaryText'),
+  tabSecondaryText: document.getElementById('tabSecondaryText'),
+  tabSupportingText: document.getElementById('tabSupportingText'),
+
+  riasecDetailedContainer: document.getElementById('riasecDetailedContainer'),
+
+  rememberTitle: document.getElementById('rememberTitle'),
+  rem1: document.getElementById('rem1'),
+  rem2: document.getElementById('rem2'),
+  rem3: document.getElementById('rem3'),
+
+  stepsBoxTitle: document.getElementById('stepsBoxTitle'),
+  step1Title: document.getElementById('step1Title'),
+  step1Desc: document.getElementById('step1Desc'),
+  step2Title: document.getElementById('step2Title'),
+  step2Desc: document.getElementById('step2Desc'),
+  step3Title: document.getElementById('step3Title'),
+  step3Desc: document.getElementById('step3Desc'),
+
+  closingCtaTitle: document.getElementById('closingCtaTitle'),
+  closingCtaFlow: document.getElementById('closingCtaFlow'),
+  closingCtaTagline: document.getElementById('closingCtaTagline'),
 
   btnPrintText: document.getElementById('btnPrintText'),
   btnCounselorText: document.getElementById('btnCounselorText'),
-  btnRetakeText: document.getElementById('btnRetakeText'),
   printReportBtn: document.getElementById('printReportBtn'),
-  retakeBtn: document.getElementById('retakeBtn')
+  retakeBtn: document.getElementById('retakeBtn'),
+  btnRetakeText: document.getElementById('btnRetakeText'),
+
+  // Social Sharing & Community
+  shareTitle: document.getElementById('shareTitle'),
+  shareSubtitle: document.getElementById('shareSubtitle'),
+  shareWhatsappBtn: document.getElementById('shareWhatsappBtn'),
+  shareWhatsappText: document.getElementById('shareWhatsappText'),
+  shareFacebookBtn: document.getElementById('shareFacebookBtn'),
+  shareFacebookText: document.getElementById('shareFacebookText'),
+  shareCopyBtn: document.getElementById('shareCopyBtn'),
+  shareCopyText: document.getElementById('shareCopyText'),
+  communityTitle: document.getElementById('communityTitle'),
+  communityWaText: document.getElementById('communityWaText'),
+  communityFbText: document.getElementById('communityFbText')
 };
 
 // 7. THEME SWITCHING
@@ -639,15 +1151,27 @@ function applyLanguage(lang) {
   DOM.pageTitle.textContent = t.pageTitle;
   DOM.pageSubtitle.textContent = t.pageSubtitle;
 
-  DOM.labelName.textContent = t.labelName;
-  DOM.inputName.placeholder = t.namePlaceholder;
+  DOM.introP1.textContent = t.introP1;
+  DOM.introP2.textContent = t.introP2;
+  DOM.noteTag.textContent = t.noteTag;
+  DOM.noteText.textContent = t.noteText;
+  DOM.formStartTitle.textContent = t.formStartTitle;
+
+  DOM.labelParentName.textContent = t.labelParentName;
+  DOM.inputParentName.placeholder = t.placeholderParentName;
+
+  DOM.labelStudentName.textContent = t.labelStudentName;
+  DOM.inputStudentName.placeholder = t.placeholderStudentName;
+
+  DOM.labelStudentAge.textContent = t.labelStudentAge;
+  DOM.inputStudentAge.placeholder = t.placeholderStudentAge;
+
+  DOM.labelStudentClass.textContent = t.labelStudentClass;
+  DOM.inputStudentClass.placeholder = t.placeholderStudentClass;
 
   DOM.labelMobile.textContent = t.labelMobile;
-  DOM.inputMobile.placeholder = t.mobilePlaceholder;
+  DOM.inputMobile.placeholder = t.placeholderMobile;
   DOM.mobileHint.textContent = t.mobileHint;
-
-  DOM.labelAge.textContent = t.labelAge;
-  DOM.inputAge.placeholder = t.agePlaceholder;
 
   if (!state.isSubmitting) {
     DOM.btnText.textContent = t.btnSubmit;
@@ -658,25 +1182,70 @@ function applyLanguage(lang) {
   DOM.footerCallUs.textContent = t.footerCallUs;
 
   // Stepper UI Texts
+  DOM.assessmentSectionTag.textContent = t.assessmentSectionTag;
   DOM.questionInstruction.textContent = t.qInstruction;
   DOM.btnPrevText.textContent = t.btnPrev;
   DOM.btnNextText.textContent = t.btnNext;
   DOM.btnFinishText.textContent = t.btnFinish;
 
   // Evaluator Dashboard Texts
-  DOM.evalResultBadge.textContent = t.evalBadge;
-  DOM.dominantStyleTag.textContent = t.dominantTag;
+  DOM.evalResultBadge.textContent = t.evalResultBadge;
+  DOM.rankTitlePrimary.textContent = t.rankTitlePrimary;
+  DOM.rankTitleSecondary.textContent = t.rankTitleSecondary;
+  DOM.rankTitleSupporting.textContent = t.rankTitleSupporting;
+
   DOM.statsSectionTitle.textContent = t.statsTitle;
   DOM.statsSectionSubtitle.textContent = t.statsSubtitle;
-  DOM.labelMeterVisual.textContent = t.labelVisual;
-  DOM.labelMeterAuditory.textContent = t.labelAuditory;
-  DOM.labelMeterReading.textContent = t.labelReading;
-  DOM.labelMeterKinesthetic.textContent = t.labelKinesthetic;
-  DOM.guidelinesSectionTitle.textContent = t.guidelinesTitle;
-  DOM.guidelinesSectionSubtitle.textContent = t.guidelinesSubtitle;
+
+  if (DOM.chartCardTitle) DOM.chartCardTitle.textContent = t.chartCardTitle;
+  if (DOM.chartCardSubtitle) DOM.chartCardSubtitle.textContent = t.chartCardSubtitle;
+  if (DOM.expandHintText) DOM.expandHintText.textContent = t.expandHintText;
+  if (DOM.tabPrimaryText) DOM.tabPrimaryText.textContent = t.tabPrimaryText;
+  if (DOM.tabSecondaryText) DOM.tabSecondaryText.textContent = t.tabSecondaryText;
+  if (DOM.tabSupportingText) DOM.tabSupportingText.textContent = t.tabSupportingText;
+
+  if (DOM.toggleGuidelinesBtnText) {
+    const isExpanded = DOM.collapsibleGuidelinesWrapper && DOM.collapsibleGuidelinesWrapper.style.display !== 'none';
+    DOM.toggleGuidelinesBtnText.textContent = isExpanded ? t.btnCollapseGuidelines : t.btnExpandGuidelines;
+  }
+
+  DOM.labelMeterR.textContent = t.labelMeterR;
+  DOM.labelMeterI.textContent = t.labelMeterI;
+  DOM.labelMeterA.textContent = t.labelMeterA;
+  DOM.labelMeterS.textContent = t.labelMeterS;
+  DOM.labelMeterE.textContent = t.labelMeterE;
+  DOM.labelMeterC.textContent = t.labelMeterC;
+
+  DOM.rememberTitle.textContent = t.rememberTitle;
+  DOM.rem1.textContent = t.rem1;
+  DOM.rem2.textContent = t.rem2;
+  DOM.rem3.textContent = t.rem3;
+
+  DOM.stepsBoxTitle.textContent = t.stepsBoxTitle;
+  DOM.step1Title.textContent = t.step1Title;
+  DOM.step1Desc.textContent = t.step1Desc;
+  DOM.step2Title.textContent = t.step2Title;
+  DOM.step2Desc.textContent = t.step2Desc;
+  DOM.step3Title.textContent = t.step3Title;
+  DOM.step3Desc.textContent = t.step3Desc;
+
+  DOM.closingCtaTitle.textContent = t.closingCtaTitle;
+  DOM.closingCtaFlow.textContent = t.closingCtaFlow;
+  DOM.closingCtaTagline.textContent = t.closingCtaTagline;
+
   DOM.btnPrintText.textContent = t.btnPrint;
   DOM.btnCounselorText.textContent = t.btnCounselor;
   DOM.btnRetakeText.textContent = t.btnRetake;
+
+  // Social Share & Community Texts
+  if (DOM.shareTitle) DOM.shareTitle.textContent = t.shareTitle;
+  if (DOM.shareSubtitle) DOM.shareSubtitle.textContent = t.shareSubtitle;
+  if (DOM.shareWhatsappText) DOM.shareWhatsappText.textContent = t.shareWhatsappText;
+  if (DOM.shareFacebookText) DOM.shareFacebookText.textContent = t.shareFacebookText;
+  if (DOM.shareCopyText && !DOM.shareCopyBtn.classList.contains('copied')) DOM.shareCopyText.textContent = t.shareCopyText;
+  if (DOM.communityTitle) DOM.communityTitle.textContent = t.communityTitle;
+  if (DOM.communityWaText) DOM.communityWaText.textContent = t.communityWaText;
+  if (DOM.communityFbText) DOM.communityFbText.textContent = t.communityFbText;
 
   // If in survey phase, refresh current question rendering
   if (DOM.phase2View.style.display !== 'none') {
@@ -716,28 +1285,81 @@ function hideToast() {
   DOM.statusToast.className = 'status-toast';
 }
 
-// 10. CLIENT-SIDE VALIDATION
+// 10. CLIENT-SIDE VALIDATION (5 Fields)
 const BD_PHONE_REGEX = /^01[3-9]\d{8}$/;
 
-function validateName(focusOnError = false) {
-  const val = DOM.inputName.value.trim();
+function validateParentName(focusOnError = false) {
+  const val = DOM.inputParentName.value.trim();
   const t = translations[state.lang];
 
   if (!val) {
-    DOM.groupName.classList.add('has-error');
-    DOM.nameErrorText.textContent = t.nameErrorEmpty;
-    if (focusOnError) DOM.inputName.focus();
+    DOM.groupParentName.classList.add('has-error');
+    DOM.parentNameErrorText.textContent = t.errorParentNameEmpty;
+    if (focusOnError) DOM.inputParentName.focus();
     return false;
   }
-
   if (val.length < 2) {
-    DOM.groupName.classList.add('has-error');
-    DOM.nameErrorText.textContent = t.nameErrorShort;
-    if (focusOnError) DOM.inputName.focus();
+    DOM.groupParentName.classList.add('has-error');
+    DOM.parentNameErrorText.textContent = t.errorParentNameShort;
+    if (focusOnError) DOM.inputParentName.focus();
     return false;
   }
+  DOM.groupParentName.classList.remove('has-error');
+  return true;
+}
 
-  DOM.groupName.classList.remove('has-error');
+function validateStudentName(focusOnError = false) {
+  const val = DOM.inputStudentName.value.trim();
+  const t = translations[state.lang];
+
+  if (!val) {
+    DOM.groupStudentName.classList.add('has-error');
+    DOM.studentNameErrorText.textContent = t.errorStudentNameEmpty;
+    if (focusOnError) DOM.inputStudentName.focus();
+    return false;
+  }
+  if (val.length < 2) {
+    DOM.groupStudentName.classList.add('has-error');
+    DOM.studentNameErrorText.textContent = t.errorStudentNameShort;
+    if (focusOnError) DOM.inputStudentName.focus();
+    return false;
+  }
+  DOM.groupStudentName.classList.remove('has-error');
+  return true;
+}
+
+function validateStudentAge(focusOnError = false) {
+  const val = DOM.inputStudentAge.value.trim();
+  const t = translations[state.lang];
+
+  if (!val) {
+    DOM.groupStudentAge.classList.add('has-error');
+    DOM.studentAgeErrorText.textContent = t.errorStudentAgeEmpty;
+    if (focusOnError) DOM.inputStudentAge.focus();
+    return false;
+  }
+  const ageNum = parseInt(val, 10);
+  if (isNaN(ageNum) || ageNum < 1 || ageNum > 99) {
+    DOM.groupStudentAge.classList.add('has-error');
+    DOM.studentAgeErrorText.textContent = t.errorStudentAgeInvalid;
+    if (focusOnError) DOM.inputStudentAge.focus();
+    return false;
+  }
+  DOM.groupStudentAge.classList.remove('has-error');
+  return true;
+}
+
+function validateStudentClass(focusOnError = false) {
+  const val = DOM.inputStudentClass.value.trim();
+  const t = translations[state.lang];
+
+  if (!val) {
+    DOM.groupStudentClass.classList.add('has-error');
+    DOM.studentClassErrorText.textContent = t.errorStudentClassEmpty;
+    if (focusOnError) DOM.inputStudentClass.focus();
+    return false;
+  }
+  DOM.groupStudentClass.classList.remove('has-error');
   return true;
 }
 
@@ -747,42 +1369,17 @@ function validateMobile(focusOnError = false) {
 
   if (!val) {
     DOM.groupMobile.classList.add('has-error');
-    DOM.mobileErrorText.textContent = t.mobileErrorEmpty;
+    DOM.mobileErrorText.textContent = t.errorMobileEmpty;
     if (focusOnError) DOM.inputMobile.focus();
     return false;
   }
-
   if (!BD_PHONE_REGEX.test(val)) {
     DOM.groupMobile.classList.add('has-error');
-    DOM.mobileErrorText.textContent = t.mobileErrorInvalid;
+    DOM.mobileErrorText.textContent = t.errorMobileInvalid;
     if (focusOnError) DOM.inputMobile.focus();
     return false;
   }
-
   DOM.groupMobile.classList.remove('has-error');
-  return true;
-}
-
-function validateAge(focusOnError = false) {
-  const val = DOM.inputAge.value.trim();
-  const t = translations[state.lang];
-
-  if (!val) {
-    DOM.groupAge.classList.add('has-error');
-    DOM.ageErrorText.textContent = t.ageErrorEmpty;
-    if (focusOnError) DOM.inputAge.focus();
-    return false;
-  }
-
-  const ageNum = parseInt(val, 10);
-  if (isNaN(ageNum) || ageNum < 1 || ageNum > 99) {
-    DOM.groupAge.classList.add('has-error');
-    DOM.ageErrorText.textContent = t.ageErrorInvalid;
-    if (focusOnError) DOM.inputAge.focus();
-    return false;
-  }
-
-  DOM.groupAge.classList.remove('has-error');
   return true;
 }
 
@@ -790,54 +1387,51 @@ function clearErrorOnInput(groupEl) {
   groupEl.classList.remove('has-error');
 }
 
-// 11. PHASE 1: FORM SUBMISSION (Records Lead into Google Sheet)
+// 11. PHASE 1: FORM SUBMISSION (Submits 5 fields to Google Apps Script Web App)
 async function handlePhase1Submit(e) {
   e.preventDefault();
   hideToast();
 
-  const isNameValid = validateName(false);
+  const isParentNameValid = validateParentName(false);
+  const isStudentNameValid = validateStudentName(false);
+  const isAgeValid = validateStudentAge(false);
+  const isClassValid = validateStudentClass(false);
   const isMobileValid = validateMobile(false);
-  const isAgeValid = validateAge(false);
 
-  if (!isNameValid) {
-    validateName(true);
-    return;
-  }
-  if (!isMobileValid) {
-    validateMobile(true);
-    return;
-  }
-  if (!isAgeValid) {
-    validateAge(true);
-    return;
-  }
+  if (!isParentNameValid) { validateParentName(true); return; }
+  if (!isStudentNameValid) { validateStudentName(true); return; }
+  if (!isAgeValid) { validateStudentAge(true); return; }
+  if (!isClassValid) { validateStudentClass(true); return; }
+  if (!isMobileValid) { validateMobile(true); return; }
 
-  state.student.name = DOM.inputName.value.trim();
-  state.student.mobile = DOM.inputMobile.value.trim();
-  state.student.studentAge = DOM.inputAge.value.trim();
+  state.lead.parentName = DOM.inputParentName.value.trim();
+  state.lead.studentName = DOM.inputStudentName.value.trim();
+  state.lead.studentAge = DOM.inputStudentAge.value.trim();
+  state.lead.studentClass = DOM.inputStudentClass.value.trim();
+  state.lead.mobile = DOM.inputMobile.value.trim();
 
   const payload = {
-    name: state.student.name,
-    mobile: state.student.mobile,
-    studentAge: state.student.studentAge
+    parentName: state.lead.parentName,
+    studentName: state.lead.studentName,
+    studentAge: state.lead.studentAge,
+    studentClass: state.lead.studentClass,
+    mobile: state.lead.mobile
   };
 
   const t = translations[state.lang];
 
-  // If SCRIPT_URL has not been set yet
   if (!SCRIPT_URL || SCRIPT_URL === "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE") {
     showToast('error', t.unconfiguredUrlToast, 8000);
     return;
   }
 
-  // Submitting state
+  // Set submitting state
   state.isSubmitting = true;
   DOM.submitBtn.disabled = true;
   DOM.submitBtn.classList.add('loading');
   DOM.btnText.textContent = t.btnSubmitting;
 
   try {
-    // Send Phase 1 lead data to Google Apps Script Web App
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
       headers: {
@@ -855,8 +1449,6 @@ async function handlePhase1Submit(e) {
 
     if (result && result.result === "success") {
       showToast('success', t.successToast, 3500);
-      
-      // Transition to Phase 2 (Static Evaluator) after short delay
       setTimeout(() => {
         transitionToPhase2();
       }, 700);
@@ -878,14 +1470,14 @@ async function handlePhase1Submit(e) {
   }
 }
 
-// 12. TRANSITION TO PHASE 2 (Interactive Questionnaire & Evaluator)
+// 12. TRANSITION TO PHASE 2 (Static RIASEC Evaluator)
 function transitionToPhase2() {
   DOM.phase1View.style.display = 'none';
   DOM.phase2View.style.display = 'block';
   DOM.surveyStepperContainer.style.display = 'block';
   DOM.evaluatorDashboard.style.display = 'none';
 
-  DOM.surveyStudentName.textContent = state.student.name;
+  DOM.surveyStudentName.textContent = state.lead.studentName;
 
   state.currentQuestionIndex = 0;
   state.answers = {};
@@ -894,7 +1486,7 @@ function transitionToPhase2() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 13. QUESTIONNAIRE RENDERING & INTERACTION
+// 13. QUESTIONNAIRE RENDERING & INTERACTION (6 Options A-F)
 function renderQuestion(index) {
   const qData = questionBank[index];
   const t = translations[state.lang];
@@ -904,7 +1496,7 @@ function renderQuestion(index) {
   const currentNum = index + 1;
   const pct = Math.round((currentNum / totalQ) * 100);
 
-  // Update progress headers
+  // Update progress bar & counters
   DOM.surveyProgressPill.textContent = t.pillTextTemplate(currentNum, totalQ);
   DOM.progressBarFill.style.width = `${pct}%`;
   DOM.surveyStepDetail.textContent = t.stepTextTemplate(currentNum, totalQ);
@@ -914,18 +1506,20 @@ function renderQuestion(index) {
   const prefix = state.lang === 'bn' ? `প্রশ্ন ${toBengaliNum(currentNum)}: ` : `Question ${currentNum}: `;
   DOM.currentQuestionTitle.textContent = `${prefix}${langData.question}`;
 
-  // Options List
+  // Render 6 Options (A to F)
   DOM.optionsList.innerHTML = '';
   const selectedType = state.answers[index];
 
   langData.options.forEach((opt) => {
     const itemEl = document.createElement('div');
-    itemEl.className = 'option-item' + (selectedType === opt.type ? ' selected' : '');
+    const isSelected = selectedType === opt.type;
+    itemEl.className = 'option-item' + (isSelected ? ' selected' : '');
     itemEl.setAttribute('role', 'radio');
-    itemEl.setAttribute('aria-checked', selectedType === opt.type ? 'true' : 'false');
+    itemEl.setAttribute('aria-checked', isSelected ? 'true' : 'false');
     itemEl.tabIndex = 0;
 
     itemEl.innerHTML = `
+      <span class="option-letter-badge">${opt.letter}</span>
       <div class="option-radio">
         <div class="option-radio-dot"></div>
       </div>
@@ -934,13 +1528,11 @@ function renderQuestion(index) {
 
     const selectOption = () => {
       state.answers[index] = opt.type;
-      
-      // Update UI classes
+
       const allItems = DOM.optionsList.querySelectorAll('.option-item');
       allItems.forEach(el => el.classList.remove('selected'));
       itemEl.classList.add('selected');
 
-      // Update Navigation Buttons
       updateNavButtons();
     };
 
@@ -963,7 +1555,6 @@ function updateNavButtons() {
   const isAnswered = Boolean(state.answers[index]);
   const isLast = index === questionBank.length - 1;
 
-  // Previous button: disabled only on first question
   DOM.prevQuestionBtn.disabled = index === 0;
 
   if (!isLast) {
@@ -991,15 +1582,15 @@ function handlePrevQuestion() {
   }
 }
 
-// 14. EVALUATOR CALCULATION & DASHBOARD (Purely Client-Side Static Evaluation)
+// 14. RIASEC SCORING ENGINE & EVALUATOR DASHBOARD (Purely Client-Side Static Evaluation)
 function handleFinishSurvey() {
   const t = translations[state.lang];
   DOM.finishSurveyBtn.disabled = true;
   DOM.finishSpinner.style.display = 'inline-block';
   DOM.btnFinishText.textContent = t.calculating;
 
-  // Count scores for V, A, R, K
-  const scores = { V: 0, A: 0, R: 0, K: 0 };
+  // Initialize scores for R, I, A, S, E, C
+  const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
   for (let i = 0; i < questionBank.length; i++) {
     const ans = state.answers[i];
     if (ans && scores[ans] !== undefined) {
@@ -1007,19 +1598,15 @@ function handleFinishSurvey() {
     }
   }
 
-  // Determine Dominant Learning Style
-  // If top scores are tied or within 1 point of each other -> Multimodal (M)
-  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-  const highestScore = sorted[0][1];
-  const secondHighest = sorted[1][1];
-
-  let dominantKey = sorted[0][0];
-  if (highestScore - secondHighest <= 1 && highestScore > 0) {
-    dominantKey = 'M'; // Multimodal Learner
-  }
+  // Sort traits descending by score
+  const traitOrder = ['R', 'I', 'A', 'S', 'E', 'C'];
+  const sorted = traitOrder.map(key => ({
+    key,
+    score: scores[key] || 0
+  })).sort((a, b) => b.score - a.score);
 
   state.evaluatedScores = scores;
-  state.evaluatedDominantStyle = dominantKey;
+  state.evaluatedRankings = sorted;
 
   setTimeout(() => {
     DOM.finishSpinner.style.display = 'none';
@@ -1031,74 +1618,384 @@ function handleFinishSurvey() {
     DOM.evaluatorDashboard.style.display = 'flex';
     renderEvaluatorResults();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 400);
+  }, 450);
+}
+
+// RIASEC Hexagon Radar Configuration (Holland's Standard Ordering Clockwise from Top)
+const RIASEC_CONFIG = [
+  { key: 'R', angle: -90, color: '#2563eb', bn: 'Realistic (হাতে-কলমে)', en: 'Realistic (Hands-on)' },
+  { key: 'I', angle: -30, color: '#0284c7', bn: 'Investigative (বিশ্লেষণধর্মী)', en: 'Investigative (Analytical)' },
+  { key: 'A', angle: 30,  color: '#8b5cf6', bn: 'Artistic (সৃজনশীলতা)', en: 'Artistic (Creative)' },
+  { key: 'S', angle: 90,  color: '#ec4899', bn: 'Social (সহযোগিতা ও যোগাযোগ)', en: 'Social (Helping)' },
+  { key: 'E', angle: 150, color: '#f97316', bn: 'Enterprising (নেতৃত্ব)', en: 'Enterprising (Leadership)' },
+  { key: 'C', angle: 210, color: '#10b981', bn: 'Conventional (শৃঙ্খলা)', en: 'Conventional (Structured)' }
+];
+
+function renderRiasecRadarChart(scores) {
+  if (!DOM.riasecRadarSvg) return;
+  const isBn = state.lang === 'bn';
+  const total = 10;
+  const cx = 190;
+  const cy = 160;
+  const maxR = 108;
+  const levels = [0.25, 0.5, 0.75, 1.0];
+
+  // 1. Concentric Hexagon Grid Rings
+  let gridSvg = '';
+  levels.forEach((lvl, idx) => {
+    const r = lvl * maxR;
+    const pts = RIASEC_CONFIG.map(cfg => {
+      const rad = (cfg.angle * Math.PI) / 180;
+      return `${(cx + r * Math.cos(rad)).toFixed(1)},${(cy + r * Math.sin(rad)).toFixed(1)}`;
+    }).join(' ');
+    const isOuter = idx === levels.length - 1;
+    gridSvg += `<polygon points="${pts}" fill="none" stroke="currentColor" stroke-opacity="${isOuter ? '0.22' : '0.12'}" stroke-width="${isOuter ? '1.5' : '1'}" stroke-dasharray="${isOuter ? 'none' : '3,3'}" />`;
+  });
+
+  // 2. Radial Spoke Lines & Axis Labels
+  let spokesSvg = '';
+  let labelsSvg = '';
+  RIASEC_CONFIG.forEach(cfg => {
+    const rad = (cfg.angle * Math.PI) / 180;
+    const outerX = cx + maxR * Math.cos(rad);
+    const outerY = cy + maxR * Math.sin(rad);
+    spokesSvg += `<line x1="${cx}" y1="${cy}" x2="${outerX.toFixed(1)}" y2="${outerY.toFixed(1)}" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" />`;
+
+    // Outer Label Position
+    const labelR = maxR + 24;
+    const lx = cx + labelR * Math.cos(rad);
+    const ly = cy + labelR * Math.sin(rad);
+
+    let anchor = 'middle';
+    let dy = '0.35em';
+    if (cfg.angle === -90) { anchor = 'middle'; dy = '-0.4em'; }
+    else if (cfg.angle === 90) { anchor = 'middle'; dy = '1.1em'; }
+    else if (cfg.angle > -90 && cfg.angle < 90) { anchor = 'start'; }
+    else { anchor = 'end'; }
+
+    const labelShort = isBn ? cfg.bn.split(' ')[0] : cfg.en.split(' ')[0];
+    labelsSvg += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dy="${dy}" fill="currentColor" font-size="11.5" font-weight="700" class="radar-axis-label">${cfg.key}: ${labelShort}</text>`;
+  });
+
+  // 3. Dynamic Data Polygon
+  const dataCoords = RIASEC_CONFIG.map(cfg => {
+    const s = scores[cfg.key] || 0;
+    const r = Math.max(12, (s / total) * maxR);
+    const rad = (cfg.angle * Math.PI) / 180;
+    return {
+      x: cx + r * Math.cos(rad),
+      y: cy + r * Math.sin(rad),
+      score: s,
+      key: cfg.key,
+      color: cfg.color,
+      name: isBn ? cfg.bn : cfg.en
+    };
+  });
+
+  const polyPoints = dataCoords.map(pt => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(' ');
+
+  const defsSvg = `
+    <defs>
+      <radialGradient id="radarFillGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ee3e26" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="#233e95" stop-opacity="0.45" />
+      </radialGradient>
+    </defs>
+  `;
+
+  const polySvg = `<polygon points="${polyPoints}" fill="url(#radarFillGrad)" stroke="#233e95" stroke-width="2.5" stroke-linejoin="round" class="radar-data-poly" />`;
+
+  // 4. Vertex Interactive Circles
+  let nodesSvg = '';
+  dataCoords.forEach(pt => {
+    nodesSvg += `
+      <g class="radar-node-group" data-trait="${pt.key}" data-score="${pt.score}" data-name="${pt.name}" style="cursor: pointer;">
+        <circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="6.5" fill="${pt.color}" stroke="#ffffff" stroke-width="2.5" class="radar-node-dot" />
+        <circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="16" fill="transparent" class="radar-node-hitbox" />
+      </g>
+    `;
+  });
+
+  DOM.riasecRadarSvg.innerHTML = `${defsSvg}${gridSvg}${spokesSvg}${labelsSvg}${polySvg}${nodesSvg}`;
+
+  // Attach hover interactions to nodes
+  const nodeGroups = DOM.riasecRadarSvg.querySelectorAll('.radar-node-group');
+  nodeGroups.forEach(grp => {
+    grp.addEventListener('mouseenter', () => {
+      const score = grp.getAttribute('data-score');
+      const name = grp.getAttribute('data-name');
+      const circle = grp.querySelector('.radar-node-dot');
+      if (circle) circle.setAttribute('r', '9');
+
+      const pct = Math.round((score / total) * 100);
+      const scoreStr = isBn ? toBengaliNum(score) : score;
+      const pctStr = isBn ? toBengaliNum(pct) : pct;
+
+      DOM.radarTooltip.innerHTML = `<strong>${name}</strong><br/>${isBn ? 'স্কোর' : 'Score'}: <strong>${scoreStr}/${isBn ? '১০' : '10'} (${pctStr}%)</strong>`;
+      DOM.radarTooltip.style.display = 'block';
+
+      if (circle) {
+        const circleRect = circle.getBoundingClientRect();
+        const wrapRect = DOM.riasecRadarSvg.parentElement.getBoundingClientRect();
+        const left = circleRect.left + circleRect.width / 2 - wrapRect.left;
+        const top = circleRect.top - wrapRect.top;
+        DOM.radarTooltip.style.left = `${left}px`;
+        DOM.radarTooltip.style.top = `${top}px`;
+      }
+    });
+
+    grp.addEventListener('mouseleave', () => {
+      const circle = grp.querySelector('.radar-node-dot');
+      if (circle) circle.setAttribute('r', '6.5');
+      DOM.radarTooltip.style.display = 'none';
+    });
+  });
+
+  // 5. Populate Interactive Legend Chips
+  if (DOM.chartLegend) {
+    DOM.chartLegend.innerHTML = '';
+    RIASEC_CONFIG.forEach(cfg => {
+      const s = scores[cfg.key] || 0;
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'legend-chip';
+      chip.setAttribute('data-trait', cfg.key);
+      const scoreStr = isBn ? toBengaliNum(s) : s;
+      const labelShort = isBn ? cfg.bn.split(' ')[0] : cfg.en.split(' ')[0];
+
+      chip.innerHTML = `
+        <span class="legend-chip-dot" style="background: ${cfg.color};"></span>
+        <span>${cfg.key}: ${labelShort}</span>
+        <strong>(${scoreStr})</strong>
+      `;
+
+      chip.addEventListener('mouseenter', () => {
+        const matchedNode = DOM.riasecRadarSvg.querySelector(`.radar-node-group[data-trait="${cfg.key}"]`);
+        if (matchedNode) {
+          const event = new MouseEvent('mouseenter');
+          matchedNode.dispatchEvent(event);
+        }
+      });
+
+      chip.addEventListener('mouseleave', () => {
+        const matchedNode = DOM.riasecRadarSvg.querySelector(`.radar-node-group[data-trait="${cfg.key}"]`);
+        if (matchedNode) {
+          const event = new MouseEvent('mouseleave');
+          matchedNode.dispatchEvent(event);
+        }
+      });
+
+      DOM.chartLegend.appendChild(chip);
+    });
+  }
+}
+
+function renderGuidelineTab(rank) {
+  state.activeGuidelineTab = rank;
+  const lang = state.lang;
+  const isBn = lang === 'bn';
+  const t = translations[lang];
+  const sorted = state.evaluatedRankings;
+  if (!sorted || sorted.length === 0) return;
+
+  let targetIndex = 0;
+  let rankBadge = isBn ? "🥇 শীর্ষ ১: Primary Personality" : "🥇 Rank 1: Primary Personality";
+
+  if (rank === 'secondary') {
+    targetIndex = 1;
+    rankBadge = isBn ? "🥈 শীর্ষ ২: Secondary Personality" : "🥈 Rank 2: Secondary Personality";
+  } else if (rank === 'supporting') {
+    targetIndex = 2;
+    rankBadge = isBn ? "🥉 শীর্ষ ৩: Supporting Personality" : "🥉 Rank 3: Supporting Personality";
+  }
+
+  const target = sorted[targetIndex];
+  if (!target) return;
+
+  const raw = riasecGuidelines[target.key];
+  const g = raw[lang];
+
+  // Update active tab buttons
+  [DOM.tabPrimary, DOM.tabSecondary, DOM.tabSupporting].forEach(btn => {
+    if (!btn) return;
+    const isThis = btn.getAttribute('data-rank') === rank;
+    if (isThis) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+    } else {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  // Render detail card
+  const traitsHtml = g.observedTraits.map(tr => `<li>${tr}</li>`).join('');
+  const doHtml = g.doList.map(d => `<li>${d}</li>`).join('');
+  const avoidHtml = g.avoidList.map(a => `<li>${a}</li>`).join('');
+  const careerChipsHtml = g.careers.map(c => `<span class="career-chip">${c}</span>`).join('');
+
+  DOM.riasecDetailedContainer.innerHTML = `
+    <div class="riasec-detail-card">
+      <div class="riasec-card-header">
+        <div class="riasec-header-left">
+          <span class="riasec-card-icon">${raw.icon}</span>
+          <div>
+            <h4 class="riasec-card-title">${g.title}</h4>
+            <span class="riasec-card-subtitle">${g.subtitle}</span>
+          </div>
+        </div>
+        <span class="riasec-rank-tag">${rankBadge}</span>
+      </div>
+
+      <p class="suggestion-body" style="margin-bottom: 14px; font-weight: 500;">${g.description}</p>
+
+      <div class="observed-traits-box">
+        <h5 class="subheading-traits">
+          <span>🔍</span> ${t.traitsHeading}
+        </h5>
+        <ul class="traits-list">
+          ${traitsHtml}
+        </ul>
+      </div>
+
+      <div class="do-avoid-grid">
+        <div class="do-card">
+          <h5><span>✓</span> ${t.doHeading}</h5>
+          <ul class="do-list">
+            ${doHtml}
+          </ul>
+        </div>
+        <div class="avoid-card">
+          <h5><span>✕</span> ${t.avoidHeading}</h5>
+          <ul class="avoid-list">
+            ${avoidHtml}
+          </ul>
+        </div>
+      </div>
+
+      <div class="career-env-box">
+        <h5 class="career-env-title">💼 ${t.careerEnvHeading}</h5>
+        <div class="career-chips">
+          ${careerChipsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function switchGuidelineTab(rank) {
+  renderGuidelineTab(rank);
+}
+
+function handleToggleGuidelines() {
+  const wrapper = DOM.collapsibleGuidelinesWrapper;
+  if (!wrapper) return;
+  const isHidden = wrapper.style.display === 'none';
+  const t = translations[state.lang];
+
+  if (isHidden) {
+    wrapper.style.display = 'flex';
+    DOM.toggleGuidelinesBtn.classList.add('expanded');
+    DOM.toggleGuidelinesBtnText.textContent = t.btnCollapseGuidelines;
+    DOM.toggleGuidelinesBtn.setAttribute('aria-expanded', 'true');
+    renderGuidelineTab(state.activeGuidelineTab || 'primary');
+    wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    wrapper.style.display = 'none';
+    DOM.toggleGuidelinesBtn.classList.remove('expanded');
+    DOM.toggleGuidelinesBtnText.textContent = t.btnExpandGuidelines;
+    DOM.toggleGuidelinesBtn.setAttribute('aria-expanded', 'false');
+  }
 }
 
 function renderEvaluatorResults() {
   const scores = state.evaluatedScores;
-  const dominantKey = state.evaluatedDominantStyle;
+  const sorted = state.evaluatedRankings;
   const lang = state.lang;
   const t = translations[lang];
+  const isBn = lang === 'bn';
 
-  // Personalized Student Heading
-  DOM.evalStudentHeading.textContent = t.evalStudentTemplate(state.student.name || (lang === 'bn' ? 'শিক্ষার্থী' : 'Student'));
+  const primary = sorted[0];
+  const secondary = sorted[1];
+  const tertiary = sorted[2];
 
-  // Dominant Profile Box
-  const profile = varkGuidelines[dominantKey];
-  const profileLang = profile[lang];
+  const primaryGuide = riasecGuidelines[primary.key][lang];
+  const secondaryGuide = riasecGuidelines[secondary.key][lang];
+  const tertiaryGuide = riasecGuidelines[tertiary.key][lang];
 
-  DOM.dominantStyleIcon.textContent = profile.icon;
-  DOM.dominantStyleTitle.textContent = profileLang.title;
-  DOM.dominantStyleSummary.textContent = profileLang.summary;
+  // 1. Personalized Student Heading
+  const studentDisplayName = state.lead.studentName || (isBn ? 'আপনার সন্তান' : 'Your Child');
+  DOM.evalStudentHeading.textContent = t.evalHeadingTemplate(studentDisplayName);
 
-  // Update Statistics Meter Figures
+  // 2. Podium Rank 1 (Gold 🥇: Primary Personality)
+  DOM.namePrimary.textContent = primaryGuide.name;
+  DOM.badgeTraitPrimary.textContent = t.badgeTraitHigh;
+  DOM.scorePrimary.textContent = `${isBn ? toBengaliNum(primary.score) : primary.score}/10`;
+
+  // Podium Rank 2 (Silver 🥈: Secondary Personality)
+  DOM.nameSecondary.textContent = secondaryGuide.name;
+  DOM.badgeTraitSecondary.textContent = t.badgeTraitHigh;
+  DOM.scoreSecondary.textContent = `${isBn ? toBengaliNum(secondary.score) : secondary.score}/10`;
+
+  // Podium Rank 3 (Bronze 🥉: Supporting Personality)
+  DOM.nameSupporting.textContent = tertiaryGuide.name;
+  DOM.badgeTraitSupporting.textContent = t.badgeTraitModerate;
+  DOM.scoreSupporting.textContent = `${isBn ? toBengaliNum(tertiary.score) : tertiary.score}/10`;
+
+  // 3. Summary Statement
+  DOM.evalSummaryText.textContent = t.summaryTemplate(primaryGuide.name, secondaryGuide.name);
+
+  // 4. Animate 6 RIASEC Meters
   const total = 10;
-  const vPct = Math.round((scores.V / total) * 100);
-  const aPct = Math.round((scores.A / total) * 100);
-  const rPct = Math.round((scores.R / total) * 100);
-  const kPct = Math.round((scores.K / total) * 100);
+  const meterElements = [
+    { key: 'R', label: DOM.scoreR, fill: DOM.fillR },
+    { key: 'I', label: DOM.scoreI, fill: DOM.fillI },
+    { key: 'A', label: DOM.scoreA, fill: DOM.fillA },
+    { key: 'S', label: DOM.scoreS, fill: DOM.fillS },
+    { key: 'E', label: DOM.scoreE, fill: DOM.fillE },
+    { key: 'C', label: DOM.scoreC, fill: DOM.fillC }
+  ];
 
-  if (lang === 'bn') {
-    DOM.scoreVisual.textContent = `${toBengaliNum(scores.V)}/${toBengaliNum(total)} (${toBengaliNum(vPct)}%)`;
-    DOM.scoreAuditory.textContent = `${toBengaliNum(scores.A)}/${toBengaliNum(total)} (${toBengaliNum(aPct)}%)`;
-    DOM.scoreReading.textContent = `${toBengaliNum(scores.R)}/${toBengaliNum(total)} (${toBengaliNum(rPct)}%)`;
-    DOM.scoreKinesthetic.textContent = `${toBengaliNum(scores.K)}/${toBengaliNum(total)} (${toBengaliNum(kPct)}%)`;
-  } else {
-    DOM.scoreVisual.textContent = `${scores.V}/${total} (${vPct}%)`;
-    DOM.scoreAuditory.textContent = `${scores.A}/${total} (${aPct}%)`;
-    DOM.scoreReading.textContent = `${scores.R}/${total} (${rPct}%)`;
-    DOM.scoreKinesthetic.textContent = `${scores.K}/${total} (${kPct}%)`;
-  }
-
-  // Trigger meter fill animation
-  setTimeout(() => {
-    DOM.fillVisual.style.width = `${vPct}%`;
-    DOM.fillAuditory.style.width = `${aPct}%`;
-    DOM.fillReading.style.width = `${rPct}%`;
-    DOM.fillKinesthetic.style.width = `${kPct}%`;
-  }, 50);
-
-  // Render Detailed Suggestions (Part 2 of PDF)
-  DOM.suggestionsContainer.innerHTML = '';
-  profileLang.suggestions.forEach(item => {
-    const cardEl = document.createElement('div');
-    cardEl.className = 'suggestion-card';
-    cardEl.innerHTML = `
-      <div class="suggestion-header">
-        <span class="suggestion-icon">${item.icon}</span>
-        <h4 class="suggestion-title">${item.title}</h4>
-      </div>
-      <p class="suggestion-body">${item.text}</p>
-    `;
-    DOM.suggestionsContainer.appendChild(cardEl);
+  meterElements.forEach(m => {
+    const val = scores[m.key] || 0;
+    const pct = Math.round((val / total) * 100);
+    animateMeter(m.label, m.fill, val, total, pct, isBn);
   });
+
+  // 5. Render Interactive Hexagon Radar Chart & Legend
+  renderRiasecRadarChart(scores);
+
+  // 6. Update Tab Titles with Trait Names
+  if (DOM.tabPrimaryText) DOM.tabPrimaryText.textContent = `${t.rankTitlePrimary} (${primaryGuide.name})`;
+  if (DOM.tabSecondaryText) DOM.tabSecondaryText.textContent = `${t.rankTitleSecondary} (${secondaryGuide.name})`;
+  if (DOM.tabSupportingText) DOM.tabSupportingText.textContent = `${t.rankTitleSupporting} (${tertiaryGuide.name})`;
+
+  // 7. Progressive Disclosure State
+  if (DOM.collapsibleGuidelinesWrapper) {
+    if (DOM.collapsibleGuidelinesWrapper.style.display !== 'none') {
+      DOM.toggleGuidelinesBtnText.textContent = t.btnCollapseGuidelines;
+      DOM.toggleGuidelinesBtn.classList.add('expanded');
+      renderGuidelineTab(state.activeGuidelineTab || 'primary');
+    } else {
+      DOM.toggleGuidelinesBtnText.textContent = t.btnExpandGuidelines;
+      DOM.toggleGuidelinesBtn.classList.remove('expanded');
+    }
+  }
 }
 
 function handleRetake() {
   state.answers = {};
   state.currentQuestionIndex = 0;
   state.evaluatedScores = null;
-  state.evaluatedDominantStyle = null;
+  state.evaluatedRankings = null;
+  state.activeGuidelineTab = 'primary';
+
+  if (DOM.collapsibleGuidelinesWrapper) {
+    DOM.collapsibleGuidelinesWrapper.style.display = 'none';
+  }
+  if (DOM.toggleGuidelinesBtn) {
+    DOM.toggleGuidelinesBtn.classList.remove('expanded');
+  }
 
   DOM.evaluatorDashboard.style.display = 'none';
   DOM.surveyStepperContainer.style.display = 'block';
@@ -1106,25 +2003,144 @@ function handleRetake() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 15. INITIALIZATION & EVENT LISTENERS
+function animateMeter(labelEl, barEl, score, total, targetPct, isBangla) {
+  barEl.style.width = '0%';
+  let currentPct = 0;
+  const duration = 600;
+  const stepTime = 25;
+  const steps = duration / stepTime;
+  const increment = targetPct / steps;
+
+  const timer = setInterval(() => {
+    currentPct += increment;
+    if (currentPct >= targetPct) {
+      currentPct = targetPct;
+      clearInterval(timer);
+    }
+    const currentScore = Math.round((currentPct / 100) * total);
+    const scoreText = isBangla ? toBengaliNum(currentScore) : currentScore;
+    const totalText = isBangla ? toBengaliNum(total) : total;
+    const pctText = isBangla ? toBengaliNum(Math.round(currentPct)) : Math.round(currentPct);
+    labelEl.textContent = `${scoreText}/${totalText} (${pctText}%)`;
+  }, stepTime);
+
+  setTimeout(() => {
+    barEl.style.width = `${targetPct}%`;
+  }, 50);
+}
+
+// 15. SOCIAL SHARING & COMMUNITY ACTIONS
+function handleShareWhatsapp() {
+  const pName = state.evaluatedRankings && state.evaluatedRankings[0]
+    ? riasecGuidelines[state.evaluatedRankings[0].key][state.lang].name
+    : '';
+  const currentUrl = window.location.href.split('#')[0];
+  const msg = state.lang === 'bn'
+    ? `আমার সন্তানের Personality Profile পেলাম: ${pName}! আপনিও আপনার সন্তানের Personality ও ক্যারিয়ার গাইডেন্স বুঝতে এই মূল্যায়নটি করুন: ${currentUrl}`
+    : `Discovered my child's RIASEC Personality Profile: ${pName}! Evaluate your child's personality and guidance with this assessment: ${currentUrl}`;
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function handleShareFacebook() {
+  const currentUrl = window.location.href.split('#')[0];
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank', 'width=620,height=480,scrollbars=yes');
+}
+
+function handleCopyLink() {
+  const currentUrl = window.location.href.split('#')[0];
+  const t = translations[state.lang];
+
+  const onCopied = () => {
+    DOM.shareCopyText.textContent = t.copiedText;
+    DOM.shareCopyBtn.classList.add('copied');
+    showToast('success', t.linkCopiedToast, 2500);
+    setTimeout(() => {
+      DOM.shareCopyText.textContent = t.shareCopyText;
+      DOM.shareCopyBtn.classList.remove('copied');
+    }, 2500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(currentUrl).then(onCopied).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const dummy = document.createElement('input');
+    document.body.appendChild(dummy);
+    dummy.value = currentUrl;
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+    onCopied();
+  }
+}
+
+// 16. KEYBOARD ACCESSIBILITY SHORTCUTS (Keys 1-6 or A-F, Arrows, Enter)
+function handleKeyboardShortcuts(e) {
+  if (DOM.phase2View.style.display === 'none' || DOM.surveyStepperContainer.style.display === 'none') {
+    return;
+  }
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+    return;
+  }
+
+  const index = state.currentQuestionIndex;
+  const qData = questionBank[index];
+  if (!qData) return;
+  const options = qData[state.lang].options;
+
+  const key = e.key.toUpperCase();
+  const digitIdx = parseInt(e.key, 10) - 1;
+  const letterMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5 };
+
+  let optIdx = -1;
+  if (digitIdx >= 0 && digitIdx < 6) optIdx = digitIdx;
+  else if (letterMap[key] !== undefined) optIdx = letterMap[key];
+
+  if (optIdx >= 0 && options[optIdx]) {
+    state.answers[index] = options[optIdx].type;
+    const allItems = DOM.optionsList.querySelectorAll('.option-item');
+    allItems.forEach((el, idx) => {
+      if (idx === optIdx) el.classList.add('selected');
+      else el.classList.remove('selected');
+    });
+    updateNavButtons();
+  } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+    if (state.answers[index]) {
+      if (index === questionBank.length - 1) {
+        handleFinishSurvey();
+      } else {
+        handleNextQuestion();
+      }
+    }
+  } else if (e.key === 'ArrowLeft') {
+    handlePrevQuestion();
+  }
+}
+
+// 17. INITIALIZATION
 function init() {
   applyTheme(state.theme);
   applyLanguage(state.lang);
 
-  // Theme toggle
+  // Theme Toggle Listener
   DOM.themeToggleBtn.addEventListener('click', toggleTheme);
 
-  // Language toggles
+  // Language Toggle Listeners
   DOM.langBtnBn.addEventListener('click', () => applyLanguage('bn'));
   DOM.langBtnEn.addEventListener('click', () => applyLanguage('en'));
 
-  // Phase 1 Input formatting & Error clearing
-  DOM.inputName.addEventListener('input', () => clearErrorOnInput(DOM.groupName));
+  // Phase 1 Error Clearing on Input
+  DOM.inputParentName.addEventListener('input', () => clearErrorOnInput(DOM.groupParentName));
+  DOM.inputStudentName.addEventListener('input', () => clearErrorOnInput(DOM.groupStudentName));
+  DOM.inputStudentAge.addEventListener('input', () => clearErrorOnInput(DOM.groupStudentAge));
+  DOM.inputStudentClass.addEventListener('input', () => clearErrorOnInput(DOM.groupStudentClass));
   DOM.inputMobile.addEventListener('input', (e) => {
     e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
     clearErrorOnInput(DOM.groupMobile);
   });
-  DOM.inputAge.addEventListener('input', () => clearErrorOnInput(DOM.groupAge));
 
   // Phase 1 Form Submit
   DOM.form.addEventListener('submit', handlePhase1Submit);
@@ -1137,6 +2153,20 @@ function init() {
   // Phase 2 Evaluator Actions
   DOM.retakeBtn.addEventListener('click', handleRetake);
   DOM.printReportBtn.addEventListener('click', () => window.print());
+
+  // Progressive Disclosure & Guidelines Tab Listeners
+  if (DOM.toggleGuidelinesBtn) DOM.toggleGuidelinesBtn.addEventListener('click', handleToggleGuidelines);
+  if (DOM.tabPrimary) DOM.tabPrimary.addEventListener('click', () => switchGuidelineTab('primary'));
+  if (DOM.tabSecondary) DOM.tabSecondary.addEventListener('click', () => switchGuidelineTab('secondary'));
+  if (DOM.tabSupporting) DOM.tabSupporting.addEventListener('click', () => switchGuidelineTab('supporting'));
+
+  // Social Sharing & Copy Listeners
+  if (DOM.shareWhatsappBtn) DOM.shareWhatsappBtn.addEventListener('click', handleShareWhatsapp);
+  if (DOM.shareFacebookBtn) DOM.shareFacebookBtn.addEventListener('click', handleShareFacebook);
+  if (DOM.shareCopyBtn) DOM.shareCopyBtn.addEventListener('click', handleCopyLink);
+
+  // Keyboard Shortcuts (1-6, A-F, Enter, Arrow keys)
+  window.addEventListener('keydown', handleKeyboardShortcuts);
 }
 
 if (document.readyState === 'loading') {
