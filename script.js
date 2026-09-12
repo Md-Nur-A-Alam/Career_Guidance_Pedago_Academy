@@ -904,10 +904,51 @@ const state = {
   // Questionnaire Stepper Progress (Purely Client-Side Static Evaluator)
   currentQuestionIndex: 0,
   answers: {}, // index 0..9 -> 'R' | 'I' | 'A' | 'S' | 'E' | 'C'
+  shuffledOptionOrders: {}, // index 0..9 -> permuted indices [0..5]
   evaluatedScores: null,
   evaluatedRankings: null,
   activeGuidelineTab: 'primary'
 };
+
+// Shuffling helper functions for question options
+function shuffleArray(arr) {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function initShuffledOptions() {
+  state.shuffledOptionOrders = {};
+  for (let i = 0; i < questionBank.length; i++) {
+    state.shuffledOptionOrders[i] = shuffleArray([0, 1, 2, 3, 4, 5]);
+  }
+}
+
+function getQuestionOptions(index, lang) {
+  const qData = questionBank[index];
+  if (!qData) return [];
+  const baseOptions = qData[lang].options;
+
+  if (!state.shuffledOptionOrders || !state.shuffledOptionOrders[index]) {
+    if (!state.shuffledOptionOrders) state.shuffledOptionOrders = {};
+    state.shuffledOptionOrders[index] = shuffleArray([0, 1, 2, 3, 4, 5]);
+  }
+
+  const order = state.shuffledOptionOrders[index];
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  return order.map((origIdx, pos) => {
+    const origOpt = baseOptions[origIdx];
+    return {
+      letter: letters[pos],
+      type: origOpt.type,
+      text: origOpt.text
+    };
+  });
+}
 
 // 6. DOM ELEMENT CACHE
 const DOM = {
@@ -1481,6 +1522,7 @@ function transitionToPhase2() {
 
   state.currentQuestionIndex = 0;
   state.answers = {};
+  initShuffledOptions();
   renderQuestion(0);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1506,11 +1548,12 @@ function renderQuestion(index) {
   const prefix = state.lang === 'bn' ? `প্রশ্ন ${toBengaliNum(currentNum)}: ` : `Question ${currentNum}: `;
   DOM.currentQuestionTitle.textContent = `${prefix}${langData.question}`;
 
-  // Render 6 Options (A to F)
+  // Render 6 Options (A to F shuffled)
   DOM.optionsList.innerHTML = '';
   const selectedType = state.answers[index];
+  const options = getQuestionOptions(index, state.lang);
 
-  langData.options.forEach((opt) => {
+  options.forEach((opt) => {
     const itemEl = document.createElement('div');
     const isSelected = selectedType === opt.type;
     itemEl.className = 'option-item' + (isSelected ? ' selected' : '');
@@ -1928,19 +1971,20 @@ function renderEvaluatorResults() {
   DOM.evalStudentHeading.textContent = t.evalHeadingTemplate(studentDisplayName);
 
   // 2. Podium Rank 1 (Gold 🥇: Primary Personality)
+  const totalScoreStr = isBn ? toBengaliNum(10) : '10';
   DOM.namePrimary.textContent = primaryGuide.name;
   DOM.badgeTraitPrimary.textContent = t.badgeTraitHigh;
-  DOM.scorePrimary.textContent = `${isBn ? toBengaliNum(primary.score) : primary.score}/10`;
+  DOM.scorePrimary.textContent = `${isBn ? toBengaliNum(primary.score) : primary.score}/${totalScoreStr}`;
 
   // Podium Rank 2 (Silver 🥈: Secondary Personality)
   DOM.nameSecondary.textContent = secondaryGuide.name;
   DOM.badgeTraitSecondary.textContent = t.badgeTraitHigh;
-  DOM.scoreSecondary.textContent = `${isBn ? toBengaliNum(secondary.score) : secondary.score}/10`;
+  DOM.scoreSecondary.textContent = `${isBn ? toBengaliNum(secondary.score) : secondary.score}/${totalScoreStr}`;
 
   // Podium Rank 3 (Bronze 🥉: Supporting Personality)
   DOM.nameSupporting.textContent = tertiaryGuide.name;
   DOM.badgeTraitSupporting.textContent = t.badgeTraitModerate;
-  DOM.scoreSupporting.textContent = `${isBn ? toBengaliNum(tertiary.score) : tertiary.score}/10`;
+  DOM.scoreSupporting.textContent = `${isBn ? toBengaliNum(tertiary.score) : tertiary.score}/${totalScoreStr}`;
 
   // 3. Summary Statement
   DOM.evalSummaryText.textContent = t.summaryTemplate(primaryGuide.name, secondaryGuide.name);
@@ -1989,6 +2033,7 @@ function handleRetake() {
   state.evaluatedScores = null;
   state.evaluatedRankings = null;
   state.activeGuidelineTab = 'primary';
+  initShuffledOptions();
 
   if (DOM.collapsibleGuidelinesWrapper) {
     DOM.collapsibleGuidelinesWrapper.style.display = 'none';
@@ -2089,7 +2134,7 @@ function handleKeyboardShortcuts(e) {
   const index = state.currentQuestionIndex;
   const qData = questionBank[index];
   if (!qData) return;
-  const options = qData[state.lang].options;
+  const options = getQuestionOptions(index, state.lang);
 
   const key = e.key.toUpperCase();
   const digitIdx = parseInt(e.key, 10) - 1;
@@ -2122,6 +2167,7 @@ function handleKeyboardShortcuts(e) {
 
 // 17. INITIALIZATION
 function init() {
+  initShuffledOptions();
   applyTheme(state.theme);
   applyLanguage(state.lang);
 

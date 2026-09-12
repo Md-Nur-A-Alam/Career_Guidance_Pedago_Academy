@@ -28,48 +28,52 @@
   <main class="main-wrapper">
     <div class="lead-card" id="mainCard">
 
-      <!-- Topbar Controls: Language & Theme Switchers -->
-      <header class="card-topbar">
-        <!-- Bilingual Toggle -->
-        <div class="lang-toggle-group" role="group" aria-label="Language Selector">
-          <button type="button" class="lang-btn active" id="langBtnBn" data-lang="bn" aria-pressed="true">
-            বাংলা
-          </button>
-          <button type="button" class="lang-btn" id="langBtnEn" data-lang="en" aria-pressed="false">
-            English
-          </button>
+      <!-- Topbar Header: Unified Flex Header (Language Toggle | Pedago Logo | Theme Switcher) -->
+      <header class="card-topbar" id="cardTopbar">
+        <!-- Left: Bilingual Toggle -->
+        <div class="topbar-left">
+          <div class="lang-toggle-group" role="group" aria-label="Language Selector">
+            <button type="button" class="lang-btn active" id="langBtnBn" data-lang="bn" aria-pressed="true">
+              বাংলা
+            </button>
+            <button type="button" class="lang-btn" id="langBtnEn" data-lang="en" aria-pressed="false">
+              English
+            </button>
+          </div>
         </div>
 
-        <!-- Dark/Light Theme Toggle Button -->
-        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme"
-          title="Toggle theme">
-          <!-- Sun Icon -->
-          <svg class="theme-icon-sun" id="sunIcon" style="display: none;" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <!-- Moon Icon -->
-          <svg class="theme-icon-moon" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
+        <!-- Center: Brand Logo (Only takes its original needed space) -->
+        <div class="topbar-center">
+          <div class="brand-logo-wrap">
+            <img src="Assets/logo.png" alt="Pedago Academy Logo" class="brand-logo" width="80" height="91">
+          </div>
+        </div>
+
+        <!-- Right: Dark/Light Theme Toggle Button -->
+        <div class="topbar-right">
+          <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme"
+            title="Toggle theme">
+            <!-- Sun Icon -->
+            <svg class="theme-icon-sun" id="sunIcon" style="display: none;" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="2" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon Icon -->
+            <svg class="theme-icon-moon" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
       </header>
-
-      <!-- Brand Identity Header -->
-      <section class="card-header" id="brandHeader">
-        <div class="brand-logo-wrap">
-          <img src="Assets/logo.png" alt="Pedago Academy Logo" class="brand-logo" width="130" height="148">
-        </div>
-      </section>
 
       <!-- ===================================================================
            PHASE 1: PARENT & STUDENT INFORMATION (START করার আগে)
@@ -388,7 +392,7 @@
                 <div class="podium-badge">🥇 <span id="rankTitlePrimary">Primary Personality</span></div>
                 <h3 class="podium-name" id="namePrimary">Investigative</h3>
                 <span class="podium-trait-badge" id="badgeTraitPrimary">উচ্চ প্রবণতা</span>
-                <span class="podium-score" id="scorePrimary">0/10</span>
+                <span class="podium-score" id="scorePrimary">০/১০</span>
               </div>
 
               <!-- 2nd: Secondary Personality -->
@@ -396,7 +400,7 @@
                 <div class="podium-badge">🥈 <span id="rankTitleSecondary">Secondary Personality</span></div>
                 <h3 class="podium-name" id="nameSecondary">Realistic</h3>
                 <span class="podium-trait-badge" id="badgeTraitSecondary">উচ্চ প্রবণতা</span>
-                <span class="podium-score" id="scoreSecondary">0/10</span>
+                <span class="podium-score" id="scoreSecondary">০/১০</span>
               </div>
 
               <!-- 3rd: Supporting Personality -->
@@ -404,7 +408,7 @@
                 <div class="podium-badge">🥉 <span id="rankTitleSupporting">Supporting Personality</span></div>
                 <h3 class="podium-name" id="nameSupporting">Enterprising</h3>
                 <span class="podium-trait-badge" id="badgeTraitSupporting">মাঝারি প্রবণতা</span>
-                <span class="podium-score" id="scoreSupporting">0/10</span>
+                <span class="podium-score" id="scoreSupporting">০/১০</span>
               </div>
 
             </div>
@@ -459,7 +463,7 @@
                       <span class="meter-bullet realistic-bullet"></span>
                       <strong id="labelMeterR">01 — Realistic (হাতে-কলমে কাজ ও Practical Thinking)</strong>
                     </div>
-                    <span class="meter-score" id="scoreR">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreR">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill realistic-fill" id="fillR" style="width: 0%;"></div>
@@ -473,7 +477,7 @@
                       <span class="meter-bullet investigative-bullet"></span>
                       <strong id="labelMeterI">02 — Investigative (কৌতূহলী, বিশ্লেষণধর্মী ও Problem-Solving)</strong>
                     </div>
-                    <span class="meter-score" id="scoreI">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreI">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill investigative-fill" id="fillI" style="width: 0%;"></div>
@@ -487,7 +491,7 @@
                       <span class="meter-bullet artistic-bullet"></span>
                       <strong id="labelMeterA">03 — Artistic (সৃজনশীলতা, Imagination ও Self-Expression)</strong>
                     </div>
-                    <span class="meter-score" id="scoreA">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreA">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill artistic-fill" id="fillA" style="width: 0%;"></div>
@@ -501,7 +505,7 @@
                       <span class="meter-bullet social-bullet"></span>
                       <strong id="labelMeterS">04 — Social (সাহায্য করা, শেখানো ও যোগাযোগ)</strong>
                     </div>
-                    <span class="meter-score" id="scoreS">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreS">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill social-fill" id="fillS" style="width: 0%;"></div>
@@ -515,7 +519,7 @@
                       <span class="meter-bullet enterprising-bullet"></span>
                       <strong id="labelMeterE">05 — Enterprising (Leadership, Initiative ও Decision-Making)</strong>
                     </div>
-                    <span class="meter-score" id="scoreE">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreE">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill enterprising-fill" id="fillE" style="width: 0%;"></div>
@@ -529,7 +533,7 @@
                       <span class="meter-bullet conventional-bullet"></span>
                       <strong id="labelMeterC">06 — Conventional (Organized, Structured ও Detail-Oriented)</strong>
                     </div>
-                    <span class="meter-score" id="scoreC">0/10 (0%)</span>
+                    <span class="meter-score" id="scoreC">০/১০ (০%)</span>
                   </div>
                   <div class="meter-bar-track">
                     <div class="meter-bar-fill conventional-fill" id="fillC" style="width: 0%;"></div>
