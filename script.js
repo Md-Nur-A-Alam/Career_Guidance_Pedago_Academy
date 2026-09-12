@@ -89,7 +89,7 @@ const questionBank = [
   {
     id: 4,
     bn: {
-      question: "আপনার সন্তান কোনো নতুন বিষয় সম্পর্কে জানতে চাইলে সাধারণত কীভাবে এগোয়?",
+      question: "আপনার সন্তান কোনো নতুন বিষয় সম্পর্কে জানতে চাইলে সাধারণত কীভাবে এগিয়ে যায়?",
       options: [
         { letter: "A", type: "R", text: "নিজে করে বা ব্যবহার করে দেখে বুঝতে চায়।" },
         { letter: "B", type: "I", text: "“কেন?”, “কীভাবে?”, “এর কারণ কী?” এ ধরনের প্রশ্ন করতে থাকে।" },
@@ -1668,8 +1668,8 @@ function handleFinishSurvey() {
 const RIASEC_CONFIG = [
   { key: 'R', angle: -90, color: '#2563eb', bn: 'Realistic (হাতে-কলমে)', en: 'Realistic (Hands-on)' },
   { key: 'I', angle: -30, color: '#0284c7', bn: 'Investigative (বিশ্লেষণধর্মী)', en: 'Investigative (Analytical)' },
-  { key: 'A', angle: 30,  color: '#8b5cf6', bn: 'Artistic (সৃজনশীলতা)', en: 'Artistic (Creative)' },
-  { key: 'S', angle: 90,  color: '#ec4899', bn: 'Social (সহযোগিতা ও যোগাযোগ)', en: 'Social (Helping)' },
+  { key: 'A', angle: 30, color: '#8b5cf6', bn: 'Artistic (সৃজনশীলতা)', en: 'Artistic (Creative)' },
+  { key: 'S', angle: 90, color: '#ec4899', bn: 'Social (সহযোগিতা ও যোগাযোগ)', en: 'Social (Helping)' },
   { key: 'E', angle: 150, color: '#f97316', bn: 'Enterprising (নেতৃত্ব)', en: 'Enterprising (Leadership)' },
   { key: 'C', angle: 210, color: '#10b981', bn: 'Conventional (শৃঙ্খলা)', en: 'Conventional (Structured)' }
 ];

@@ -95,18 +95,22 @@
             <!-- Introductory Context Box -->
             <div class="intro-description-box">
               <p id="introP1">
-                প্রতিটি শিশুর Personality, পছন্দ ও কাজের ধরন আলাদা। কেউ হাতে-কলমে কাজ করতে ভালোবাসে, কেউ জানতে চায় “কেন” ও
+                প্রতিটি শিশুর Personality, পছন্দ ও কাজের ধরন আলাদা। কেউ হাতে-কলমে কাজ করতে ভালোবাসে, কেউ জানতে চায়
+                “কেন” ও
                 “কীভাবে”, কেউ সৃজনশীল, কেউ সাহায্য করতে বা নেতৃত্ব দিতে পছন্দ করে।
               </p>
               <p id="introP2">
-                এই ১০টি প্রশ্ন আপনার সন্তানের দৈনন্দিন আচরণ ও পছন্দের ওপর ভিত্তি করে তৈরি। আপনার সন্তানের সঙ্গে সবচেয়ে বেশি
+                এই ১০টি প্রশ্ন আপনার সন্তানের দৈনন্দিন আচরণ ও পছন্দের ওপর ভিত্তি করে তৈরি। আপনার সন্তানের সঙ্গে সবচেয়ে
+                বেশি
                 মিলে যায় এমন উত্তরটি নির্বাচন করুন।
               </p>
               <div class="disclaimer-note-card">
                 <span class="note-tag" id="noteTag">নোট:</span>
                 <span id="noteText">
-                  এটি কোনো Clinical Psychological Test বা Career Prediction নয়; বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি Parent
-                  Observation & Career Guidance Tool। সময় নিয়ে প্রতিটি প্রশ্নের উত্তর দিন—আপনার প্রতিটি উত্তরই সন্তানের
+                  এটি কোনো Clinical Psychological Test বা Career Prediction নয়; বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি
+                  Parent
+                  Observation & Career Guidance Tool। সময় নিয়ে প্রতিটি প্রশ্নের উত্তর দিন—আপনার প্রতিটি উত্তরই
+                  সন্তানের
                   Personality বুঝতে গুরুত্বপূর্ণ।
                 </span>
               </div>
@@ -140,159 +144,162 @@
             <!-- Phase 1 Form: 5 Inputs -->
             <form id="leadForm" class="lead-form" novalidate>
 
-          <!-- Field 1: Guardian Name -->
-          <div class="form-group" id="groupParentName">
-            <label for="parentName" class="form-label">
-              <span id="labelParentName">অভিভাবকের নাম</span>
-              <span class="required-asterisk">*</span>
-            </label>
-            <div class="input-container">
-              <span class="input-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </span>
-              <input type="text" id="parentName" name="parentName" class="form-control"
-                placeholder="অভিভাবকের পূর্ণ নাম লিখুন" required autocomplete="name">
-            </div>
-            <p class="field-error-msg" id="parentNameError" role="alert" aria-live="polite">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              <span id="parentNameErrorText">অনুগ্রহ করে অভিভাবকের নাম লিখুন</span>
-            </p>
-          </div>
-
-          <!-- Field 2: Student Name -->
-          <div class="form-group" id="groupStudentName">
-            <label for="studentName" class="form-label">
-              <span id="labelStudentName">সন্তানের নাম</span>
-              <span class="required-asterisk">*</span>
-            </label>
-            <div class="input-container">
-              <span class="input-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </span>
-              <input type="text" id="studentName" name="studentName" class="form-control"
-                placeholder="সন্তানের পূর্ণ নাম লিখুন" required>
-            </div>
-            <p class="field-error-msg" id="studentNameError" role="alert" aria-live="polite">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              <span id="studentNameErrorText">অনুগ্রহ করে সন্তানের নাম লিখুন</span>
-            </p>
-          </div>
-
-          <!-- Dual Column: Age & Class -->
-          <div class="form-row-dual">
-
-            <!-- Field 3: Student Age -->
-            <div class="form-group flex-1" id="groupStudentAge">
-              <label for="studentAge" class="form-label">
-                <span id="labelStudentAge">সন্তানের বয়স</span>
-                <span class="required-asterisk">*</span>
-              </label>
-              <div class="input-container">
-                <span class="input-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
+              <!-- Field 1: Guardian Name -->
+              <div class="form-group" id="groupParentName">
+                <label for="parentName" class="form-label">
+                  <span id="labelParentName">অভিভাবকের নাম</span>
+                  <span class="required-asterisk">*</span>
+                </label>
+                <div class="input-container">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </span>
+                  <input type="text" id="parentName" name="parentName" class="form-control"
+                    placeholder="অভিভাবকের পূর্ণ নাম লিখুন" required autocomplete="name">
+                </div>
+                <p class="field-error-msg" id="parentNameError" role="alert" aria-live="polite">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
                   </svg>
-                </span>
-                <input type="number" id="studentAge" name="studentAge" class="form-control" placeholder="যেমন: ১০"
-                  min="1" max="99" required>
+                  <span id="parentNameErrorText">অনুগ্রহ করে অভিভাবকের নাম লিখুন</span>
+                </p>
               </div>
-              <p class="field-error-msg" id="studentAgeError" role="alert" aria-live="polite">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <span id="studentAgeErrorText">সঠিক বয়স দিন</span>
-              </p>
-            </div>
 
-            <!-- Field 4: Student Class -->
-            <div class="form-group flex-1" id="groupStudentClass">
-              <label for="studentClass" class="form-label">
-                <span id="labelStudentClass">সন্তানের শ্রেণি</span>
-                <span class="required-asterisk">*</span>
-              </label>
-              <div class="input-container">
-                <span class="input-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <!-- Field 2: Student Name -->
+              <div class="form-group" id="groupStudentName">
+                <label for="studentName" class="form-label">
+                  <span id="labelStudentName">সন্তানের নাম</span>
+                  <span class="required-asterisk">*</span>
+                </label>
+                <div class="input-container">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </span>
+                  <input type="text" id="studentName" name="studentName" class="form-control"
+                    placeholder="সন্তানের পূর্ণ নাম লিখুন" required>
+                </div>
+                <p class="field-error-msg" id="studentNameError" role="alert" aria-live="polite">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
                   </svg>
-                </span>
-                <input type="text" id="studentClass" name="studentClass" class="form-control"
-                  placeholder="যেমন: ৪র্থ শ্রেণি / Class 4" required>
+                  <span id="studentNameErrorText">অনুগ্রহ করে সন্তানের নাম লিখুন</span>
+                </p>
               </div>
-              <p class="field-error-msg" id="studentClassError" role="alert" aria-live="polite">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <span id="studentClassErrorText">শ্রেণি উল্লেখ করুন</span>
-              </p>
-            </div>
 
-          </div>
+              <!-- Dual Column: Age & Class -->
+              <div class="form-row-dual">
 
-          <!-- Field 5: Mobile Number -->
-          <div class="form-group" id="groupMobile">
-            <label for="mobile" class="form-label">
-              <span id="labelMobile">মোবাইল নম্বর</span>
-              <span class="required-asterisk">*</span>
-            </label>
-            <div class="input-container">
-              <span class="input-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                  </path>
-                </svg>
-              </span>
-              <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="01XXXXXXXXX" maxlength="11"
-                required autocomplete="tel">
-            </div>
-            <span class="phone-prefix-hint" id="mobileHint">১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন: 01712345678)</span>
-            <p class="field-error-msg" id="mobileError" role="alert" aria-live="polite">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              <span id="mobileErrorText">সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)</span>
-            </p>
-          </div>
+                <!-- Field 3: Student Age -->
+                <div class="form-group flex-1" id="groupStudentAge">
+                  <label for="studentAge" class="form-label">
+                    <span id="labelStudentAge">সন্তানের বয়স</span>
+                    <span class="required-asterisk">*</span>
+                  </label>
+                  <div class="input-container">
+                    <span class="input-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </span>
+                    <input type="number" id="studentAge" name="studentAge" class="form-control" placeholder="যেমন: ১০"
+                      min="1" max="99" required>
+                  </div>
+                  <p class="field-error-msg" id="studentAgeError" role="alert" aria-live="polite">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span id="studentAgeErrorText">সঠিক বয়স দিন</span>
+                  </p>
+                </div>
 
-          <!-- Submit Button -->
-          <button type="submit" id="submitBtn" class="btn-submit">
-            <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
-            <span id="btnText">শুরু করুন →</span>
-          </button>
+                <!-- Field 4: Student Class -->
+                <div class="form-group flex-1" id="groupStudentClass">
+                  <label for="studentClass" class="form-label">
+                    <span id="labelStudentClass">সন্তানের শ্রেণি</span>
+                    <span class="required-asterisk">*</span>
+                  </label>
+                  <div class="input-container">
+                    <span class="input-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                      </svg>
+                    </span>
+                    <input type="text" id="studentClass" name="studentClass" class="form-control"
+                      placeholder="যেমন: ৪র্থ শ্রেণি / Class 4" required>
+                  </div>
+                  <p class="field-error-msg" id="studentClassError" role="alert" aria-live="polite">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span id="studentClassErrorText">শ্রেণি উল্লেখ করুন</span>
+                  </p>
+                </div>
 
-        </form>
-      </div> <!-- End .phase1-form-col -->
-    </div> <!-- End .phase1-grid -->
+              </div>
 
-    <!-- Footer Info -->
-    <footer class="card-footer">
+              <!-- Field 5: Mobile Number -->
+              <div class="form-group" id="groupMobile">
+                <label for="mobile" class="form-label">
+                  <span id="labelMobile">মোবাইল নম্বর</span>
+                  <span class="required-asterisk">*</span>
+                </label>
+                <div class="input-container">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                      </path>
+                    </svg>
+                  </span>
+                  <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="01XXXXXXXXX"
+                    maxlength="11" required autocomplete="tel">
+                </div>
+                <span class="phone-prefix-hint" id="mobileHint">১১ ডিজিটের বাংলাদেশি মোবাইল নম্বর (যেমন:
+                  01712345678)</span>
+                <p class="field-error-msg" id="mobileError" role="alert" aria-live="polite">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  <span id="mobileErrorText">সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (01XXXXXXXXX)</span>
+                </p>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="submitBtn" class="btn-submit">
+                <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
+                <span id="btnText">শুরু করুন →</span>
+              </button>
+
+            </form>
+          </div> <!-- End .phase1-form-col -->
+        </div> <!-- End .phase1-grid -->
+
+        <!-- Footer Info -->
+        <footer class="card-footer">
           <p id="footerCallUs">যে কোনো তথ্যের জন্য কল করুন:</p>
           <a href="tel:+8809612222999" class="footer-support">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -424,18 +431,20 @@
 
           <!-- Visual Statistics & Interactive Hexagon Graph Section -->
           <div class="stats-visual-container">
-            
+
             <!-- Left Column: Interactive RIASEC Hexagon Radar Graph Card -->
             <div class="radar-chart-card">
               <div class="chart-header">
                 <span class="chart-badge">RIASEC HEXAGON MODEL</span>
                 <h3 class="chart-title" id="chartCardTitle">ব্যক্তিত্ব হেক্সাগন রাডার গ্রাফ</h3>
-                <p class="chart-subtitle" id="chartCardSubtitle">John Holland-এর ৬টি প্রবণতার পারস্পরিক সামঞ্জস্যের ভিজ্যুয়াল চিত্র:</p>
+                <p class="chart-subtitle" id="chartCardSubtitle">John Holland-এর ৬টি প্রবণতার পারস্পরিক সামঞ্জস্যের
+                  ভিজ্যুয়াল চিত্র:</p>
               </div>
 
               <!-- Interactive Radar SVG Canvas -->
               <div class="radar-canvas-wrap">
-                <svg id="riasecRadarSvg" viewBox="0 0 380 340" class="radar-svg" aria-label="Interactive RIASEC Radar Chart">
+                <svg id="riasecRadarSvg" viewBox="0 0 380 340" class="radar-svg"
+                  aria-label="Interactive RIASEC Radar Chart">
                   <!-- Dynamically rendered via JS -->
                 </svg>
                 <div id="radarTooltip" class="radar-tooltip" style="display: none;"></div>
@@ -451,7 +460,8 @@
             <div class="stats-section">
               <div class="section-title-wrap">
                 <h3 class="section-title" id="statsSectionTitle">John Holland RIASEC স্কোর বিশ্লেষণ</h3>
-                <p class="section-subtitle" id="statsSectionSubtitle">১০টি মূল্যায়নের ওপর ভিত্তি করে ৬টি Personality-এর স্কোর অনুপাত:</p>
+                <p class="section-subtitle" id="statsSectionSubtitle">১০টি মূল্যায়নের ওপর ভিত্তি করে ৬টি Personality-এর
+                  স্কোর অনুপাত:</p>
               </div>
 
               <div class="stats-meters-grid" id="statsMetersGrid">
@@ -546,11 +556,13 @@
 
           <!-- Progressive Disclosure Action: "বিস্তারিত পরামর্শ দেখতে ক্লিক করুন" -->
           <div class="expand-guidelines-cta text-center">
-            <button type="button" class="btn-expand-guidelines" id="toggleGuidelinesBtn" aria-expanded="false" aria-controls="collapsibleGuidelinesWrapper">
+            <button type="button" class="btn-expand-guidelines" id="toggleGuidelinesBtn" aria-expanded="false"
+              aria-controls="collapsibleGuidelinesWrapper">
               <span class="btn-expand-icon">💡</span>
               <span id="toggleGuidelinesBtnText">বিস্তারিত পরামর্শ ও গাইডলাইন দেখুন ↓</span>
             </button>
-            <p class="expand-hint-text" id="expandHintText">অভিভাবক হিসেবে কী করবেন (DO/AVOID), ক্যারিয়ার সম্ভাবনা ও পরবর্তী পদক্ষেপ জানতে ক্লিক করুন</p>
+            <p class="expand-hint-text" id="expandHintText">অভিভাবক হিসেবে কী করবেন (DO/AVOID), ক্যারিয়ার সম্ভাবনা ও
+              পরবর্তী পদক্ষেপ জানতে ক্লিক করুন</p>
           </div>
 
           <!-- Collapsible Deep-Dive Container (Initially Hidden / Smooth Reveal) -->
@@ -558,13 +570,16 @@
 
             <!-- Interactive Personality Tab Switcher -->
             <div class="guidelines-tab-bar" id="guidelinesTabBar" role="tablist">
-              <button type="button" class="guideline-tab active" id="tabPrimary" data-rank="primary" role="tab" aria-selected="true">
+              <button type="button" class="guideline-tab active" id="tabPrimary" data-rank="primary" role="tab"
+                aria-selected="true">
                 🥇 <span id="tabPrimaryText">Primary Personality</span>
               </button>
-              <button type="button" class="guideline-tab" id="tabSecondary" data-rank="secondary" role="tab" aria-selected="false">
+              <button type="button" class="guideline-tab" id="tabSecondary" data-rank="secondary" role="tab"
+                aria-selected="false">
                 🥈 <span id="tabSecondaryText">Secondary Personality</span>
               </button>
-              <button type="button" class="guideline-tab" id="tabSupporting" data-rank="supporting" role="tab" aria-selected="false">
+              <button type="button" class="guideline-tab" id="tabSupporting" data-rank="supporting" role="tab"
+                aria-selected="false">
                 🥉 <span id="tabSupportingText">Supporting Personality</span>
               </button>
             </div>
@@ -582,8 +597,11 @@
               </div>
               <ul class="remember-list" id="rememberList">
                 <li id="rem1">Personality কোনো শিশুর ভবিষ্যৎ Career নির্ধারণ করে না।</li>
-                <li id="rem2">একজন শিশুর Personality-এর সঙ্গে তার Interest + Ability + Skills এই বিষয়গুলোও বিবেচনা করতে হবে।</li>
-                <li id="rem3">একটি শিশুর Personality সময়ের সঙ্গে পরিবর্তিত ও বিকশিতও হতে পারে। তাই এই Assessment-এর ফলাফলকে একটি নির্দিষ্ট Career-এর সিদ্ধান্ত হিসেবে নয়, বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি starting point হিসেবে দেখুন।</li>
+                <li id="rem2">একজন শিশুর Personality-এর সঙ্গে তার Interest + Ability + Skills এই বিষয়গুলোও বিবেচনা করতে
+                  হবে।</li>
+                <li id="rem3">একটি শিশুর Personality সময়ের সঙ্গে পরিবর্তিত ও বিকশিতও হতে পারে। তাই এই Assessment-এর
+                  ফলাফলকে একটি নির্দিষ্ট Career-এর সিদ্ধান্ত হিসেবে নয়, বরং সন্তানকে আরও ভালোভাবে বুঝতে একটি starting
+                  point হিসেবে দেখুন।</li>
               </ul>
             </div>
 
@@ -607,7 +625,8 @@
                 <div class="step-card">
                   <div class="step-num">৩</div>
                   <h5 class="step-heading" id="step3Title">Develop</h5>
-                  <p class="step-desc" id="step3Desc">যে কাজে তার আগ্রহ ও সম্ভাবনা দেখা যাচ্ছে, সেখানে Practice, Learning ও Skill Development-এর সুযোগ তৈরি করুন।</p>
+                  <p class="step-desc" id="step3Desc">যে কাজে তার আগ্রহ ও সম্ভাবনা দেখা যাচ্ছে, সেখানে Practice,
+                    Learning ও Skill Development-এর সুযোগ তৈরি করুন।</p>
                 </div>
 
               </div>
@@ -615,9 +634,12 @@
 
             <!-- Closing Pedago Career Guidance CTA Banner -->
             <div class="closing-cta-banner">
-              <h4 class="closing-cta-title" id="closingCtaTitle">আপনার সন্তানের Career Journey শুরু হোক তাকে বোঝার মাধ্যমে</h4>
-              <p class="closing-cta-flow" id="closingCtaFlow">Personality জানুন → Interest বুঝুন → Ability ও Skills তৈরি করুন → তারপর Career Path নিয়ে ভাবুন।</p>
-              <p class="closing-cta-tagline" id="closingCtaTagline">Pedago Career Guidance — সন্তানের জন্য Career বেছে দেওয়ার আগে, তাকে বুঝুন।</p>
+              <h4 class="closing-cta-title" id="closingCtaTitle">আপনার সন্তানের Career Journey শুরু হোক তাকে বোঝার
+                মাধ্যমে</h4>
+              <p class="closing-cta-flow" id="closingCtaFlow">Personality জানুন → Interest বুঝুন → Ability ও Skills তৈরি
+                করুন → তারপর Career Path নিয়ে ভাবুন।</p>
+              <p class="closing-cta-tagline" id="closingCtaTagline">Pedago Career Guidance — সন্তানের জন্য Career বেছে
+                দেওয়ার আগে, তাকে বুঝুন।</p>
             </div>
 
           </div>
@@ -638,7 +660,7 @@
                   d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                 </path>
               </svg>
-              <span id="btnCounselorText">কাউন্সেলরের পরামর্শ নিন</span>
+              <!-- <span id="btnCounselorText">কাউন্সেলরের পরামর্শ নিন</span> -->
             </a>
           </div>
 
