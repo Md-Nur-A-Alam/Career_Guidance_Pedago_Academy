@@ -1250,33 +1250,33 @@ function applyLanguage(lang) {
     DOM.toggleGuidelinesBtnText.textContent = isExpanded ? t.btnCollapseGuidelines : t.btnExpandGuidelines;
   }
 
-  DOM.labelMeterR.textContent = t.labelMeterR;
-  DOM.labelMeterI.textContent = t.labelMeterI;
-  DOM.labelMeterA.textContent = t.labelMeterA;
-  DOM.labelMeterS.textContent = t.labelMeterS;
-  DOM.labelMeterE.textContent = t.labelMeterE;
-  DOM.labelMeterC.textContent = t.labelMeterC;
+  if (DOM.labelMeterR) DOM.labelMeterR.textContent = t.labelMeterR;
+  if (DOM.labelMeterI) DOM.labelMeterI.textContent = t.labelMeterI;
+  if (DOM.labelMeterA) DOM.labelMeterA.textContent = t.labelMeterA;
+  if (DOM.labelMeterS) DOM.labelMeterS.textContent = t.labelMeterS;
+  if (DOM.labelMeterE) DOM.labelMeterE.textContent = t.labelMeterE;
+  if (DOM.labelMeterC) DOM.labelMeterC.textContent = t.labelMeterC;
 
-  DOM.rememberTitle.textContent = t.rememberTitle;
-  DOM.rem1.textContent = t.rem1;
-  DOM.rem2.textContent = t.rem2;
-  DOM.rem3.textContent = t.rem3;
+  if (DOM.rememberTitle) DOM.rememberTitle.textContent = t.rememberTitle;
+  if (DOM.rem1) DOM.rem1.textContent = t.rem1;
+  if (DOM.rem2) DOM.rem2.textContent = t.rem2;
+  if (DOM.rem3) DOM.rem3.textContent = t.rem3;
 
-  DOM.stepsBoxTitle.textContent = t.stepsBoxTitle;
-  DOM.step1Title.textContent = t.step1Title;
-  DOM.step1Desc.textContent = t.step1Desc;
-  DOM.step2Title.textContent = t.step2Title;
-  DOM.step2Desc.textContent = t.step2Desc;
-  DOM.step3Title.textContent = t.step3Title;
-  DOM.step3Desc.textContent = t.step3Desc;
+  if (DOM.stepsBoxTitle) DOM.stepsBoxTitle.textContent = t.stepsBoxTitle;
+  if (DOM.step1Title) DOM.step1Title.textContent = t.step1Title;
+  if (DOM.step1Desc) DOM.step1Desc.textContent = t.step1Desc;
+  if (DOM.step2Title) DOM.step2Title.textContent = t.step2Title;
+  if (DOM.step2Desc) DOM.step2Desc.textContent = t.step2Desc;
+  if (DOM.step3Title) DOM.step3Title.textContent = t.step3Title;
+  if (DOM.step3Desc) DOM.step3Desc.textContent = t.step3Desc;
 
-  DOM.closingCtaTitle.textContent = t.closingCtaTitle;
-  DOM.closingCtaFlow.textContent = t.closingCtaFlow;
-  DOM.closingCtaTagline.textContent = t.closingCtaTagline;
+  if (DOM.closingCtaTitle) DOM.closingCtaTitle.textContent = t.closingCtaTitle;
+  if (DOM.closingCtaFlow) DOM.closingCtaFlow.textContent = t.closingCtaFlow;
+  if (DOM.closingCtaTagline) DOM.closingCtaTagline.textContent = t.closingCtaTagline;
 
-  DOM.btnPrintText.textContent = t.btnPrint;
-  DOM.btnCounselorText.textContent = t.btnCounselor;
-  DOM.btnRetakeText.textContent = t.btnRetake;
+  if (DOM.btnPrintText) DOM.btnPrintText.textContent = t.btnPrint;
+  if (DOM.btnCounselorText) DOM.btnCounselorText.textContent = t.btnCounselor;
+  if (DOM.btnRetakeText) DOM.btnRetakeText.textContent = t.btnRetake;
 
   // Social Share & Community Texts
   if (DOM.shareTitle) DOM.shareTitle.textContent = t.shareTitle;
