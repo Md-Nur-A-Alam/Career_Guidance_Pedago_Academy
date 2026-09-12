@@ -1720,10 +1720,18 @@ function renderRiasecRadarChart(scores) {
     labelsSvg += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dy="${dy}" fill="currentColor" font-size="11.5" font-weight="700" class="radar-axis-label">${cfg.key}: ${labelShort}</text>`;
   });
 
-  // 3. Dynamic Data Polygon
+  // 3. Dynamic Data Polygon (Normalized to the Top Most Gained Value)
+  // Scaling by the student's highest score ensures that even when scores are distributed (e.g. 3, 2, 2, 2),
+  // the dominant traits reach the top/outer boundary of the hexagon (100% of radius), making the profile prominent and clear.
+  const maxScore = Math.max(...RIASEC_CONFIG.map(cfg => scores[cfg.key] || 0), 0);
+  const minR = 10;
+
   const dataCoords = RIASEC_CONFIG.map(cfg => {
     const s = scores[cfg.key] || 0;
-    const r = Math.max(12, (s / total) * maxR);
+    let r = minR;
+    if (maxScore > 0) {
+      r = s > 0 ? Math.max(16, (s / maxScore) * maxR) : minR;
+    }
     const rad = (cfg.angle * Math.PI) / 180;
     return {
       x: cx + r * Math.cos(rad),
