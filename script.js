@@ -1188,55 +1188,53 @@ function applyLanguage(lang) {
   }
 
   // Phase 1 Texts
-  DOM.badgeText.textContent = t.badgeText;
-  DOM.pageTitle.textContent = t.pageTitle;
-  DOM.pageSubtitle.textContent = t.pageSubtitle;
+  if (DOM.badgeText) DOM.badgeText.textContent = t.badgeText;
+  if (DOM.pageTitle) DOM.pageTitle.textContent = t.pageTitle;
+  if (DOM.pageSubtitle) DOM.pageSubtitle.textContent = t.pageSubtitle;
 
-  DOM.introP1.textContent = t.introP1;
-  DOM.introP2.textContent = t.introP2;
-  DOM.noteTag.textContent = t.noteTag;
-  DOM.noteText.textContent = t.noteText;
-  DOM.formStartTitle.textContent = t.formStartTitle;
+  if (DOM.introP1) DOM.introP1.textContent = t.introP1;
+  if (DOM.introP2) DOM.introP2.textContent = t.introP2;
+  if (DOM.noteTag) DOM.noteTag.textContent = t.noteTag;
+  if (DOM.noteText) DOM.noteText.textContent = t.noteText;
+  if (DOM.formStartTitle) DOM.formStartTitle.textContent = t.formStartTitle;
 
-  DOM.labelParentName.textContent = t.labelParentName;
-  DOM.inputParentName.placeholder = t.placeholderParentName;
+  if (DOM.labelParentName) DOM.labelParentName.textContent = t.labelParentName;
+  if (DOM.inputParentName) DOM.inputParentName.placeholder = t.placeholderParentName;
 
-  DOM.labelStudentName.textContent = t.labelStudentName;
-  DOM.inputStudentName.placeholder = t.placeholderStudentName;
+  if (DOM.labelStudentName) DOM.labelStudentName.textContent = t.labelStudentName;
+  if (DOM.inputStudentName) DOM.inputStudentName.placeholder = t.placeholderStudentName;
 
-  DOM.labelStudentAge.textContent = t.labelStudentAge;
-  DOM.inputStudentAge.placeholder = t.placeholderStudentAge;
+  if (DOM.labelStudentAge) DOM.labelStudentAge.textContent = t.labelStudentAge;
+  if (DOM.inputStudentAge) DOM.inputStudentAge.placeholder = t.placeholderStudentAge;
 
-  DOM.labelStudentClass.textContent = t.labelStudentClass;
-  DOM.inputStudentClass.placeholder = t.placeholderStudentClass;
+  if (DOM.labelStudentClass) DOM.labelStudentClass.textContent = t.labelStudentClass;
+  if (DOM.inputStudentClass) DOM.inputStudentClass.placeholder = t.placeholderStudentClass;
 
-  DOM.labelMobile.textContent = t.labelMobile;
-  DOM.inputMobile.placeholder = t.placeholderMobile;
-  DOM.mobileHint.textContent = t.mobileHint;
+  if (DOM.labelMobile) DOM.labelMobile.textContent = t.labelMobile;
+  if (DOM.inputMobile) DOM.inputMobile.placeholder = t.placeholderMobile;
+  if (DOM.mobileHint) DOM.mobileHint.textContent = t.mobileHint;
 
-  if (!state.isSubmitting) {
-    DOM.btnText.textContent = t.btnSubmit;
-  } else {
-    DOM.btnText.textContent = t.btnSubmitting;
+  if (DOM.btnText) {
+    DOM.btnText.textContent = !state.isSubmitting ? t.btnSubmit : t.btnSubmitting;
   }
 
-  DOM.footerCallUs.textContent = t.footerCallUs;
+  if (DOM.footerCallUs) DOM.footerCallUs.textContent = t.footerCallUs;
 
   // Stepper UI Texts
-  DOM.assessmentSectionTag.textContent = t.assessmentSectionTag;
-  DOM.questionInstruction.textContent = t.qInstruction;
-  DOM.btnPrevText.textContent = t.btnPrev;
-  DOM.btnNextText.textContent = t.btnNext;
-  DOM.btnFinishText.textContent = t.btnFinish;
+  if (DOM.assessmentSectionTag) DOM.assessmentSectionTag.textContent = t.assessmentSectionTag;
+  if (DOM.questionInstruction) DOM.questionInstruction.textContent = t.qInstruction;
+  if (DOM.btnPrevText) DOM.btnPrevText.textContent = t.btnPrev;
+  if (DOM.btnNextText) DOM.btnNextText.textContent = t.btnNext;
+  if (DOM.btnFinishText) DOM.btnFinishText.textContent = t.btnFinish;
 
   // Evaluator Dashboard Texts
-  DOM.evalResultBadge.textContent = t.evalResultBadge;
-  DOM.rankTitlePrimary.textContent = t.rankTitlePrimary;
-  DOM.rankTitleSecondary.textContent = t.rankTitleSecondary;
-  DOM.rankTitleSupporting.textContent = t.rankTitleSupporting;
+  if (DOM.evalResultBadge) DOM.evalResultBadge.textContent = t.evalResultBadge;
+  if (DOM.rankTitlePrimary) DOM.rankTitlePrimary.textContent = t.rankTitlePrimary;
+  if (DOM.rankTitleSecondary) DOM.rankTitleSecondary.textContent = t.rankTitleSecondary;
+  if (DOM.rankTitleSupporting) DOM.rankTitleSupporting.textContent = t.rankTitleSupporting;
 
-  DOM.statsSectionTitle.textContent = t.statsTitle;
-  DOM.statsSectionSubtitle.textContent = t.statsSubtitle;
+  if (DOM.statsSectionTitle) DOM.statsSectionTitle.textContent = t.statsTitle;
+  if (DOM.statsSectionSubtitle) DOM.statsSectionSubtitle.textContent = t.statsSubtitle;
 
   if (DOM.chartCardTitle) DOM.chartCardTitle.textContent = t.chartCardTitle;
   if (DOM.chartCardSubtitle) DOM.chartCardSubtitle.textContent = t.chartCardSubtitle;
